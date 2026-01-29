@@ -1699,11 +1699,17 @@
 
       .project-gallery {
         gap: 10px;
+        flex-wrap: wrap;
       }
 
       .gallery-item {
-        width: 150px;
-        height: 150px;
+        width: calc(50% - 5px);
+        height: auto;
+        aspect-ratio: 1;
+      }
+
+      .gallery-item img {
+        transform: scale(1.08);
       }
 
       .project-main-image {
@@ -1711,8 +1717,9 @@
       }
 
       .project-main-image img {
-        max-height: 250px;
+        max-height: 220px;
         object-fit: cover;
+        transform: scale(1.05);
       }
 
       .contact-info {
@@ -1751,12 +1758,11 @@
       }
 
       .gallery-item {
-        width: 130px;
-        height: 130px;
+        width: calc(50% - 5px);
       }
 
       .project-gallery {
-        gap: 10px;
+        gap: 8px;
       }
     }
   </style>
