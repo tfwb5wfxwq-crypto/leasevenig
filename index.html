@@ -953,13 +953,14 @@
 
     .project-gallery {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
     }
 
     .project-gallery img {
-      max-height: 200px;
+      max-height: 150px;
       object-fit: cover;
+      width: 100%;
     }
 
     .gallery-item {
@@ -1291,6 +1292,10 @@
       transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       z-index: 1;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Theatre mask animation */
@@ -1305,29 +1310,58 @@
       75% { transform: rotate(3deg) scale(1.05); }
     }
 
-    /* Cinema clap animation */
-    .interest-card:nth-child(2) .interest-icon {
-      animation: clap 2.5s ease-in-out infinite;
-      transform-origin: center bottom;
-      display: inline-block;
+    /* Cinema clap - custom CSS */
+    .clapperboard {
+      width: 70px;
+      height: 55px;
+      position: relative;
     }
 
-    @keyframes clap {
-      0%, 100% {
-        transform: perspective(300px) rotateX(0deg) scaleY(1);
-      }
-      10% {
-        transform: perspective(300px) rotateX(25deg) scaleY(0.95);
-      }
-      15% {
-        transform: perspective(300px) rotateX(0deg) scaleY(0.85);
-      }
-      20% {
-        transform: perspective(300px) rotateX(-5deg) scaleY(1);
-      }
-      30% {
-        transform: perspective(300px) rotateX(0deg) scaleY(1);
-      }
+    .clap-top {
+      position: absolute;
+      top: 0;
+      left: 5px;
+      width: 60px;
+      height: 12px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--coral) 0px,
+        var(--coral) 10px,
+        var(--white) 10px,
+        var(--white) 20px
+      );
+      border-radius: 2px;
+      transform-origin: left bottom;
+      animation: clap-down 2s ease-in-out infinite;
+    }
+
+    .clap-body {
+      position: absolute;
+      top: 12px;
+      left: 5px;
+      width: 60px;
+      height: 40px;
+      background: var(--coral);
+      border-radius: 3px;
+    }
+
+    .clap-body::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      background: var(--black);
+      border-radius: 2px;
+    }
+
+    @keyframes clap-down {
+      0%, 100% { transform: rotate(0deg); }
+      15% { transform: rotate(-35deg); }
+      25% { transform: rotate(0deg); }
+      30% { transform: rotate(-5deg); }
+      35% { transform: rotate(0deg); }
     }
 
     /* Boxing glove animation */
@@ -1893,7 +1927,12 @@
         <p class="interest-desc">Rôle dans « Gainsbourg, Gainsbarre faut voir » (2016)</p>
       </div>
       <div class="interest-card reveal-scale stagger">
-        <div class="interest-icon">🎬</div>
+        <div class="interest-icon">
+          <div class="clapperboard">
+            <div class="clap-top"></div>
+            <div class="clap-body"></div>
+          </div>
+        </div>
         <h3 class="interest-title">Cinéma</h3>
         <p class="interest-desc">1er Prix Court Métrage · Association Banlieue Climat (écriture du script)</p>
       </div>
