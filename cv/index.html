@@ -3,8 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CV - Lea Sevenig</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>CV - Lea Sevenig | Communication & Marketing</title>
+  <meta name="description" content="CV de Lea Sevenig - Responsable communication, Graphiste & Web Designer. 4 ans d'expérience, MBA Communication, 4 langues courantes.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://leasevenig.cv/cv">
+  <meta property="og:title" content="CV - Lea Sevenig">
+  <meta property="og:description" content="Responsable communication, Graphiste & Web Designer. MBA Communication, 4 langues courantes.">
+  <meta property="og:image" content="https://leasevenig.cv/og-image.png">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CV - Lea Sevenig">
+  <meta name="twitter:description" content="Responsable communication, Graphiste & Web Designer.">
+  <meta name="twitter:image" content="https://leasevenig.cv/og-image.png">
+
+  <link rel="canonical" href="https://leasevenig.cv/cv">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -567,7 +584,7 @@
 
       <div class="photo-container">
         <div class="photo-ring">
-          <img src="lea-portrait.jpg" alt="Lea Sevenig" class="photo">
+          <img src="../lea-portrait.jpg" alt="Lea Sevenig" class="photo">
         </div>
       </div>
 
@@ -785,7 +802,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             event: eventType,
-            page: '/cv.html',
+            page: '/cv',
             userAgent: navigator.userAgent,
             referrer: document.referrer
           })
