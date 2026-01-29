@@ -148,9 +148,6 @@
     .stagger-3 { transition-delay: 0.3s; }
     .stagger-4 { transition-delay: 0.4s; }
     .stagger-5 { transition-delay: 0.5s; }
-    .stagger-6 { transition-delay: 0.6s; }
-    .stagger-7 { transition-delay: 0.7s; }
-    .stagger-8 { transition-delay: 0.8s; }
 
     /* Text character animation */
     .split-text {
@@ -199,10 +196,6 @@
     @keyframes rotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
-    }
-
-    @keyframes draw {
-      to { stroke-dashoffset: 0; }
     }
 
     @keyframes gradient-shift {
@@ -965,17 +958,6 @@
       flex-wrap: wrap;
       gap: 15px;
       justify-content: center;
-    }
-
-    .gallery-item {
-      flex: 0 1 auto;
-      max-width: 280px;
-    }
-
-    .project-gallery img {
-      width: 100%;
-      height: auto;
-      display: block;
     }
 
     .gallery-item {
@@ -2392,18 +2374,12 @@
         requestAnimationFrame(() => {
           const scrolled = window.pageYOffset;
           const shapes = document.querySelectorAll('.hero-bg .shape');
-          const heroContent = document.querySelector('.hero-content');
 
           if (scrolled < window.innerHeight) {
             shapes.forEach((shape, i) => {
               const speed = (i + 1) * 0.1;
               shape.style.transform = `translate(${scrolled * speed * 0.5}px, ${scrolled * speed}px)`;
             });
-
-            if (heroContent) {
-              heroContent.style.transform = `translateY(${scrolled * 0.4}px)`;
-              heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
-            }
           }
           ticking = false;
         });
@@ -2509,6 +2485,37 @@
     setTimeout(() => {
       showToast();
     }, 6000);
+
+    // ========== TRACKING ==========
+    const TRACKING_URL = 'https://byqfnpdcnifauhwgetcq.supabase.co/functions/v1/lea-tracking';
+
+    async function trackEvent(eventType) {
+      try {
+        await fetch(TRACKING_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: eventType,
+            page: window.location.pathname,
+            userAgent: navigator.userAgent,
+            referrer: document.referrer
+          })
+        });
+      } catch (e) {
+        // Silent fail - don't break the site
+      }
+    }
+
+    // Track page visit (only once per session)
+    if (!sessionStorage.getItem('lea_visited')) {
+      sessionStorage.setItem('lea_visited', '1');
+      trackEvent('visit');
+    }
+
+    // Track CV clicks
+    document.querySelectorAll('a[href="cv.html"]').forEach(link => {
+      link.addEventListener('click', () => trackEvent('cv_click'));
+    });
   </script>
 
 </body>

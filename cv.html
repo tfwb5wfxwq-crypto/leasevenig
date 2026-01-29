@@ -57,9 +57,62 @@
       }
       .cv {
         box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+        transform: none !important;
       }
       .print-btn {
         display: none !important;
+      }
+    }
+
+    /* Mobile responsive - scale CV to fit screen */
+    @media screen and (max-width: 900px) {
+      body {
+        padding: 10px;
+        align-items: flex-start;
+      }
+      .cv {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        transform: none;
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        padding: 8mm 6mm;
+      }
+      .main {
+        padding: 8mm 6mm;
+      }
+      .photo-ring {
+        width: 35mm;
+        height: 35mm;
+      }
+      .header-name {
+        font-size: 28px;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .exp {
+        gap: 10px;
+      }
+      .edu {
+        flex-direction: column;
+        gap: 5px;
+      }
+      .edu-year {
+        min-width: auto;
+      }
+    }
+
+    /* Tablet - scale down A4 */
+    @media screen and (min-width: 901px) and (max-width: 1200px) {
+      .cv {
+        transform: scale(0.8);
+        transform-origin: top center;
       }
     }
 
@@ -103,7 +156,7 @@
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      object-position: center 30%;
+      object-position: center 40%;
       border: 3px solid var(--black);
     }
 
@@ -720,6 +773,53 @@
   <button class="print-btn" onclick="window.print()">
     <span>📄</span> Imprimer / PDF
   </button>
+
+  <script>
+    // ========== TRACKING ==========
+    const TRACKING_URL = 'https://byqfnpdcnifauhwgetcq.supabase.co/functions/v1/lea-tracking';
+
+    async function trackEvent(eventType) {
+      try {
+        await fetch(TRACKING_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: eventType,
+            page: '/cv.html',
+            userAgent: navigator.userAgent,
+            referrer: document.referrer
+          })
+        });
+      } catch (e) {
+        // Silent fail
+      }
+    }
+
+    // Track CV view (only once per session)
+    if (!sessionStorage.getItem('lea_cv_viewed')) {
+      sessionStorage.setItem('lea_cv_viewed', '1');
+      trackEvent('cv_view');
+    }
+
+    // Track print/download
+    let printTracked = false;
+    window.addEventListener('beforeprint', () => {
+      if (!printTracked) {
+        printTracked = true;
+        trackEvent('cv_print');
+      }
+    });
+
+    // Also detect via matchMedia for browsers that support it
+    if (window.matchMedia) {
+      window.matchMedia('print').addEventListener('change', (e) => {
+        if (e.matches && !printTracked) {
+          printTracked = true;
+          trackEvent('cv_print');
+        }
+      });
+    }
+  </script>
 
 </body>
 </html>
