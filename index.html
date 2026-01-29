@@ -1678,6 +1678,9 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
+        } else {
+          // Reset animation when element leaves viewport
+          entry.target.classList.remove('active');
         }
       });
     }, observerOptions);
@@ -1740,7 +1743,11 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           animateCounters();
-          statsObserver.disconnect();
+        } else {
+          // Reset counters when leaving viewport
+          document.querySelectorAll('.stat-number[data-count]').forEach(counter => {
+            counter.textContent = '0';
+          });
         }
       });
     }, { threshold: 0.5 });
