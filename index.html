@@ -269,6 +269,29 @@
       color: var(--white);
     }
 
+    /* ========== PAGE TRANSITIONS ========== */
+    .page-transition {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .page-transition.fade-out {
+      opacity: 1;
+    }
+
+    .page-transition.fade-in {
+      opacity: 0;
+    }
+
+    body.transitioning {
+      overflow: hidden;
+    }
+
     /* ========== HERO SECTION ========== */
     .hero {
       min-height: 100vh;
@@ -1970,6 +1993,9 @@
 </head>
 <body>
 
+  <!-- Page Transition Overlay -->
+  <div class="page-transition" id="pageTransition"></div>
+
   <!-- Auto-detect language and redirect -->
   <script>
     (function() {
@@ -1985,12 +2011,32 @@
         window.location.replace('/en/');
       }
     })();
+
+    // Fade in on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const transition = document.getElementById('pageTransition');
+      requestAnimationFrame(() => {
+        transition.classList.add('fade-in');
+      });
+    });
+
+    // Smooth transition function
+    function smoothNavigate(url, langPref) {
+      if (langPref) sessionStorage.setItem('lang_preference', langPref);
+      const transition = document.getElementById('pageTransition');
+      document.body.classList.add('transitioning');
+      transition.classList.remove('fade-in');
+      transition.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = url;
+      }, 350);
+    }
   </script>
 
   <!-- Language Selector -->
   <div class="lang-selector">
-    <a href="/" class="active" onclick="sessionStorage.setItem('lang_preference', 'fr')">FR</a>
-    <a href="/en/" onclick="sessionStorage.setItem('lang_preference', 'en')">EN</a>
+    <a href="/" class="active" onclick="event.preventDefault(); smoothNavigate('/', 'fr')">FR</a>
+    <a href="/en/" onclick="event.preventDefault(); smoothNavigate('/en/', 'en')">EN</a>
   </div>
 
   <!-- Hero Section -->
