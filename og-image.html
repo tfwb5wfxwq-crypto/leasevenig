@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    .og-container {
+      width: 1200px;
+      height: 630px;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      position: relative;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* Gradient shapes */
+    .shape-1 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: #D94F3D;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4;
+      top: -150px;
+      left: -100px;
+    }
+
+    .shape-2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: #C4B8E8;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4;
+      bottom: -100px;
+      right: 200px;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      height: 100%;
+      padding: 60px 80px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .text {
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 10px 24px;
+      background: rgba(217, 79, 61, 0.2);
+      border: 1px solid #D94F3D;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #D94F3D;
+      margin-bottom: 30px;
+    }
+
+    .name {
+      font-size: 90px;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+      margin-bottom: 20px;
+      letter-spacing: -3px;
+    }
+
+    .name span {
+      background: linear-gradient(135deg, #fff 0%, #C4B8E8 50%, #D94F3D 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .title {
+      font-size: 28px;
+      color: rgba(255,255,255,0.7);
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .photo-container {
+      position: relative;
+      margin-right: 20px;
+    }
+
+    .photo-ring {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      padding: 6px;
+      background: linear-gradient(135deg, #D94F3D, #C4B8E8);
+    }
+
+    .photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 30%;
+      border: 4px solid #0a0a0a;
+    }
+
+    .domain {
+      position: absolute;
+      bottom: 40px;
+      right: 80px;
+      font-size: 20px;
+      color: rgba(255,255,255,0.4);
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="og-container">
+    <div class="shape-1"></div>
+    <div class="shape-2"></div>
+
+    <div class="content">
+      <div class="text">
+        <div class="badge">Portfolio</div>
+        <h1 class="name"><span>Lea Sevenig</span></h1>
+        <p class="title">Responsable Communication · Graphiste · Web Designer</p>
+        <div class="tags">
+          <span class="tag">Stratégie de marque</span>
+          <span class="tag">Identité visuelle</span>
+          <span class="tag">Création de contenus</span>
+        </div>
+      </div>
+
+      <div class="photo-container">
+        <div class="photo-ring">
+          <img src="lea-pro.png" alt="Lea Sevenig" class="photo">
+        </div>
+      </div>
+    </div>
+
+    <div class="domain">leasevenig.cv</div>
+  </div>
+</body>
+</html>
