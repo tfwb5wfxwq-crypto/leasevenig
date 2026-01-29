@@ -838,6 +838,14 @@
       height: 280px;
       position: relative;
       overflow: hidden;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .project-image::after {
@@ -1514,7 +1522,7 @@
       </div>
       <div class="projects-grid">
         <div class="project-card reveal-left">
-          <div class="project-image" data-category="Identité visuelle" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);"></div>
+          <div class="project-image" data-category="Identité visuelle" style="background-color: #C84C3B; background-image: url('maison-saint-martin.png');"></div>
           <div class="project-content">
             <h3 class="project-title">Maison Saint Martin</h3>
             <p class="project-subtitle">Branding & Communication</p>
@@ -1522,7 +1530,7 @@
           </div>
         </div>
         <div class="project-card reveal stagger">
-          <div class="project-image" data-category="Court métrage" style="background: linear-gradient(135deg, var(--coral) 0%, #ff8a7a 50%, var(--coral) 100%);"></div>
+          <div class="project-image" data-category="Court métrage" style="background-color: #0a0a0a; background-image: url('court-ou-creve.png');"></div>
           <div class="project-content">
             <h3 class="project-title">Court ou Crève</h3>
             <p class="project-subtitle">1er Prix · Banlieue Climat</p>
@@ -1530,7 +1538,7 @@
           </div>
         </div>
         <div class="project-card reveal-right stagger-2">
-          <div class="project-image" data-category="Restauration" style="background: linear-gradient(135deg, var(--lavender) 0%, #e8e0ff 50%, var(--lavender) 100%);"></div>
+          <div class="project-image" data-category="Restauration" style="background-color: #F5E6F0; background-image: url('break.png');"></div>
           <div class="project-content">
             <h3 class="project-title">Break</h3>
             <p class="project-subtitle">Concept & Design</p>
