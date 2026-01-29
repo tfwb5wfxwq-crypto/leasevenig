@@ -299,6 +299,51 @@
       z-index: 2;
     }
 
+    .hero-photo {
+      width: 320px;
+      height: 380px;
+      margin: 0 auto 30px;
+      position: relative;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-photo::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, var(--coral) 0%, var(--lavender) 100%);
+      border-radius: 50%;
+      z-index: -1;
+      opacity: 0.3;
+      filter: blur(60px);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    .hero-photo:hover img {
+      transform: scale(1.03) translateY(-5px);
+      filter: drop-shadow(0 30px 60px rgba(217, 79, 61, 0.3));
+    }
+
+    @media (max-width: 768px) {
+      .hero-photo {
+        width: 240px;
+        height: 300px;
+        margin-bottom: 20px;
+      }
+    }
+
     .hero-badge {
       display: inline-block;
       padding: 12px 28px;
@@ -1429,23 +1474,26 @@
       <div class="particle" style="top: 10%; left: 40%; animation-delay: 5s;"></div>
     </div>
     <div class="hero-content">
-      <div class="hero-badge reveal">Communication & Marketing</div>
+      <div class="hero-photo reveal-scale">
+        <img src="lea-photo.png" alt="Lea Sevenig">
+      </div>
+      <div class="hero-badge reveal stagger">Communication & Marketing</div>
       <h1>
-        <span class="line reveal stagger">
+        <span class="line reveal stagger-2">
           <span class="text-wrapper">Lea</span>
         </span>
-        <span class="line reveal stagger-2">
+        <span class="line reveal stagger-3">
           <span class="text-wrapper">Sevenig</span>
         </span>
       </h1>
-      <p class="hero-subtitle reveal stagger-3">
+      <p class="hero-subtitle reveal stagger-4">
         <span class="highlight">Responsable communication</span> · <span class="highlight">Graphiste</span> · <span class="highlight">Web Designer</span>
       </p>
       <div class="hero-tags">
-        <span class="hero-tag reveal-bounce stagger-4">Stratégie de marque</span>
-        <span class="hero-tag reveal-bounce stagger-5">Création de contenus</span>
-        <span class="hero-tag reveal-bounce stagger-6">Identité visuelle</span>
-        <span class="hero-tag reveal-bounce stagger-7">Community management</span>
+        <span class="hero-tag reveal-bounce stagger-5">Stratégie de marque</span>
+        <span class="hero-tag reveal-bounce stagger-6">Création de contenus</span>
+        <span class="hero-tag reveal-bounce stagger-7">Identité visuelle</span>
+        <span class="hero-tag reveal-bounce stagger-8">Community management</span>
       </div>
     </div>
     <div class="scroll-indicator">
