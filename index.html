@@ -520,6 +520,10 @@
       transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .stat::before {
@@ -791,111 +795,146 @@
     }
 
     .projects .container {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
-    .projects-grid {
+    /* Project Full Cards */
+    .project-full {
+      margin-bottom: 120px;
+      padding-bottom: 120px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .project-full:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .project-full-header {
+      margin-bottom: 50px;
+    }
+
+    .project-category {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 16px;
+    }
+
+    .project-full-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .project-full-intro {
+      font-size: 18px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 800px;
+    }
+
+    .project-full-content {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      margin-bottom: 50px;
+      align-items: start;
     }
 
-    .project-card {
-      background: var(--black);
-      border-radius: 28px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 28px;
-      padding: 2px;
-      background: linear-gradient(135deg, var(--coral), var(--lavender), var(--coral));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-20px) scale(1.02);
-      box-shadow: 0 40px 80px rgba(217, 79, 61, 0.2);
-    }
-
-    .project-card:hover::before {
-      opacity: 1;
-    }
-
-    .project-image {
-      height: 280px;
-      position: relative;
-      overflow: hidden;
+    .project-main-image {
+      height: 400px;
+      border-radius: 20px;
       background-size: cover;
       background-position: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
     }
 
-    .project-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .project-image::after {
-      content: attr(data-category);
-      position: absolute;
-      top: 24px;
-      left: 24px;
-      padding: 10px 20px;
-      background: var(--black);
-      color: var(--white);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      border-radius: 50px;
-      transition: all 0.4s ease;
-    }
-
-    .project-card:hover .project-image::after {
-      background: var(--coral);
-    }
-
-    .project-content {
-      padding: 45px;
-    }
-
-    .project-title {
+    .project-details h4 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 28px;
+      font-size: 20px;
       font-weight: 700;
-      margin-bottom: 12px;
-      transition: color 0.3s ease;
-    }
-
-    .project-card:hover .project-title {
+      margin-bottom: 24px;
       color: var(--coral);
     }
 
-    .project-subtitle {
+    .project-actions {
+      list-style: none;
+    }
+
+    .project-actions li {
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .project-actions li:last-child {
+      border-bottom: none;
+    }
+
+    .project-actions li strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .project-budget {
+      margin-top: 24px;
+      padding: 16px 24px;
+      background: rgba(217, 79, 61, 0.1);
+      border-radius: 12px;
       font-size: 14px;
       color: var(--coral);
-      font-weight: 600;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
     }
 
-    .project-desc {
-      color: var(--gray);
-      font-size: 15px;
-      line-height: 1.8;
+    .project-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .gallery-item {
+      height: 250px;
+      border-radius: 16px;
+      background-size: cover;
+      background-position: center;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 1024px) {
+      .project-full-content {
+        grid-template-columns: 1fr;
+      }
+
+      .project-main-image {
+        height: 300px;
+      }
+
+      .project-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .project-gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-item {
+        height: 200px;
+      }
     }
 
     /* ========== FORMATION SECTION ========== */
@@ -1521,32 +1560,84 @@
           <span class="line reveal-flip stagger">sélectionnés</span>
         </h2>
       </div>
-      <div class="projects-grid">
-        <div class="project-card reveal-left">
-          <div class="project-image" data-category="Ouverture restaurant" style="background-color: #C84C3B; background-image: url('maison-saint-martin.png');"></div>
-          <div class="project-content">
-            <h3 class="project-title">Maison Saint Martin</h3>
-            <p class="project-subtitle">Stratégie & Identité visuelle</p>
-            <p class="project-desc">Accompagnement stratégique et créatif pour l'ouverture d'un restaurant parisien au sein du Marché Saint Martin. Création d'une identité forte issue d'une histoire familiale, déploiement d'affiches storytelling, campagne de stickers de proximité et stratégie Instagram avec compte à rebours jusqu'à l'ouverture.</p>
+
+      <!-- Project 1: Maison Saint Martin -->
+      <div class="project-full reveal">
+        <div class="project-full-header">
+          <span class="project-category">Ouverture de restaurant</span>
+          <h3 class="project-full-title">Maison Saint Martin</h3>
+          <p class="project-full-intro">Accompagnement stratégique et créatif pour l'ouverture d'un restaurant parisien au sein du Marché Saint Martin. Un lieu porteur d'une identité forte, issue d'une histoire familiale fondée sur la transmission et l'amour du métier.</p>
+        </div>
+        <div class="project-full-content">
+          <div class="project-main-image reveal-left" style="background-color: #C84C3B; background-image: url('maison-saint-martin.png');"></div>
+          <div class="project-details reveal-right">
+            <h4>Activations</h4>
+            <ul class="project-actions">
+              <li><strong>Affiches storytelling</strong> sur la devanture du restaurant en rénovation, racontant visuellement l'histoire familiale</li>
+              <li><strong>Campagne de stickers</strong> "Coucou voisin" dans le 10e arrondissement, offrant 20% de réduction aux habitants du quartier</li>
+              <li><strong>Stratégie Instagram</strong> avec compte à rebours jusqu'à l'ouverture et suivi des travaux</li>
+              <li><strong>Soirée crémaillère</strong> avec flyers QR code pour créer du lien avec les voisins</li>
+            </ul>
           </div>
         </div>
-        <div class="project-card reveal stagger">
-          <div class="project-image" data-category="Masterclass" style="background-color: #0a0a0a; background-image: url('court-ou-creve.png');"></div>
-          <div class="project-content">
-            <h3 class="project-title">Court ou Crève</h3>
-            <p class="project-subtitle">Lancement & Communication</p>
-            <p class="project-desc">Conception et lancement d'une masterclass de format court pour les intermittents du spectacle. Création et écriture d'un format vidéo viral, gestion du compte Instagram @courtoucreve, partenariat avec le Christine Cinéma Club pour les projections des créations des participants.</p>
-          </div>
-        </div>
-        <div class="project-card reveal-right stagger-2">
-          <div class="project-image" data-category="Rebranding" style="background-color: #F5E6F0; background-image: url('break.png');"></div>
-          <div class="project-content">
-            <h3 class="project-title">Break</h3>
-            <p class="project-subtitle">Restaurant & Club de tennis</p>
-            <p class="project-desc">Rebranding complet d'un restaurant intégré à un club de tennis dans le 17e arrondissement. Repositionnement vers une identité lifestyle et playful, inspiration californienne années 70. Partenariat Lacoste, activation influenceurs, shooting photo et stratégie social media. Budget optimisé de 5 000€.</p>
-          </div>
+        <div class="project-gallery">
+          <div class="gallery-item reveal-scale" style="background-image: url('msm-flyer.png');"></div>
+          <div class="gallery-item reveal-scale stagger" style="background-image: url('msm-sticker.png');"></div>
+          <div class="gallery-item reveal-scale stagger-2" style="background-image: url('msm-affichage.png');"></div>
         </div>
       </div>
+
+      <!-- Project 2: Court ou Crève -->
+      <div class="project-full reveal">
+        <div class="project-full-header">
+          <span class="project-category">Lancement d'une Masterclass</span>
+          <h3 class="project-full-title">Court ou Crève</h3>
+          <p class="project-full-intro">Conception et lancement d'une masterclass de format court pour les intermittents du spectacle. Objectif : générer de la notoriété et installer un haut niveau de crédibilité auprès d'un public restreint et potentiellement sceptique.</p>
+        </div>
+        <div class="project-full-content">
+          <div class="project-main-image reveal-left" style="background-color: #0a0a0a; background-image: url('court-ou-creve.png');"></div>
+          <div class="project-details reveal-right">
+            <h4>Activations</h4>
+            <ul class="project-actions">
+              <li><strong>Création vidéo virale</strong> avec un hook fort et un ton dynamique pour capter l'attention sur les réseaux sociaux</li>
+              <li><strong>Compte Instagram</strong> @courtoucreve centralisant les informations et répondant aux doutes éventuels</li>
+              <li><strong>Partenariat Christine Cinéma Club</strong> pour les projections des créations des participants</li>
+              <li><strong>Court ou Crève 2</strong> : production de la vidéo promo, création du site courtoucreve.com</li>
+            </ul>
+          </div>
+        </div>
+        <div class="project-gallery">
+          <div class="gallery-item reveal-scale" style="background-image: url('coc-masterclass.png');"></div>
+          <div class="gallery-item reveal-scale stagger" style="background-image: url('coc-cinema.png');"></div>
+        </div>
+      </div>
+
+      <!-- Project 3: Break -->
+      <div class="project-full reveal">
+        <div class="project-full-header">
+          <span class="project-category">Rebranding</span>
+          <h3 class="project-full-title">Break</h3>
+          <p class="project-full-intro">Rebranding complet d'un restaurant intégré à un club de tennis dans le 17e arrondissement. L'objectif : faire évoluer une image trop masculine et sportive vers une identité lifestyle, playful et inclusive.</p>
+        </div>
+        <div class="project-full-content">
+          <div class="project-main-image reveal-left" style="background-color: #F5E6F0; background-image: url('break.png');"></div>
+          <div class="project-details reveal-right">
+            <h4>Activations</h4>
+            <ul class="project-actions">
+              <li><strong>Partenariat Lacoste</strong> : prêt de tenues pour le shooting officiel et organisation d'un événement sur place</li>
+              <li><strong>Shooting photo</strong> incarnant l'identité californienne années 70, ambiance girl power</li>
+              <li><strong>Activation influenceurs</strong> parisiens des univers sport, lifestyle et food</li>
+              <li><strong>Distribution flyers</strong> dans les établissements scolaires du quartier</li>
+            </ul>
+            <p class="project-budget">Budget optimisé : <strong>5 000€ HT</strong></p>
+          </div>
+        </div>
+        <div class="project-gallery">
+          <div class="gallery-item reveal-scale" style="background-image: url('break-food.png');"></div>
+          <div class="gallery-item reveal-scale stagger" style="background-image: url('break-mood.png');"></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
