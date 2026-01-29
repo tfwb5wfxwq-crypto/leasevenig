@@ -227,8 +227,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      padding: 40px 20px;
+      padding: 60px 40px;
       position: relative;
       overflow: hidden;
     }
@@ -249,60 +248,51 @@
     }
 
     .hero-bg .shape-1 {
-      width: 600px;
-      height: 600px;
+      width: 500px;
+      height: 500px;
       background: var(--coral);
-      top: -200px;
-      left: -200px;
+      top: -150px;
+      left: -150px;
       animation: float 15s ease-in-out infinite;
     }
 
     .hero-bg .shape-2 {
-      width: 500px;
-      height: 500px;
+      width: 400px;
+      height: 400px;
       background: var(--lavender);
-      bottom: -150px;
-      right: -150px;
+      bottom: -100px;
+      right: -100px;
       animation: float 20s ease-in-out infinite reverse;
     }
 
     .hero-bg .shape-3 {
-      width: 300px;
-      height: 300px;
+      width: 250px;
+      height: 250px;
       background: var(--coral-light);
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      right: 20%;
+      transform: translateY(-50%);
       animation: pulse 8s ease-in-out infinite;
     }
 
-    /* Floating particles */
-    .particles {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      z-index: 1;
-    }
-
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: var(--white);
-      border-radius: 50%;
-      opacity: 0.3;
-      animation: float 10s ease-in-out infinite;
-    }
-
-    .hero-content {
+    .hero-wrapper {
       position: relative;
       z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: center;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .hero-text {
+      text-align: left;
     }
 
     .hero-photo {
-      width: 320px;
-      height: 380px;
-      margin: 0 auto 30px;
+      width: 350px;
+      height: 450px;
       position: relative;
     }
 
@@ -321,12 +311,12 @@
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 200px;
-      height: 200px;
+      width: 250px;
+      height: 250px;
       background: linear-gradient(135deg, var(--coral) 0%, var(--lavender) 100%);
       border-radius: 50%;
       z-index: -1;
-      opacity: 0.3;
+      opacity: 0.4;
       filter: blur(60px);
       animation: pulse 4s ease-in-out infinite;
     }
@@ -336,36 +326,62 @@
       filter: drop-shadow(0 30px 60px rgba(217, 79, 61, 0.3));
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
+      .hero-wrapper {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-text {
+        text-align: center;
+        order: 2;
+      }
+
       .hero-photo {
-        width: 240px;
-        height: 300px;
-        margin-bottom: 20px;
+        order: 1;
+        width: 280px;
+        height: 360px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 40px 20px;
+      }
+
+      .hero-photo {
+        width: 220px;
+        height: 280px;
+      }
+
+      .hero-tags {
+        justify-content: center;
       }
     }
 
     .hero-badge {
       display: inline-block;
-      padding: 12px 28px;
+      padding: 10px 24px;
       background: rgba(217, 79, 61, 0.15);
       border: 1px solid var(--coral);
       border-radius: 50px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--coral);
-      margin-bottom: 40px;
+      margin-bottom: 24px;
       animation: glow 3s ease-in-out infinite;
     }
 
     .hero h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(60px, 15vw, 180px);
+      font-size: clamp(50px, 10vw, 120px);
       font-weight: 700;
-      line-height: 0.9;
-      margin-bottom: 30px;
-      letter-spacing: -5px;
+      line-height: 0.95;
+      margin-bottom: 24px;
+      letter-spacing: -3px;
     }
 
     .hero h1 .line {
@@ -384,11 +400,11 @@
     }
 
     .hero-subtitle {
-      font-size: clamp(20px, 3vw, 32px);
+      font-size: clamp(16px, 2.5vw, 24px);
       font-weight: 300;
       color: var(--gray);
-      margin-bottom: 50px;
-      max-width: 700px;
+      margin-bottom: 32px;
+      line-height: 1.6;
     }
 
     .hero-subtitle .highlight {
@@ -418,17 +434,15 @@
     .hero-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      justify-content: center;
-      margin-bottom: 80px;
+      gap: 12px;
     }
 
     .hero-tag {
-      padding: 14px 28px;
+      padding: 10px 20px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 50px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: default;
@@ -438,8 +452,8 @@
       background: var(--coral);
       border-color: var(--coral);
       color: var(--white);
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 20px 40px rgba(217, 79, 61, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(217, 79, 61, 0.3);
     }
 
     .scroll-indicator {
@@ -1465,35 +1479,30 @@
       <div class="shape shape-2"></div>
       <div class="shape shape-3"></div>
     </div>
-    <div class="particles">
-      <div class="particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
-      <div class="particle" style="top: 40%; left: 80%; animation-delay: 2s;"></div>
-      <div class="particle" style="top: 70%; left: 20%; animation-delay: 4s;"></div>
-      <div class="particle" style="top: 30%; left: 60%; animation-delay: 1s;"></div>
-      <div class="particle" style="top: 80%; left: 70%; animation-delay: 3s;"></div>
-      <div class="particle" style="top: 10%; left: 40%; animation-delay: 5s;"></div>
-    </div>
-    <div class="hero-content">
-      <div class="hero-photo reveal-scale">
-        <img src="lea-photo.png" alt="Lea Sevenig">
+    <div class="hero-wrapper">
+      <div class="hero-text">
+        <div class="hero-badge reveal">Communication & Marketing</div>
+        <h1>
+          <span class="line reveal stagger">
+            <span class="text-wrapper">Lea</span>
+          </span>
+          <span class="line reveal stagger-2">
+            <span class="text-wrapper">Sevenig</span>
+          </span>
+        </h1>
+        <p class="hero-subtitle reveal stagger-3">
+          <span class="highlight">Responsable communication</span><br>
+          <span class="highlight">Graphiste</span> · <span class="highlight">Web Designer</span>
+        </p>
+        <div class="hero-tags reveal stagger-4">
+          <span class="hero-tag">Stratégie de marque</span>
+          <span class="hero-tag">Création de contenus</span>
+          <span class="hero-tag">Identité visuelle</span>
+          <span class="hero-tag">Community management</span>
+        </div>
       </div>
-      <div class="hero-badge reveal stagger">Communication & Marketing</div>
-      <h1>
-        <span class="line reveal stagger-2">
-          <span class="text-wrapper">Lea</span>
-        </span>
-        <span class="line reveal stagger-3">
-          <span class="text-wrapper">Sevenig</span>
-        </span>
-      </h1>
-      <p class="hero-subtitle reveal stagger-4">
-        <span class="highlight">Responsable communication</span> · <span class="highlight">Graphiste</span> · <span class="highlight">Web Designer</span>
-      </p>
-      <div class="hero-tags">
-        <span class="hero-tag reveal-bounce stagger-5">Stratégie de marque</span>
-        <span class="hero-tag reveal-bounce stagger-6">Création de contenus</span>
-        <span class="hero-tag reveal-bounce stagger-7">Identité visuelle</span>
-        <span class="hero-tag reveal-bounce stagger-8">Community management</span>
+      <div class="hero-photo reveal-right">
+        <img src="lea-photo.png" alt="Lea Sevenig">
       </div>
     </div>
     <div class="scroll-indicator">
