@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page non trouvée | Lea Sevenig</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --coral: #D94F3D;
+      --coral-light: #E8685A;
+      --lavender: #C4B8E8;
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray: #888;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.3;
+    }
+
+    .shape-1 {
+      width: 400px;
+      height: 400px;
+      background: var(--coral);
+      top: -100px;
+      left: -100px;
+    }
+
+    .shape-2 {
+      width: 300px;
+      height: 300px;
+      background: var(--lavender);
+      bottom: -50px;
+      right: -50px;
+    }
+
+    .content {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .error-code {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(100px, 25vw, 200px);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--white) 0%, var(--lavender) 50%, var(--coral) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .error-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .error-text {
+      font-size: 16px;
+      color: var(--gray);
+      margin-bottom: 40px;
+      max-width: 400px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: var(--coral);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 30px rgba(217, 79, 61, 0.3);
+    }
+
+    .back-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(217, 79, 61, 0.4);
+    }
+
+    .back-btn span {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+
+  <div class="content">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page non trouvée</h1>
+    <p class="error-text">Oops ! Cette page n'existe pas ou a été déplacée.</p>
+    <a href="/" class="back-btn">
+      <span>←</span> Retour à l'accueil
+    </a>
+  </div>
+</body>
+</html>
