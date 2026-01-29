@@ -2012,6 +2012,13 @@
       }
     })();
 
+    // Restore scroll position if coming from language switch
+    const savedScroll = sessionStorage.getItem('lang_scroll');
+    if (savedScroll) {
+      sessionStorage.removeItem('lang_scroll');
+      window.scrollTo(0, parseInt(savedScroll));
+    }
+
     // Fade in on page load
     document.addEventListener('DOMContentLoaded', () => {
       const transition = document.getElementById('pageTransition');
@@ -2023,6 +2030,8 @@
     // Smooth transition function
     function smoothNavigate(url, langPref) {
       if (langPref) sessionStorage.setItem('lang_preference', langPref);
+      // Save scroll position
+      sessionStorage.setItem('lang_scroll', window.scrollY.toString());
       const transition = document.getElementById('pageTransition');
       document.body.classList.add('transitioning');
       transition.classList.remove('fade-in');
