@@ -952,15 +952,21 @@
     }
 
     .project-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 15px;
+      justify-content: center;
+    }
+
+    .gallery-item {
+      flex: 0 1 auto;
+      max-width: 280px;
     }
 
     .project-gallery img {
       width: 100%;
       height: auto;
-      object-fit: contain;
+      display: block;
     }
 
     .gallery-item {
@@ -1295,16 +1301,92 @@
       justify-content: center;
     }
 
-    /* Theatre mask animation */
-    .interest-card:nth-child(1) .interest-icon {
-      animation: drama 4s ease-in-out infinite;
+    /* Theatre masks - custom CSS */
+    .theatre-masks {
+      width: 80px;
+      height: 50px;
+      position: relative;
     }
 
-    @keyframes drama {
-      0%, 100% { transform: rotate(-5deg) scale(1); }
-      25% { transform: rotate(5deg) scale(1.05); }
-      50% { transform: rotate(-3deg) scale(1); }
-      75% { transform: rotate(3deg) scale(1.05); }
+    .mask {
+      width: 35px;
+      height: 40px;
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      top: 5px;
+    }
+
+    .mask-happy {
+      left: 5px;
+      background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+      animation: mask-happy 3s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .mask-happy::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 8px;
+      width: 6px;
+      height: 6px;
+      background: #1a1a1a;
+      border-radius: 50%;
+      box-shadow: 13px 0 0 #1a1a1a;
+    }
+
+    .mask-happy::after {
+      content: '';
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 15px;
+      height: 8px;
+      border: 3px solid #1a1a1a;
+      border-top: none;
+      border-radius: 0 0 15px 15px;
+    }
+
+    .mask-sad {
+      right: 5px;
+      background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%);
+      animation: mask-sad 3s ease-in-out infinite;
+    }
+
+    .mask-sad::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 8px;
+      width: 6px;
+      height: 6px;
+      background: #1a1a1a;
+      border-radius: 50%;
+      box-shadow: 13px 0 0 #1a1a1a;
+    }
+
+    .mask-sad::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 15px;
+      height: 8px;
+      border: 3px solid #1a1a1a;
+      border-bottom: none;
+      border-radius: 15px 15px 0 0;
+    }
+
+    @keyframes mask-happy {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(-5deg) translateY(-3px); }
+    }
+
+    @keyframes mask-sad {
+      0%, 100% { transform: rotate(10deg); }
+      50% { transform: rotate(5deg) translateY(3px); }
     }
 
     /* Cinema clap - custom CSS */
@@ -1364,16 +1446,96 @@
       31% { transform: rotate(0deg); }
     }
 
-    /* Boxing glove animation */
-    .interest-card:nth-child(3) .interest-icon {
-      animation: punch 1.5s ease-in-out infinite;
+    /* Boxing gloves - custom CSS */
+    .boxing-gloves {
+      width: 80px;
+      height: 60px;
+      position: relative;
     }
 
-    @keyframes punch {
-      0%, 100% { transform: translateX(0) rotate(0deg); }
-      25% { transform: translateX(-10px) rotate(-10deg); }
-      50% { transform: translateX(15px) rotate(5deg); }
-      75% { transform: translateX(-5px) rotate(-5deg); }
+    .glove {
+      width: 35px;
+      height: 40px;
+      border-radius: 40% 40% 50% 50%;
+      position: absolute;
+      top: 10px;
+    }
+
+    .glove-left {
+      left: 0;
+      background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+      transform-origin: bottom right;
+      animation: punch-left 1.5s ease-in-out infinite;
+    }
+
+    .glove-left::before {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 10px;
+      background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+      border-radius: 0 0 5px 5px;
+    }
+
+    .glove-left::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 5px;
+      width: 20px;
+      height: 4px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 2px;
+      box-shadow: 0 6px 0 rgba(255,255,255,0.2);
+    }
+
+    .glove-right {
+      right: 0;
+      background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+      transform-origin: bottom left;
+      animation: punch-right 1.5s ease-in-out infinite;
+      animation-delay: 0.75s;
+    }
+
+    .glove-right::before {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 10px;
+      background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+      border-radius: 0 0 5px 5px;
+    }
+
+    .glove-right::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      right: 5px;
+      width: 20px;
+      height: 4px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 2px;
+      box-shadow: 0 6px 0 rgba(255,255,255,0.2);
+    }
+
+    @keyframes punch-left {
+      0%, 100% { transform: rotate(0deg) translateX(0); }
+      20% { transform: rotate(-15deg) translateX(-5px); }
+      40% { transform: rotate(10deg) translateX(15px); }
+      60% { transform: rotate(0deg) translateX(0); }
+    }
+
+    @keyframes punch-right {
+      0%, 100% { transform: rotate(0deg) translateX(0); }
+      20% { transform: rotate(15deg) translateX(5px); }
+      40% { transform: rotate(-10deg) translateX(-15px); }
+      60% { transform: rotate(0deg) translateX(0); }
     }
 
     .interest-card:hover .interest-icon {
@@ -1922,7 +2084,12 @@
     </div>
     <div class="interests-grid">
       <div class="interest-card reveal-scale">
-        <div class="interest-icon">🎭</div>
+        <div class="interest-icon">
+          <div class="theatre-masks">
+            <div class="mask mask-happy"></div>
+            <div class="mask mask-sad"></div>
+          </div>
+        </div>
         <h3 class="interest-title">Théâtre</h3>
         <p class="interest-desc">Rôle dans « Gainsbourg, Gainsbarre faut voir » (2016)</p>
       </div>
@@ -1937,7 +2104,12 @@
         <p class="interest-desc">1er Prix Court Métrage · Association Banlieue Climat (écriture du script)</p>
       </div>
       <div class="interest-card reveal-scale stagger-2">
-        <div class="interest-icon">🥊</div>
+        <div class="interest-icon">
+          <div class="boxing-gloves">
+            <div class="glove glove-left"></div>
+            <div class="glove glove-right"></div>
+          </div>
+        </div>
         <h3 class="interest-title">Boxe Anglaise</h3>
         <p class="interest-desc">Discipline, détermination et dépassement de soi</p>
       </div>
