@@ -1518,30 +1518,6 @@
       font-weight: 600;
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: 0 10px 30px rgba(217, 79, 61, 0.3);
-      opacity: 0;
-      transform: scale(0.5);
-    }
-
-    .cv-download.pop-active {
-      animation: cv-pop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-
-    @keyframes cv-pop {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) rotate(-10deg);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.15) rotate(3deg);
-      }
-      70% {
-        transform: scale(0.95) rotate(-2deg);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
     }
 
     .cv-download:hover {
@@ -1551,6 +1527,116 @@
 
     .cv-download span {
       font-size: 20px;
+    }
+
+    /* CV Notification Toast */
+    .cv-toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--black);
+      color: var(--white);
+      padding: 16px 24px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(100px) scale(0.8);
+      pointer-events: none;
+      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cv-toast.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .cv-toast-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--coral) 0%, var(--lavender) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      animation: toast-bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes toast-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .cv-toast-content {
+      flex: 1;
+    }
+
+    .cv-toast-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .cv-toast-text {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    .cv-toast-btn {
+      background: var(--coral);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .cv-toast-btn:hover {
+      background: var(--coral-light);
+      transform: scale(1.05);
+    }
+
+    .cv-toast-close {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 24px;
+      height: 24px;
+      background: var(--gray);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .cv-toast-close:hover {
+      background: var(--coral);
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .cv-toast {
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+      }
     }
 
     /* ========== FOOTER ========== */
@@ -2248,6 +2334,17 @@
     <p>© 2026 <span>Lea Sevenig</span> · Tous droits réservés</p>
   </footer>
 
+  <!-- CV Toast Notification -->
+  <div class="cv-toast" id="cvToast">
+    <button class="cv-toast-close" onclick="closeToast()">&times;</button>
+    <div class="cv-toast-icon">📄</div>
+    <div class="cv-toast-content">
+      <p class="cv-toast-title">CV disponible</p>
+      <p class="cv-toast-text">Téléchargez mon CV complet en PDF</p>
+    </div>
+    <a href="cv.html" target="_blank" class="cv-toast-btn">Voir le CV</a>
+  </div>
+
   <!-- Scripts -->
   <script>
     // Intersection Observer for all reveal animations
@@ -2371,20 +2468,35 @@
       ).join(' ');
     });
 
-    // CV download button pop animation
-    const cvButton = document.querySelector('.cv-download');
-    if (cvButton) {
-      const cvObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.classList.add('pop-active');
-            }, 600);
-          }
-        });
-      }, { threshold: 0.5 });
-      cvObserver.observe(cvButton);
+    // CV Toast notification
+    let toastShown = false;
+    const cvToast = document.getElementById('cvToast');
+
+    function showToast() {
+      if (!toastShown && cvToast) {
+        cvToast.classList.add('show');
+        toastShown = true;
+      }
     }
+
+    function closeToast() {
+      if (cvToast) {
+        cvToast.classList.remove('show');
+      }
+    }
+
+    // Show toast after scrolling 60% of the page
+    window.addEventListener('scroll', () => {
+      const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      if (scrollPercent > 60 && !toastShown) {
+        showToast();
+      }
+    });
+
+    // Also show after 15 seconds as fallback
+    setTimeout(() => {
+      showToast();
+    }, 15000);
   </script>
 
 </body>
