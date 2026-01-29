@@ -1574,10 +1574,33 @@
       }
 
       .hero-photo {
-        width: 250px;
-        right: -30px;
-        bottom: 0;
-        opacity: 0.25;
+        position: relative;
+        width: 180px;
+        right: auto;
+        bottom: auto;
+        opacity: 1;
+        margin: 0 auto 30px;
+        pointer-events: auto;
+      }
+
+      .hero-photo img {
+        filter: none;
+        -webkit-mask-image: none;
+        mask-image: none;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      }
+
+      .hero-wrapper {
+        flex-direction: column;
+      }
+
+      .hero-text {
+        order: 2;
+      }
+
+      .hero-photo {
+        order: 1;
       }
 
       .scroll-indicator {
