@@ -11,10 +11,11 @@
       --coral: #D94F3D;
       --coral-light: #E8685A;
       --lavender: #C4B8E8;
-      --lavender-light: #E8E3F5;
+      --lavender-light: #F3F0FA;
       --black: #1a1a1a;
-      --gray: #666;
-      --gray-light: #999;
+      --gray: #6b7280;
+      --gray-light: #9ca3af;
+      --white: #ffffff;
     }
 
     * {
@@ -29,8 +30,8 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #f0f0f0;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: var(--black);
       display: flex;
       justify-content: center;
@@ -39,13 +40,13 @@
       padding: 20px;
     }
 
-    .cv-container {
+    .cv {
       width: 210mm;
       height: 297mm;
-      background: white;
+      background: var(--white);
       display: grid;
-      grid-template-columns: 70mm 1fr;
-      box-shadow: 0 25px 80px rgba(0,0,0,0.15);
+      grid-template-columns: 78mm 1fr;
+      box-shadow: 0 50px 100px rgba(0,0,0,0.3);
       overflow: hidden;
     }
 
@@ -54,7 +55,7 @@
         background: white;
         padding: 0;
       }
-      .cv-container {
+      .cv {
         box-shadow: none;
       }
       .print-btn {
@@ -62,343 +63,416 @@
       }
     }
 
-    /* ========== LEFT SIDEBAR ========== */
-    .cv-sidebar {
-      background: linear-gradient(180deg, var(--black) 0%, #2a2a2a 100%);
-      color: white;
-      padding: 15mm 6mm;
+    /* ========== SIDEBAR ========== */
+    .sidebar {
+      background: var(--black);
+      color: var(--white);
+      padding: 18mm 8mm;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
-    .cv-photo-wrapper {
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--coral), var(--lavender));
+    }
+
+    /* Photo */
+    .photo-container {
       text-align: center;
-      margin-bottom: 15px;
-    }
-
-    .cv-photo {
-      width: 45mm;
-      height: 45mm;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: center 20%;
-      border: 3px solid var(--coral);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .cv-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 4px;
-      letter-spacing: -0.5px;
-    }
-
-    .cv-title {
-      font-size: 9px;
-      color: var(--coral);
-      text-align: center;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 20px;
-    }
-
-    .cv-sidebar-section {
       margin-bottom: 18px;
     }
 
-    .cv-sidebar-title {
+    .photo-ring {
+      width: 52mm;
+      height: 52mm;
+      margin: 0 auto;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--coral), var(--lavender));
+    }
+
+    .photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 15%;
+      border: 3px solid var(--black);
+    }
+
+    /* Identity */
+    .identity {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .name {
       font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    .title {
       font-size: 9px;
+      color: var(--coral);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Sidebar sections */
+    .sidebar-section {
+      margin-bottom: 22px;
+    }
+
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
       font-weight: 700;
       color: var(--coral);
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-bottom: 10px;
-      padding-bottom: 5px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
     }
 
     /* Contact */
-    .cv-contact-item {
+    .contact-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-      font-size: 8px;
-      color: rgba(255,255,255,0.85);
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 9px;
+      color: rgba(255,255,255,0.9);
     }
 
-    .cv-contact-icon {
-      width: 24px;
-      height: 24px;
-      background: rgba(217, 79, 61, 0.2);
-      border-radius: 6px;
+    .contact-icon {
+      width: 30px;
+      height: 30px;
+      background: rgba(217, 79, 61, 0.15);
+      border: 1px solid rgba(217, 79, 61, 0.3);
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 13px;
       flex-shrink: 0;
     }
 
     /* Languages */
-    .cv-lang-item {
+    .lang-item {
+      margin-bottom: 12px;
+    }
+
+    .lang-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-      font-size: 8px;
+      margin-bottom: 5px;
     }
 
-    .cv-lang-name {
-      color: white;
+    .lang-name {
+      font-size: 10px;
       font-weight: 500;
+      color: var(--white);
     }
 
-    .cv-lang-level {
-      color: var(--coral);
-      font-size: 7px;
-      font-weight: 600;
+    .lang-level {
+      font-size: 8px;
+      color: var(--lavender);
     }
 
-    .cv-lang-bar {
-      flex: 1;
-      height: 3px;
+    .lang-bar {
+      height: 4px;
       background: rgba(255,255,255,0.1);
-      margin: 0 10px;
       border-radius: 2px;
       overflow: hidden;
     }
 
-    .cv-lang-fill {
+    .lang-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--coral), var(--lavender));
       border-radius: 2px;
     }
 
     /* Skills */
-    .cv-skills-list {
+    .skills-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
+      gap: 7px;
     }
 
-    .cv-skill-tag {
-      background: rgba(196, 184, 232, 0.15);
-      border: 1px solid rgba(196, 184, 232, 0.3);
+    .skill {
+      background: transparent;
+      border: 1px solid rgba(196, 184, 232, 0.4);
       color: var(--lavender);
-      padding: 4px 10px;
+      padding: 6px 12px;
       border-radius: 20px;
-      font-size: 7px;
+      font-size: 8px;
       font-weight: 500;
     }
 
     /* Interests */
-    .cv-interests-list {
+    .interests-row {
       display: flex;
-      gap: 12px;
+      justify-content: space-around;
+      padding-top: 8px;
     }
 
-    .cv-interest-item {
+    .interest {
       text-align: center;
     }
 
-    .cv-interest-icon {
-      font-size: 18px;
-      margin-bottom: 3px;
+    .interest-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
     }
 
-    .cv-interest-name {
-      font-size: 7px;
+    .interest-label {
+      font-size: 8px;
       color: rgba(255,255,255,0.7);
     }
 
-    /* ========== RIGHT MAIN CONTENT ========== */
-    .cv-main {
-      padding: 15mm 12mm;
+    /* ========== MAIN CONTENT ========== */
+    .main {
+      padding: 18mm 14mm 18mm 12mm;
       display: flex;
       flex-direction: column;
     }
 
     /* Header */
-    .cv-header {
-      margin-bottom: 15px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--lavender-light);
+    .header {
+      margin-bottom: 22px;
     }
 
-    .cv-header-name {
+    .header-name {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 32px;
+      font-size: 42px;
       font-weight: 700;
       color: var(--black);
-      letter-spacing: -1px;
-      margin-bottom: 5px;
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 6px;
     }
 
-    .cv-header-name span {
+    .header-name .accent {
       color: var(--coral);
     }
 
-    .cv-profile {
-      font-size: 9px;
+    .header-role {
+      font-size: 13px;
       color: var(--gray);
-      line-height: 1.6;
-      max-width: 90%;
+      font-weight: 500;
+      margin-bottom: 14px;
     }
 
-    /* Main content grid */
-    .cv-content {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 20px;
-      flex: 1;
-    }
-
-    .cv-section {
-      margin-bottom: 15px;
-    }
-
-    .cv-section-title {
-      font-family: 'Space Grotesk', sans-serif;
+    .profile {
       font-size: 11px;
+      color: var(--gray);
+      line-height: 1.7;
+      padding: 14px 16px;
+      background: var(--lavender-light);
+      border-radius: 10px;
+      border-left: 4px solid var(--coral);
+    }
+
+    /* Main sections */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .main-section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
       font-weight: 700;
       color: var(--coral);
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .cv-section-title::after {
+    .main-section-title::before {
       content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--lavender), transparent);
-    }
-
-    /* Experience items */
-    .cv-exp-item {
-      margin-bottom: 12px;
-      padding-left: 12px;
-      border-left: 2px solid var(--lavender);
-      position: relative;
-    }
-
-    .cv-exp-item::before {
-      content: '';
-      position: absolute;
-      left: -5px;
-      top: 3px;
-      width: 8px;
-      height: 8px;
+      width: 5px;
+      height: 5px;
       background: var(--coral);
       border-radius: 50%;
     }
 
-    .cv-exp-header {
+    .main-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--lavender), transparent 80%);
+    }
+
+    /* Experience */
+    .exp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .exp {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+    }
+
+    .exp-timeline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 3px;
+    }
+
+    .exp-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--coral);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .exp-line {
+      width: 2px;
+      flex: 1;
+      background: linear-gradient(to bottom, var(--lavender), transparent);
+      margin-top: 5px;
+    }
+
+    .exp-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 2px;
-    }
-
-    .cv-exp-company {
-      font-weight: 700;
-      font-size: 10px;
-      color: var(--black);
-    }
-
-    .cv-exp-date {
-      font-size: 7px;
-      color: var(--coral);
-      font-weight: 600;
-      background: rgba(217, 79, 61, 0.1);
-      padding: 2px 8px;
-      border-radius: 10px;
-    }
-
-    .cv-exp-role {
-      font-size: 8px;
-      color: var(--gray);
-      font-style: italic;
-      margin-bottom: 3px;
-    }
-
-    .cv-exp-desc {
-      font-size: 7.5px;
-      color: var(--gray-light);
-      line-height: 1.5;
-    }
-
-    /* Projects */
-    .cv-projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-    }
-
-    .cv-project-card {
-      background: var(--lavender-light);
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    .cv-project-name {
-      font-weight: 700;
-      font-size: 8px;
-      color: var(--black);
-      margin-bottom: 2px;
-    }
-
-    .cv-project-type {
-      font-size: 6px;
-      color: var(--coral);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
       margin-bottom: 4px;
     }
 
-    .cv-project-desc {
-      font-size: 6.5px;
+    .exp-company {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--black);
+    }
+
+    .exp-date {
+      font-size: 9px;
+      color: var(--white);
+      font-weight: 600;
+      background: var(--coral);
+      padding: 4px 12px;
+      border-radius: 12px;
+    }
+
+    .exp-role {
+      font-size: 10px;
       color: var(--gray);
-      line-height: 1.4;
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+
+    .exp-desc {
+      font-size: 10px;
+      color: var(--gray-light);
+      line-height: 1.6;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .project {
+      background: #fafafa;
+      border: 1px solid #eee;
+      padding: 14px;
+      border-radius: 12px;
+    }
+
+    .project-type {
+      font-size: 7px;
+      color: var(--coral);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .project-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      font-size: 9px;
+      color: var(--gray);
+      line-height: 1.5;
     }
 
     /* Education */
-    .cv-edu-item {
+    .edu-list {
       display: flex;
-      gap: 12px;
-      margin-bottom: 10px;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .edu {
+      display: flex;
+      gap: 16px;
       align-items: flex-start;
     }
 
-    .cv-edu-year {
+    .edu-year {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--coral);
-      min-width: 50px;
+      min-width: 60px;
+      padding-top: 2px;
     }
 
-    .cv-edu-content {
+    .edu-content {
       flex: 1;
+      padding-left: 16px;
+      border-left: 2px solid var(--lavender);
     }
 
-    .cv-edu-degree {
+    .edu-degree {
       font-weight: 600;
-      font-size: 9px;
+      font-size: 11px;
       color: var(--black);
-      margin-bottom: 1px;
+      margin-bottom: 3px;
     }
 
-    .cv-edu-school {
-      font-size: 7.5px;
+    .edu-school {
+      font-size: 10px;
       color: var(--gray);
     }
 
@@ -407,15 +481,15 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: linear-gradient(135deg, var(--coral) 0%, var(--coral-light) 100%);
-      color: white;
+      background: var(--white);
+      color: var(--black);
       border: none;
-      padding: 16px 32px;
+      padding: 16px 28px;
       border-radius: 50px;
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 10px 40px rgba(217, 79, 61, 0.4);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
@@ -424,7 +498,7 @@
 
     .print-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 15px 50px rgba(217, 79, 61, 0.5);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
     }
 
     .print-btn span {
@@ -434,178 +508,211 @@
 </head>
 <body>
 
-  <div class="cv-container">
-    <!-- Left Sidebar -->
-    <aside class="cv-sidebar">
-      <div class="cv-photo-wrapper">
-        <img src="lea-portrait.jpg" alt="Lea Sevenig" class="cv-photo">
+  <div class="cv">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+      <div class="photo-container">
+        <div class="photo-ring">
+          <img src="lea-portrait.jpg" alt="Lea Sevenig" class="photo">
+        </div>
       </div>
 
-      <h1 class="cv-name">Lea Sevenig</h1>
-      <p class="cv-title">Communication & Marketing</p>
+      <div class="identity">
+        <h1 class="name">Lea Sevenig</h1>
+        <p class="title">Communication & Marketing</p>
+      </div>
 
-      <div class="cv-sidebar-section">
-        <h3 class="cv-sidebar-title">Contact</h3>
-        <div class="cv-contact-item">
-          <span class="cv-contact-icon">✉️</span>
+      <div class="sidebar-section">
+        <h3 class="section-label">Contact</h3>
+        <div class="contact-item">
+          <span class="contact-icon">✉️</span>
           <span>leasevenig13@icloud.com</span>
         </div>
-        <div class="cv-contact-item">
-          <span class="cv-contact-icon">📞</span>
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
           <span>+33 6 64 32 20 24</span>
         </div>
-        <div class="cv-contact-item">
-          <span class="cv-contact-icon">📍</span>
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
           <span>Paris & Luxembourg</span>
         </div>
       </div>
 
-      <div class="cv-sidebar-section">
-        <h3 class="cv-sidebar-title">Langues</h3>
-        <div class="cv-lang-item">
-          <span class="cv-lang-name">Français</span>
-          <div class="cv-lang-bar"><div class="cv-lang-fill" style="width: 100%"></div></div>
-          <span class="cv-lang-level">Courant</span>
+      <div class="sidebar-section">
+        <h3 class="section-label">Langues</h3>
+        <div class="lang-item">
+          <div class="lang-header">
+            <span class="lang-name">Français</span>
+            <span class="lang-level">Courant</span>
+          </div>
+          <div class="lang-bar"><div class="lang-fill" style="width: 100%"></div></div>
         </div>
-        <div class="cv-lang-item">
-          <span class="cv-lang-name">Anglais</span>
-          <div class="cv-lang-bar"><div class="cv-lang-fill" style="width: 100%"></div></div>
-          <span class="cv-lang-level">Courant</span>
+        <div class="lang-item">
+          <div class="lang-header">
+            <span class="lang-name">Anglais</span>
+            <span class="lang-level">Courant</span>
+          </div>
+          <div class="lang-bar"><div class="lang-fill" style="width: 100%"></div></div>
         </div>
-        <div class="cv-lang-item">
-          <span class="cv-lang-name">Allemand</span>
-          <div class="cv-lang-bar"><div class="cv-lang-fill" style="width: 100%"></div></div>
-          <span class="cv-lang-level">Courant</span>
+        <div class="lang-item">
+          <div class="lang-header">
+            <span class="lang-name">Allemand</span>
+            <span class="lang-level">Courant</span>
+          </div>
+          <div class="lang-bar"><div class="lang-fill" style="width: 100%"></div></div>
         </div>
-        <div class="cv-lang-item">
-          <span class="cv-lang-name">Luxembourgeois</span>
-          <div class="cv-lang-bar"><div class="cv-lang-fill" style="width: 100%"></div></div>
-          <span class="cv-lang-level">Natif</span>
+        <div class="lang-item">
+          <div class="lang-header">
+            <span class="lang-name">Luxembourgeois</span>
+            <span class="lang-level">Natif</span>
+          </div>
+          <div class="lang-bar"><div class="lang-fill" style="width: 100%"></div></div>
         </div>
       </div>
 
-      <div class="cv-sidebar-section">
-        <h3 class="cv-sidebar-title">Compétences</h3>
-        <div class="cv-skills-list">
-          <span class="cv-skill-tag">Identité visuelle</span>
-          <span class="cv-skill-tag">Community Management</span>
-          <span class="cv-skill-tag">Web Design</span>
-          <span class="cv-skill-tag">Stratégie Marketing</span>
-          <span class="cv-skill-tag">Production audiovisuelle</span>
-          <span class="cv-skill-tag">Création de contenus</span>
+      <div class="sidebar-section">
+        <h3 class="section-label">Compétences</h3>
+        <div class="skills-grid">
+          <span class="skill">Identité visuelle</span>
+          <span class="skill">Community Management</span>
+          <span class="skill">Web Design</span>
+          <span class="skill">Stratégie Marketing</span>
+          <span class="skill">Production audiovisuelle</span>
+          <span class="skill">Création de contenus</span>
         </div>
       </div>
 
-      <div class="cv-sidebar-section">
-        <h3 class="cv-sidebar-title">Centres d'intérêt</h3>
-        <div class="cv-interests-list">
-          <div class="cv-interest-item">
-            <div class="cv-interest-icon">🎭</div>
-            <div class="cv-interest-name">Théâtre</div>
+      <div class="sidebar-section">
+        <h3 class="section-label">Centres d'intérêt</h3>
+        <div class="interests-row">
+          <div class="interest">
+            <div class="interest-icon">🎭</div>
+            <div class="interest-label">Théâtre</div>
           </div>
-          <div class="cv-interest-item">
-            <div class="cv-interest-icon">🎬</div>
-            <div class="cv-interest-name">Cinéma</div>
+          <div class="interest">
+            <div class="interest-icon">🎬</div>
+            <div class="interest-label">Cinéma</div>
           </div>
-          <div class="cv-interest-item">
-            <div class="cv-interest-icon">🥊</div>
-            <div class="cv-interest-name">Boxe</div>
+          <div class="interest">
+            <div class="interest-icon">🥊</div>
+            <div class="interest-label">Boxe</div>
           </div>
         </div>
       </div>
+
     </aside>
 
-    <!-- Right Main Content -->
-    <main class="cv-main">
-      <header class="cv-header">
-        <h2 class="cv-header-name">Lea <span>Sevenig</span></h2>
-        <p class="cv-profile">Profil terrain issu de la restauration et de l'hôtellerie de luxe, avec une forte sensibilité à l'image et à l'expérience client. Habituée à concevoir et déployer des stratégies de communication adaptées aux lieux, aux équipes et aux publics.</p>
+    <!-- Main Content -->
+    <main class="main">
+
+      <header class="header">
+        <h2 class="header-name">Lea <span class="accent">Sevenig</span></h2>
+        <p class="header-role">Responsable Communication · Graphiste · Web Designer</p>
+        <p class="profile">Profil terrain issu de la restauration et de l'hôtellerie de luxe, avec une forte sensibilité à l'image et à l'expérience client. Habituée à concevoir et déployer des stratégies de communication adaptées aux lieux, aux équipes et aux publics.</p>
       </header>
 
-      <div class="cv-content">
-        <div class="cv-col-left">
-          <section class="cv-section">
-            <h3 class="cv-section-title">Expériences</h3>
+      <div class="content">
 
-            <div class="cv-exp-item">
-              <div class="cv-exp-header">
-                <span class="cv-exp-company">Brasseur Design</span>
-                <span class="cv-exp-date">Depuis 2025</span>
-              </div>
-              <p class="cv-exp-role">Graphiste & Responsable de projet · Auto-entreprise</p>
-              <p class="cv-exp-desc">Accompagnement de restaurants dans leur identité visuelle. Suivi de projets audiovisuels et coordination entre clients et prestataires.</p>
-            </div>
+        <section class="main-section">
+          <h3 class="main-section-title">Expériences</h3>
+          <div class="exp-list">
 
-            <div class="cv-exp-item">
-              <div class="cv-exp-header">
-                <span class="cv-exp-company">Groupe Nasther</span>
-                <span class="cv-exp-date">2024 - 2025</span>
+            <div class="exp">
+              <div class="exp-timeline">
+                <div class="exp-dot"></div>
+                <div class="exp-line"></div>
               </div>
-              <p class="cv-exp-role">Responsable communication – Graphiste & Web designer · CDI</p>
-              <p class="cv-exp-desc">Pilotage de la communication de plusieurs lieux de restauration. Création de supports print/digitaux, community management.</p>
-            </div>
-
-            <div class="cv-exp-item">
-              <div class="cv-exp-header">
-                <span class="cv-exp-company">Restaurant Focacc'</span>
-                <span class="cv-exp-date">2022</span>
-              </div>
-              <p class="cv-exp-role">Directrice générale · Restaurant éphémère</p>
-              <p class="cv-exp-desc">Co-création et ouverture d'un restaurant. Définition du concept, gestion de la communication et management d'équipe.</p>
-            </div>
-          </section>
-
-          <section class="cv-section">
-            <h3 class="cv-section-title">Projets clés</h3>
-            <div class="cv-projects-grid">
-              <div class="cv-project-card">
-                <p class="cv-project-type">Ouverture</p>
-                <p class="cv-project-name">Maison Saint Martin</p>
-                <p class="cv-project-desc">Storytelling, campagne stickers, stratégie Instagram</p>
-              </div>
-              <div class="cv-project-card">
-                <p class="cv-project-type">Masterclass</p>
-                <p class="cv-project-name">Court ou Crève</p>
-                <p class="cv-project-desc">Vidéo virale, compte Instagram, site web</p>
-              </div>
-              <div class="cv-project-card">
-                <p class="cv-project-type">Rebranding</p>
-                <p class="cv-project-name">Break</p>
-                <p class="cv-project-desc">Partenariat Lacoste, shooting, influenceurs</p>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div class="cv-col-right">
-          <section class="cv-section">
-            <h3 class="cv-section-title">Formation</h3>
-
-            <div class="cv-edu-item">
-              <span class="cv-edu-year">2023-24</span>
-              <div class="cv-edu-content">
-                <p class="cv-edu-degree">MBA Communication et production audiovisuelle</p>
-                <p class="cv-edu-school">EFAP · Paris</p>
+              <div class="exp-content">
+                <div class="exp-header">
+                  <span class="exp-company">Brasseur Design</span>
+                  <span class="exp-date">Depuis 2025</span>
+                </div>
+                <p class="exp-role">Graphiste & Responsable de projet · Auto-entreprise</p>
+                <p class="exp-desc">Accompagnement de restaurants dans leur identité visuelle. Suivi de projets audiovisuels et coordination entre clients et prestataires.</p>
               </div>
             </div>
 
-            <div class="cv-edu-item">
-              <span class="cv-edu-year">2019-23</span>
-              <div class="cv-edu-content">
-                <p class="cv-edu-degree">Bachelor (Hons.) Management international de la restauration</p>
-                <p class="cv-edu-school">Institut Paul Bocuse · Lyon · Spécialisation entrepreneuriat</p>
+            <div class="exp">
+              <div class="exp-timeline">
+                <div class="exp-dot"></div>
+                <div class="exp-line"></div>
+              </div>
+              <div class="exp-content">
+                <div class="exp-header">
+                  <span class="exp-company">Groupe Nasther</span>
+                  <span class="exp-date">2024 - 2025</span>
+                </div>
+                <p class="exp-role">Responsable communication – Graphiste & Web designer · CDI</p>
+                <p class="exp-desc">Pilotage de la communication de plusieurs lieux de restauration. Création de supports print/digitaux, community management, coordination équipes.</p>
               </div>
             </div>
 
-            <div class="cv-edu-item">
-              <span class="cv-edu-year">2019</span>
-              <div class="cv-edu-content">
-                <p class="cv-edu-degree">Baccalauréat économique et social</p>
-                <p class="cv-edu-school">Lycée Vauban · Luxembourg</p>
+            <div class="exp">
+              <div class="exp-timeline">
+                <div class="exp-dot"></div>
+              </div>
+              <div class="exp-content">
+                <div class="exp-header">
+                  <span class="exp-company">Restaurant Focacc'</span>
+                  <span class="exp-date">2022</span>
+                </div>
+                <p class="exp-role">Directrice générale · Restaurant éphémère</p>
+                <p class="exp-desc">Co-création et ouverture d'un restaurant. Définition du concept, gestion de la communication et management d'équipe.</p>
               </div>
             </div>
-          </section>
-        </div>
+
+          </div>
+        </section>
+
+        <section class="main-section">
+          <h3 class="main-section-title">Projets clés</h3>
+          <div class="projects-grid">
+            <div class="project">
+              <p class="project-type">Ouverture</p>
+              <p class="project-name">Maison Saint Martin</p>
+              <p class="project-desc">Storytelling, campagne stickers, stratégie Instagram</p>
+            </div>
+            <div class="project">
+              <p class="project-type">Masterclass</p>
+              <p class="project-name">Court ou Crève</p>
+              <p class="project-desc">Vidéo virale, compte Instagram, création site web</p>
+            </div>
+            <div class="project">
+              <p class="project-type">Rebranding</p>
+              <p class="project-name">Break</p>
+              <p class="project-desc">Partenariat Lacoste, shooting, activation influenceurs</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="main-section">
+          <h3 class="main-section-title">Formation</h3>
+          <div class="edu-list">
+            <div class="edu">
+              <span class="edu-year">2023-24</span>
+              <div class="edu-content">
+                <p class="edu-degree">MBA Communication et production audiovisuelle</p>
+                <p class="edu-school">EFAP · Paris</p>
+              </div>
+            </div>
+            <div class="edu">
+              <span class="edu-year">2019-23</span>
+              <div class="edu-content">
+                <p class="edu-degree">Bachelor (Hons.) Management international de la restauration</p>
+                <p class="edu-school">Institut Paul Bocuse · Lyon · Spécialisation entrepreneuriat</p>
+              </div>
+            </div>
+            <div class="edu">
+              <span class="edu-year">2019</span>
+              <div class="edu-content">
+                <p class="edu-degree">Baccalauréat économique et social</p>
+                <p class="edu-school">Lycée Vauban · Luxembourg</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </main>
   </div>
