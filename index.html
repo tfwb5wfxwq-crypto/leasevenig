@@ -1600,11 +1600,12 @@
 
       .hero-photo img {
         max-width: 150px;
+        -webkit-mask-image: none;
+        mask-image: none;
       }
 
       .hero-photo::before {
-        width: 120px;
-        height: 120px;
+        display: none;
       }
 
       .scroll-indicator {
