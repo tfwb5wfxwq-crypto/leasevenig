@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CV - Lea Sevenig | Communication & Marketing</title>
-  <meta name="description" content="CV de Lea Sevenig - Responsable communication, Graphiste & Web Designer. 4 ans d'expérience, MBA Communication, 4 langues courantes.">
+  <meta name="description" content="Lea Sevenig's CV - Communication Manager, Graphic Designer & Web Designer. 4 years of experience, MBA Communication, 4 fluent languages.">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://leasevenig.cv/cv">
+  <meta property="og:url" content="https://leasevenig.cv/en/cv">
   <meta property="og:title" content="CV - Lea Sevenig">
-  <meta property="og:description" content="Responsable communication, Graphiste & Web Designer. MBA Communication, 4 langues courantes.">
+  <meta property="og:description" content="Communication Manager, Graphic Designer & Web Designer. MBA Communication, 4 fluent languages.">
   <meta property="og:image" content="https://leasevenig.cv/og-image.png">
-  <meta property="og:locale" content="fr_FR">
+  <meta property="og:locale" content="en_US">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="CV - Lea Sevenig">
-  <meta name="twitter:description" content="Responsable communication, Graphiste & Web Designer.">
+  <meta name="twitter:description" content="Communication Manager, Graphic Designer & Web Designer.">
   <meta name="twitter:image" content="https://leasevenig.cv/og-image.png">
 
-  <link rel="canonical" href="https://leasevenig.cv/cv">
+  <link rel="canonical" href="https://leasevenig.cv/en/cv">
   <link rel="alternate" hreflang="fr" href="https://leasevenig.cv/cv">
   <link rel="alternate" hreflang="en" href="https://leasevenig.cv/en/cv">
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -80,7 +80,7 @@
         height: 297mm;
         transform: none !important;
       }
-      .print-btn {
+      .print-btn, .lang-selector {
         display: none !important;
       }
     }
@@ -133,6 +133,41 @@
         transform: scale(0.8);
         transform-origin: top center;
       }
+    }
+
+    /* ========== LANGUAGE SELECTOR ========== */
+    .lang-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .lang-selector a {
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--gray);
+      transition: all 0.3s ease;
+    }
+
+    .lang-selector a:hover {
+      color: var(--black);
+    }
+
+    .lang-selector a.active {
+      background: var(--coral);
+      color: var(--white);
     }
 
     /* ========== SIDEBAR ========== */
@@ -576,72 +611,14 @@
     .print-btn span {
       font-size: 18px;
     }
-
-    /* ========== LANGUAGE SELECTOR ========== */
-    .lang-selector {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      display: flex;
-      gap: 0;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 20px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    .lang-selector a {
-      padding: 8px 14px;
-      font-size: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      color: var(--gray);
-      transition: all 0.3s ease;
-    }
-
-    .lang-selector a:hover {
-      color: var(--black);
-    }
-
-    .lang-selector a.active {
-      background: var(--coral);
-      color: var(--white);
-    }
-
-    @media print {
-      .lang-selector {
-        display: none !important;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Auto-detect language and redirect -->
-  <script>
-    (function() {
-      // Don't redirect if user explicitly chose French
-      if (sessionStorage.getItem('lang_preference')) return;
-
-      // Check browser language
-      const lang = navigator.language || navigator.userLanguage;
-      const isEnglish = lang.startsWith('en');
-
-      // Redirect English speakers to /en/cv
-      if (isEnglish) {
-        window.location.replace('/en/cv');
-      }
-    })();
-  </script>
-
   <!-- Language Selector -->
   <div class="lang-selector">
-    <a href="/cv" class="active" onclick="sessionStorage.setItem('lang_preference', 'fr')">FR</a>
-    <a href="/en/cv" onclick="sessionStorage.setItem('lang_preference', 'en')">EN</a>
+    <a href="/cv" onclick="sessionStorage.setItem('lang_preference', 'fr')">FR</a>
+    <a href="/en/cv" class="active" onclick="sessionStorage.setItem('lang_preference', 'en')">EN</a>
   </div>
 
   <div class="cv">
@@ -650,7 +627,7 @@
 
       <div class="photo-container">
         <div class="photo-ring">
-          <img src="../lea-portrait.jpg" alt="Lea Sevenig" class="photo">
+          <img src="../../lea-portrait.jpg" alt="Lea Sevenig" class="photo">
         </div>
       </div>
 
@@ -676,63 +653,63 @@
       </div>
 
       <div class="sidebar-section">
-        <h3 class="section-label">Langues</h3>
+        <h3 class="section-label">Languages</h3>
         <div class="lang-item">
           <div class="lang-header">
-            <span class="lang-name">Français</span>
-            <span class="lang-level">Courant</span>
+            <span class="lang-name">French</span>
+            <span class="lang-level">Fluent</span>
           </div>
           <div class="lang-bar"><div class="lang-fill" style="width: 100%"></div></div>
         </div>
         <div class="lang-item">
           <div class="lang-header">
-            <span class="lang-name">Anglais</span>
-            <span class="lang-level">Courant</span>
+            <span class="lang-name">English</span>
+            <span class="lang-level">Fluent</span>
           </div>
           <div class="lang-bar"><div class="lang-fill" style="width: 100%"></div></div>
         </div>
         <div class="lang-item">
           <div class="lang-header">
-            <span class="lang-name">Allemand</span>
-            <span class="lang-level">Courant</span>
+            <span class="lang-name">German</span>
+            <span class="lang-level">Fluent</span>
           </div>
           <div class="lang-bar"><div class="lang-fill" style="width: 100%"></div></div>
         </div>
         <div class="lang-item">
           <div class="lang-header">
-            <span class="lang-name">Luxembourgeois</span>
-            <span class="lang-level">Natif</span>
+            <span class="lang-name">Luxembourgish</span>
+            <span class="lang-level">Native</span>
           </div>
           <div class="lang-bar"><div class="lang-fill" style="width: 100%"></div></div>
         </div>
       </div>
 
       <div class="sidebar-section">
-        <h3 class="section-label">Compétences</h3>
+        <h3 class="section-label">Skills</h3>
         <div class="skills-grid">
-          <span class="skill">Identité visuelle</span>
+          <span class="skill">Visual Identity</span>
           <span class="skill">Community Management</span>
           <span class="skill">Web Design</span>
-          <span class="skill">Stratégie Marketing</span>
-          <span class="skill">Production audiovisuelle</span>
-          <span class="skill">Création de contenus</span>
+          <span class="skill">Marketing Strategy</span>
+          <span class="skill">Audiovisual Production</span>
+          <span class="skill">Content Creation</span>
         </div>
       </div>
 
       <div class="sidebar-section">
-        <h3 class="section-label">Centres d'intérêt</h3>
+        <h3 class="section-label">Interests</h3>
         <div class="interests-row">
           <div class="interest">
             <div class="interest-icon">🎭</div>
-            <div class="interest-label">Théâtre</div>
+            <div class="interest-label">Theatre</div>
           </div>
           <div class="interest">
             <div class="interest-icon">🎬</div>
-            <div class="interest-label">Cinéma</div>
+            <div class="interest-label">Cinema</div>
           </div>
           <div class="interest">
             <div class="interest-icon">🥊</div>
-            <div class="interest-label">Boxe</div>
+            <div class="interest-label">Boxing</div>
           </div>
         </div>
       </div>
@@ -744,14 +721,14 @@
 
       <header class="header">
         <h2 class="header-name">Lea <span class="accent">Sevenig</span></h2>
-        <p class="header-role">Responsable Communication · Graphiste · Web Designer</p>
-        <p class="profile">Profil terrain issu de la restauration et de l'hôtellerie de luxe, avec une forte sensibilité à l'image et à l'expérience client. Habituée à concevoir et déployer des stratégies de communication adaptées aux lieux, aux équipes et aux publics.</p>
+        <p class="header-role">Communication Manager · Graphic Designer · Web Designer</p>
+        <p class="profile">Field-oriented profile from the restaurant and luxury hospitality industry, with a strong sensitivity to image and customer experience. Experienced in designing and deploying communication strategies adapted to venues, teams and audiences.</p>
       </header>
 
       <div class="content">
 
         <section class="main-section">
-          <h3 class="main-section-title">Expériences</h3>
+          <h3 class="main-section-title">Experience</h3>
           <div class="exp-list">
 
             <div class="exp">
@@ -762,10 +739,10 @@
               <div class="exp-content">
                 <div class="exp-header">
                   <span class="exp-company">Brasseur Design</span>
-                  <span class="exp-date">Depuis 2025</span>
+                  <span class="exp-date">Since 2025</span>
                 </div>
-                <p class="exp-role">Graphiste & Responsable de projet · Auto-entreprise</p>
-                <p class="exp-desc">Accompagnement de restaurants dans leur identité visuelle. Suivi de projets audiovisuels et coordination entre clients et prestataires.</p>
+                <p class="exp-role">Graphic Designer & Project Manager · Freelance</p>
+                <p class="exp-desc">Supporting restaurants in creating their visual identity. Managing audiovisual projects and coordinating between clients and service providers.</p>
               </div>
             </div>
 
@@ -779,8 +756,8 @@
                   <span class="exp-company">Groupe Nasther</span>
                   <span class="exp-date">2024 - 2025</span>
                 </div>
-                <p class="exp-role">Responsable communication – Graphiste & Web designer · CDI</p>
-                <p class="exp-desc">Pilotage de la communication de plusieurs lieux de restauration. Création de supports print/digitaux, community management, coordination équipes.</p>
+                <p class="exp-role">Communication Manager – Graphic & Web Designer · Full-time</p>
+                <p class="exp-desc">Managing communication for multiple restaurant venues. Creating print/digital materials, community management, team coordination.</p>
               </div>
             </div>
 
@@ -793,8 +770,8 @@
                   <span class="exp-company">Restaurant Focacc'</span>
                   <span class="exp-date">2022</span>
                 </div>
-                <p class="exp-role">Directrice générale · Restaurant éphémère</p>
-                <p class="exp-desc">Co-création et ouverture d'un restaurant. Définition du concept, gestion de la communication et management d'équipe.</p>
+                <p class="exp-role">General Manager · Pop-up restaurant</p>
+                <p class="exp-desc">Co-creation and opening of a restaurant. Defining the concept, managing communication and team leadership.</p>
               </div>
             </div>
 
@@ -802,47 +779,47 @@
         </section>
 
         <section class="main-section">
-          <h3 class="main-section-title">Projets clés</h3>
+          <h3 class="main-section-title">Key Projects</h3>
           <div class="projects-grid">
             <div class="project">
-              <p class="project-type">Ouverture</p>
+              <p class="project-type">Opening</p>
               <p class="project-name">Maison Saint Martin</p>
-              <p class="project-desc">Storytelling, campagne stickers, stratégie Instagram</p>
+              <p class="project-desc">Storytelling, sticker campaign, Instagram strategy</p>
             </div>
             <div class="project">
               <p class="project-type">Masterclass</p>
               <p class="project-name">Court ou Crève</p>
-              <p class="project-desc">Vidéo virale, compte Instagram, création site web</p>
+              <p class="project-desc">Viral video, Instagram account, website creation</p>
             </div>
             <div class="project">
               <p class="project-type">Rebranding</p>
               <p class="project-name">Break</p>
-              <p class="project-desc">Partenariat Lacoste, shooting, activation influenceurs</p>
+              <p class="project-desc">Lacoste partnership, photoshoot, influencer activation</p>
             </div>
           </div>
         </section>
 
         <section class="main-section">
-          <h3 class="main-section-title">Formation</h3>
+          <h3 class="main-section-title">Education</h3>
           <div class="edu-list">
             <div class="edu">
               <span class="edu-year">2023-24</span>
               <div class="edu-content">
-                <p class="edu-degree">MBA Communication et production audiovisuelle</p>
+                <p class="edu-degree">MBA Communication & Audiovisual Production</p>
                 <p class="edu-school">EFAP · Paris</p>
               </div>
             </div>
             <div class="edu">
               <span class="edu-year">2019-23</span>
               <div class="edu-content">
-                <p class="edu-degree">Bachelor (Hons.) Management international de la restauration</p>
-                <p class="edu-school">Institut Paul Bocuse · Lyon · Spécialisation entrepreneuriat</p>
+                <p class="edu-degree">Bachelor (Hons.) International Restaurant Management</p>
+                <p class="edu-school">Institut Paul Bocuse · Lyon · Entrepreneurship specialization</p>
               </div>
             </div>
             <div class="edu">
               <span class="edu-year">2019</span>
               <div class="edu-content">
-                <p class="edu-degree">Baccalauréat économique et social</p>
+                <p class="edu-degree">Economics & Social Sciences Baccalaureate</p>
                 <p class="edu-school">Lycée Vauban · Luxembourg</p>
               </div>
             </div>
@@ -854,7 +831,7 @@
   </div>
 
   <button class="print-btn" onclick="window.print()">
-    <span>📄</span> Imprimer / PDF
+    <span>📄</span> Print / PDF
   </button>
 
   <script>
@@ -868,7 +845,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             event: eventType,
-            page: '/cv',
+            page: '/en/cv',
             userAgent: navigator.userAgent,
             referrer: document.referrer
           })
@@ -879,8 +856,8 @@
     }
 
     // Track CV view (only once per session)
-    if (!sessionStorage.getItem('lea_cv_viewed')) {
-      sessionStorage.setItem('lea_cv_viewed', '1');
+    if (!sessionStorage.getItem('lea_cv_viewed_en')) {
+      sessionStorage.setItem('lea_cv_viewed_en', '1');
       trackEvent('cv_view');
     }
 
