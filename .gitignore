@@ -1,0 +1,4 @@
+.DS_Store
+secrets.md
+*.log
+node_modules/
