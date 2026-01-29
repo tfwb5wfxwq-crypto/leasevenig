@@ -1095,10 +1095,22 @@
       font-size: 64px;
       margin-bottom: 20px;
       transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: wave-flag 3s ease-in-out infinite;
+    }
+
+    .language-item:nth-child(1) .language-flag { animation-delay: 0s; }
+    .language-item:nth-child(2) .language-flag { animation-delay: 0.5s; }
+    .language-item:nth-child(3) .language-flag { animation-delay: 1s; }
+    .language-item:nth-child(4) .language-flag { animation-delay: 1.5s; }
+
+    @keyframes wave-flag {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
     }
 
     .language-item:hover .language-flag {
-      transform: scale(1.2) rotate(10deg);
+      transform: scale(1.3) rotate(10deg);
+      animation: none;
     }
 
     .language-name {
@@ -1172,8 +1184,44 @@
       z-index: 1;
     }
 
+    /* Theatre mask animation */
+    .interest-card:nth-child(1) .interest-icon {
+      animation: drama 4s ease-in-out infinite;
+    }
+
+    @keyframes drama {
+      0%, 100% { transform: rotate(-5deg) scale(1); }
+      25% { transform: rotate(5deg) scale(1.05); }
+      50% { transform: rotate(-3deg) scale(1); }
+      75% { transform: rotate(3deg) scale(1.05); }
+    }
+
+    /* Cinema clap animation */
+    .interest-card:nth-child(2) .interest-icon {
+      animation: clap 2s ease-in-out infinite;
+    }
+
+    @keyframes clap {
+      0%, 100% { transform: rotate(0deg); }
+      10% { transform: rotate(-15deg); }
+      20% { transform: rotate(0deg); }
+    }
+
+    /* Boxing glove animation */
+    .interest-card:nth-child(3) .interest-icon {
+      animation: punch 1.5s ease-in-out infinite;
+    }
+
+    @keyframes punch {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      25% { transform: translateX(-10px) rotate(-10deg); }
+      50% { transform: translateX(15px) rotate(5deg); }
+      75% { transform: translateX(-5px) rotate(-5deg); }
+    }
+
     .interest-card:hover .interest-icon {
-      transform: scale(1.2) rotate(-10deg);
+      transform: scale(1.3) rotate(-10deg);
+      animation: none;
     }
 
     .interest-title {
