@@ -1998,19 +1998,32 @@
   <div class="page-transition" id="pageTransition"></div>
 
   <script>
-    // Restore scroll position if coming from language switch
-    const savedScroll = sessionStorage.getItem('lang_scroll');
-    if (savedScroll) {
-      sessionStorage.removeItem('lang_scroll');
-      window.scrollTo(0, parseInt(savedScroll));
+    // Disable browser's automatic scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
     }
 
-    // Fade in on page load
+    // Fade in on page load and restore scroll
     document.addEventListener('DOMContentLoaded', () => {
       const transition = document.getElementById('pageTransition');
-      requestAnimationFrame(() => {
-        transition.classList.add('fade-in');
-      });
+
+      // Restore scroll position if coming from language switch
+      const savedScroll = sessionStorage.getItem('lang_scroll');
+      if (savedScroll) {
+        sessionStorage.removeItem('lang_scroll');
+        // Wait for content to render then scroll
+        requestAnimationFrame(() => {
+          window.scrollTo(0, parseInt(savedScroll));
+          // Fade in after scroll is set
+          requestAnimationFrame(() => {
+            transition.classList.add('fade-in');
+          });
+        });
+      } else {
+        requestAnimationFrame(() => {
+          transition.classList.add('fade-in');
+        });
+      }
     });
 
     // Smooth transition function
