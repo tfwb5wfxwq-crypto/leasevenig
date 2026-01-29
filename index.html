@@ -1529,43 +1529,25 @@
       font-size: 20px;
     }
 
-    /* CV Notification Toast - Liquid Glass */
+    /* CV Notification Toast */
     .cv-toast {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.15) 0%,
-        rgba(255, 255, 255, 0.05) 100%);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: var(--black);
       color: var(--white);
       padding: 18px 24px;
-      border-radius: 24px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       gap: 16px;
-      box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
       z-index: 1000;
       opacity: 0;
       transform: translateY(100px) scale(0.8);
       pointer-events: none;
       transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .cv-toast::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 24px;
-      background: linear-gradient(135deg,
-        rgba(217, 79, 61, 0.1) 0%,
-        rgba(196, 184, 232, 0.1) 100%);
-      z-index: -1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .cv-toast.show {
@@ -1577,20 +1559,19 @@
     .cv-toast-icon {
       width: 48px;
       height: 48px;
-      background: linear-gradient(135deg, var(--coral) 0%, var(--lavender) 100%);
-      border-radius: 14px;
+      background: linear-gradient(135deg, var(--coral) 0%, var(--coral-light) 100%);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
       flex-shrink: 0;
       animation: toast-float 3s ease-in-out infinite;
-      box-shadow: 0 4px 15px rgba(217, 79, 61, 0.4);
     }
 
     @keyframes toast-float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-4px) rotate(2deg); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
     }
 
     .cv-toast-content {
@@ -1602,19 +1583,16 @@
       font-size: 14px;
       font-weight: 700;
       margin-bottom: 3px;
-      background: linear-gradient(90deg, var(--white), var(--lavender-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--white);
     }
 
     .cv-toast-text {
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--gray);
     }
 
     .cv-toast-btn {
-      background: linear-gradient(135deg, var(--coral) 0%, var(--coral-light) 100%);
+      background: var(--coral);
       color: white;
       border: none;
       padding: 10px 20px;
@@ -1624,26 +1602,24 @@
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
-      box-shadow: 0 4px 15px rgba(217, 79, 61, 0.3);
     }
 
     .cv-toast-btn:hover {
-      transform: scale(1.05) translateY(-2px);
-      box-shadow: 0 8px 25px rgba(217, 79, 61, 0.4);
+      background: var(--coral-light);
+      transform: scale(1.05);
     }
 
     .cv-toast-close {
       position: absolute;
-      top: -10px;
-      right: -10px;
-      width: 26px;
-      height: 26px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: -8px;
+      right: -8px;
+      width: 24px;
+      height: 24px;
+      background: #444;
+      border: none;
       border-radius: 50%;
       color: white;
-      font-size: 14px;
+      font-size: 12px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -1653,8 +1629,7 @@
 
     .cv-toast-close:hover {
       background: var(--coral);
-      border-color: var(--coral);
-      transform: scale(1.1) rotate(90deg);
+      transform: scale(1.1);
     }
 
     @media (max-width: 768px) {
@@ -1662,7 +1637,6 @@
         left: 15px;
         right: 15px;
         bottom: 15px;
-        border-radius: 20px;
       }
     }
 
@@ -2520,10 +2494,10 @@
       }
     });
 
-    // Also show after 3 seconds as fallback
+    // Show after 10 seconds
     setTimeout(() => {
       showToast();
-    }, 3000);
+    }, 10000);
   </script>
 
 </body>
