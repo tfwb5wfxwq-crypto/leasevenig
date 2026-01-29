@@ -38,58 +38,189 @@
       overflow-x: hidden;
     }
 
-    /* Scroll animations */
+    /* ========== ANIMATIONS ========== */
+
+    /* Fade up */
     .reveal {
       opacity: 0;
-      transform: translateY(60px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(80px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
 
+    /* Fade down */
+    .reveal-down {
+      opacity: 0;
+      transform: translateY(-80px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-down.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Slide from left */
     .reveal-left {
       opacity: 0;
-      transform: translateX(-80px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateX(-120px) rotate(-5deg);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     .reveal-left.active {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateX(0) rotate(0);
     }
 
+    /* Slide from right */
     .reveal-right {
       opacity: 0;
-      transform: translateX(80px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateX(120px) rotate(5deg);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     .reveal-right.active {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateX(0) rotate(0);
     }
 
+    /* Scale up with rotation */
     .reveal-scale {
       opacity: 0;
-      transform: scale(0.8);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: scale(0.5) rotate(-10deg);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     .reveal-scale.active {
       opacity: 1;
+      transform: scale(1) rotate(0);
+    }
+
+    /* Blur reveal */
+    .reveal-blur {
+      opacity: 0;
+      filter: blur(20px);
+      transform: scale(1.1);
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-blur.active {
+      opacity: 1;
+      filter: blur(0);
       transform: scale(1);
     }
 
+    /* Flip reveal */
+    .reveal-flip {
+      opacity: 0;
+      transform: perspective(1000px) rotateX(90deg);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-flip.active {
+      opacity: 1;
+      transform: perspective(1000px) rotateX(0);
+    }
+
+    /* Zoom rotate */
+    .reveal-zoom {
+      opacity: 0;
+      transform: scale(0) rotate(180deg);
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-zoom.active {
+      opacity: 1;
+      transform: scale(1) rotate(0);
+    }
+
+    /* Elastic bounce */
+    .reveal-bounce {
+      opacity: 0;
+      transform: translateY(100px) scale(0.8);
+      transition: all 1.2s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    }
+    .reveal-bounce.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Stagger delays */
     .stagger { transition-delay: 0.1s; }
     .stagger-2 { transition-delay: 0.2s; }
     .stagger-3 { transition-delay: 0.3s; }
     .stagger-4 { transition-delay: 0.4s; }
     .stagger-5 { transition-delay: 0.5s; }
+    .stagger-6 { transition-delay: 0.6s; }
+    .stagger-7 { transition-delay: 0.7s; }
+    .stagger-8 { transition-delay: 0.8s; }
 
-    /* Hero Section */
+    /* Text character animation */
+    .split-text {
+      display: inline-block;
+      overflow: hidden;
+    }
+    .split-text .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(100%) rotate(10deg);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .split-text.active .char {
+      opacity: 1;
+      transform: translateY(0) rotate(0);
+    }
+
+    /* Word by word */
+    .word-reveal .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(40px) rotateX(90deg);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .word-reveal.active .word {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+
+    /* Continuous animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes bounce-soft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(217, 79, 61, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(217, 79, 61, 0.6); }
+    }
+
+    /* ========== HERO SECTION ========== */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -102,90 +233,168 @@
       overflow: hidden;
     }
 
-    .hero::before {
-      content: '';
+    /* Animated background shapes */
+    .hero-bg {
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 50%, rgba(217, 79, 61, 0.08) 0%, transparent 50%),
-                  radial-gradient(circle at 70% 80%, rgba(196, 184, 232, 0.06) 0%, transparent 40%);
-      animation: float 20s ease-in-out infinite;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(30px, -30px) rotate(5deg); }
-      66% { transform: translate(-20px, 20px) rotate(-5deg); }
+    .hero-bg .shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+    }
+
+    .hero-bg .shape-1 {
+      width: 600px;
+      height: 600px;
+      background: var(--coral);
+      top: -200px;
+      left: -200px;
+      animation: float 15s ease-in-out infinite;
+    }
+
+    .hero-bg .shape-2 {
+      width: 500px;
+      height: 500px;
+      background: var(--lavender);
+      bottom: -150px;
+      right: -150px;
+      animation: float 20s ease-in-out infinite reverse;
+    }
+
+    .hero-bg .shape-3 {
+      width: 300px;
+      height: 300px;
+      background: var(--coral-light);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    /* Floating particles */
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--white);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 10s ease-in-out infinite;
     }
 
     .hero-content {
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
     .hero-badge {
       display: inline-block;
-      padding: 8px 20px;
+      padding: 12px 28px;
       background: rgba(217, 79, 61, 0.15);
       border: 1px solid var(--coral);
       border-radius: 50px;
       font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 2px;
+      font-weight: 600;
+      letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--coral);
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      animation: glow 3s ease-in-out infinite;
     }
 
     .hero h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(48px, 12vw, 140px);
+      font-size: clamp(60px, 15vw, 180px);
       font-weight: 700;
-      line-height: 0.95;
-      margin-bottom: 20px;
-      letter-spacing: -3px;
+      line-height: 0.9;
+      margin-bottom: 30px;
+      letter-spacing: -5px;
     }
 
-    .hero h1 span {
+    .hero h1 .line {
       display: block;
-      background: linear-gradient(135deg, var(--white) 0%, var(--lavender) 50%, var(--coral) 100%);
+      overflow: hidden;
+    }
+
+    .hero h1 .text-wrapper {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--white) 0%, var(--lavender) 40%, var(--coral) 80%, var(--white) 100%);
+      background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: gradient-shift 8s ease infinite;
     }
 
     .hero-subtitle {
-      font-size: clamp(18px, 3vw, 28px);
+      font-size: clamp(20px, 3vw, 32px);
       font-weight: 300;
       color: var(--gray);
-      margin-bottom: 40px;
-      max-width: 600px;
+      margin-bottom: 50px;
+      max-width: 700px;
+    }
+
+    .hero-subtitle .highlight {
+      color: var(--white);
+      font-weight: 500;
+      position: relative;
+    }
+
+    .hero-subtitle .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--coral);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-subtitle.active .highlight::after {
+      transform: scaleX(1);
+      transform-origin: left;
     }
 
     .hero-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
       justify-content: center;
-      margin-bottom: 60px;
+      margin-bottom: 80px;
     }
 
     .hero-tag {
-      padding: 10px 24px;
-      background: rgba(255, 255, 255, 0.05);
+      padding: 14px 28px;
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 50px;
       font-size: 14px;
-      font-weight: 400;
-      transition: all 0.3s ease;
+      font-weight: 500;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
     }
 
     .hero-tag:hover {
-      background: rgba(217, 79, 61, 0.1);
+      background: var(--coral);
       border-color: var(--coral);
-      color: var(--coral);
+      color: var(--white);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(217, 79, 61, 0.3);
     }
 
     .scroll-indicator {
@@ -196,119 +405,173 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       color: var(--gray);
-      font-size: 12px;
-      letter-spacing: 2px;
+      font-size: 11px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      animation: bounce 2s infinite;
     }
 
-    .scroll-indicator::after {
+    .scroll-indicator .mouse {
+      width: 26px;
+      height: 42px;
+      border: 2px solid var(--gray);
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .scroll-indicator .mouse::before {
       content: '';
-      width: 1px;
-      height: 60px;
-      background: linear-gradient(to bottom, var(--coral), transparent);
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 8px;
+      background: var(--coral);
+      border-radius: 2px;
+      animation: bounce-soft 1.5s ease-in-out infinite;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(10px); }
-    }
-
-    /* Sections */
+    /* ========== SECTIONS ========== */
     section {
-      padding: 120px 20px;
+      padding: 150px 20px;
       max-width: 1400px;
       margin: 0 auto;
+      position: relative;
     }
 
     .section-header {
-      margin-bottom: 80px;
+      margin-bottom: 100px;
     }
 
     .section-label {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--coral);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      display: inline-block;
+      position: relative;
+    }
+
+    .section-label::before {
+      content: '';
+      position: absolute;
+      left: -40px;
+      top: 50%;
+      width: 24px;
+      height: 2px;
+      background: var(--coral);
+      transform: translateY(-50%);
     }
 
     .section-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(36px, 6vw, 72px);
+      font-size: clamp(42px, 8vw, 90px);
       font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -2px;
+      line-height: 1;
+      letter-spacing: -3px;
     }
 
-    /* About Section */
+    .section-title .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    /* ========== ABOUT SECTION ========== */
     .about {
-      background: linear-gradient(180deg, var(--black) 0%, #111 100%);
+      background: linear-gradient(180deg, var(--black) 0%, #0f0f0f 100%);
     }
 
     .about-content {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 100px;
       align-items: center;
     }
 
     .about-text p {
-      font-size: 18px;
-      line-height: 1.8;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 24px;
+      font-size: 20px;
+      line-height: 1.9;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 28px;
     }
 
     .about-text p strong {
       color: var(--coral);
       font-weight: 600;
+      position: relative;
     }
 
     .about-stats {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
+      gap: 30px;
     }
 
     .stat {
       text-align: center;
-      padding: 40px;
+      padding: 50px 30px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      transition: all 0.4s ease;
+      border-radius: 24px;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(217, 79, 61, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.6s ease;
     }
 
     .stat:hover {
-      background: rgba(217, 79, 61, 0.05);
-      border-color: rgba(217, 79, 61, 0.2);
-      transform: translateY(-5px);
+      transform: translateY(-10px) scale(1.02);
+      border-color: rgba(217, 79, 61, 0.3);
+    }
+
+    .stat:hover::before {
+      opacity: 1;
     }
 
     .stat-number {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 48px;
+      font-size: 64px;
       font-weight: 700;
       color: var(--coral);
       display: block;
+      position: relative;
+      z-index: 1;
     }
 
     .stat-label {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--gray);
       text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 8px;
+      letter-spacing: 2px;
+      margin-top: 12px;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Experience Section */
+    /* ========== EXPERIENCE SECTION ========== */
     .experience {
       background: var(--white);
       color: var(--black);
+      padding: 150px 20px;
+      max-width: none;
+      margin: 0;
+    }
+
+    .experience .container {
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .experience .section-title {
@@ -317,7 +580,7 @@
 
     .timeline {
       position: relative;
-      padding-left: 40px;
+      padding-left: 60px;
     }
 
     .timeline::before {
@@ -326,60 +589,76 @@
       left: 0;
       top: 0;
       bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--coral), var(--lavender));
+      width: 3px;
+      background: linear-gradient(to bottom, var(--coral), var(--lavender), var(--coral));
+      border-radius: 3px;
     }
 
     .timeline-item {
       position: relative;
-      padding-bottom: 60px;
+      padding-bottom: 80px;
     }
 
     .timeline-item::before {
       content: '';
       position: absolute;
-      left: -44px;
+      left: -66px;
       top: 8px;
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
       background: var(--coral);
       border-radius: 50%;
-      border: 3px solid var(--white);
-      box-shadow: 0 0 0 3px var(--coral);
+      border: 4px solid var(--white);
+      box-shadow: 0 0 0 4px var(--coral);
+      transition: all 0.4s ease;
+    }
+
+    .timeline-item:hover::before {
+      transform: scale(1.3);
+      box-shadow: 0 0 0 6px var(--coral), 0 0 30px rgba(217, 79, 61, 0.5);
     }
 
     .timeline-date {
       font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 2px;
+      font-weight: 700;
+      letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--coral);
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     .timeline-company {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 28px;
+      font-size: 36px;
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+      transition: all 0.4s ease;
+    }
+
+    .timeline-item:hover .timeline-company {
+      color: var(--coral);
     }
 
     .timeline-role {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 500;
-      color: var(--lavender);
-      margin-bottom: 20px;
+      color: #666;
+      margin-bottom: 24px;
+      padding-left: 20px;
+      border-left: 3px solid var(--lavender);
     }
 
     .timeline-desc {
       color: #555;
-      line-height: 1.8;
+      line-height: 2;
+      list-style: none;
     }
 
     .timeline-desc li {
-      margin-bottom: 8px;
-      padding-left: 20px;
+      margin-bottom: 12px;
+      padding-left: 30px;
       position: relative;
+      transition: all 0.3s ease;
     }
 
     .timeline-desc li::before {
@@ -387,141 +666,264 @@
       position: absolute;
       left: 0;
       color: var(--coral);
+      font-weight: 700;
+      transition: all 0.3s ease;
     }
 
-    /* Skills Section */
+    .timeline-desc li:hover {
+      padding-left: 40px;
+    }
+
+    .timeline-desc li:hover::before {
+      left: 5px;
+    }
+
+    /* ========== SKILLS SECTION ========== */
     .skills {
-      background: linear-gradient(135deg, var(--coral) 0%, var(--coral-light) 100%);
+      background: linear-gradient(135deg, var(--coral) 0%, var(--coral-light) 50%, #ff7b6b 100%);
+      max-width: none;
+      margin: 0;
+      padding: 150px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skills::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+      animation: rotate 30s linear infinite;
+    }
+
+    .skills .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .skills .section-label {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .skills .section-label::before {
+      background: rgba(255, 255, 255, 0.8);
     }
 
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 30px;
     }
 
     .skill-card {
       background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 40px;
-      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      padding: 50px 40px;
+      border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.4s ease;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s ease;
     }
 
     .skill-card:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .skill-card:hover::before {
+      left: 100%;
     }
 
     .skill-icon {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       background: var(--white);
-      border-radius: 15px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      margin-bottom: 24px;
+      font-size: 32px;
+      margin-bottom: 28px;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .skill-card:hover .skill-icon {
+      transform: scale(1.1) rotate(10deg);
     }
 
     .skill-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .skill-desc {
       font-size: 15px;
-      line-height: 1.7;
+      line-height: 1.8;
       opacity: 0.9;
     }
 
-    /* Projects Section */
+    /* ========== PROJECTS SECTION ========== */
     .projects {
-      background: #111;
+      background: #0f0f0f;
+      max-width: none;
+      margin: 0;
+      padding: 150px 20px;
+    }
+
+    .projects .container {
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 40px;
     }
 
     .project-card {
       background: var(--black);
-      border-radius: 24px;
+      border-radius: 28px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--coral), var(--lavender), var(--coral));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
 
     .project-card:hover {
-      transform: translateY(-15px);
-      border-color: var(--coral);
-      box-shadow: 0 30px 60px rgba(217, 79, 61, 0.15);
+      transform: translateY(-20px) scale(1.02);
+      box-shadow: 0 40px 80px rgba(217, 79, 61, 0.2);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
     }
 
     .project-image {
-      height: 250px;
-      background: linear-gradient(135deg, var(--lavender) 0%, var(--coral) 100%);
+      height: 280px;
       position: relative;
       overflow: hidden;
     }
 
-    .project-image::before {
+    .project-image::after {
       content: attr(data-category);
       position: absolute;
-      top: 20px;
-      left: 20px;
-      padding: 8px 16px;
+      top: 24px;
+      left: 24px;
+      padding: 10px 20px;
       background: var(--black);
       color: var(--white);
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-weight: 700;
+      letter-spacing: 2px;
       text-transform: uppercase;
       border-radius: 50px;
+      transition: all 0.4s ease;
+    }
+
+    .project-card:hover .project-image::after {
+      background: var(--coral);
     }
 
     .project-content {
-      padding: 40px;
+      padding: 45px;
     }
 
     .project-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 700;
       margin-bottom: 12px;
+      transition: color 0.3s ease;
+    }
+
+    .project-card:hover .project-title {
+      color: var(--coral);
     }
 
     .project-subtitle {
       font-size: 14px;
       color: var(--coral);
-      font-weight: 500;
-      margin-bottom: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
     }
 
     .project-desc {
       color: var(--gray);
       font-size: 15px;
-      line-height: 1.7;
+      line-height: 1.8;
     }
 
-    /* Formation Section */
+    /* ========== FORMATION SECTION ========== */
     .formation {
       background: var(--lavender);
       color: var(--black);
+      max-width: none;
+      margin: 0;
+      padding: 150px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .formation::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0%, rgba(217, 79, 61, 0.1) 100%);
+    }
+
+    .formation .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .formation .section-label {
       color: var(--coral);
+    }
+
+    .formation .section-label::before {
+      background: var(--coral);
     }
 
     .formation .section-title {
@@ -530,15 +932,15 @@
 
     .formation-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 30px;
     }
 
     .formation-card {
       background: var(--white);
-      padding: 40px;
-      border-radius: 20px;
-      transition: all 0.4s ease;
+      padding: 50px 40px;
+      border-radius: 24px;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
     }
@@ -549,87 +951,129 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--coral), var(--lavender));
+      height: 5px;
+      background: linear-gradient(90deg, var(--coral), var(--lavender), var(--coral));
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
     }
 
     .formation-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      transform: translateY(-15px) rotate(1deg);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
     }
 
     .formation-year {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--coral);
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--white);
+      background: var(--coral);
+      padding: 6px 16px;
+      border-radius: 50px;
       letter-spacing: 1px;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
     }
 
     .formation-degree {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 22px;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      line-height: 1.3;
     }
 
     .formation-school {
       font-size: 16px;
       color: #666;
       margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .formation-school::before {
+      content: '📍';
     }
 
     .formation-spec {
       font-size: 14px;
-      color: var(--gray);
+      color: var(--coral);
+      font-weight: 500;
       font-style: italic;
     }
 
-    /* Languages Section */
+    /* ========== LANGUAGES SECTION ========== */
     .languages {
       background: var(--black);
+      padding: 150px 20px;
     }
 
     .languages-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 30px;
     }
 
     .language-item {
       text-align: center;
-      padding: 40px 20px;
+      padding: 60px 30px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      transition: all 0.4s ease;
+      border-radius: 24px;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .language-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(196, 184, 232, 0.1) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
 
     .language-item:hover {
-      background: rgba(196, 184, 232, 0.1);
+      transform: translateY(-15px) scale(1.05);
       border-color: var(--lavender);
+      box-shadow: 0 30px 60px rgba(196, 184, 232, 0.2);
+    }
+
+    .language-item:hover::before {
+      opacity: 1;
     }
 
     .language-flag {
-      font-size: 48px;
-      margin-bottom: 16px;
+      font-size: 64px;
+      margin-bottom: 20px;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .language-item:hover .language-flag {
+      transform: scale(1.2) rotate(10deg);
     }
 
     .language-name {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 700;
       margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
     }
 
     .language-level {
       font-size: 13px;
       color: var(--gray);
+      position: relative;
+      z-index: 1;
     }
 
-    /* Interests Section */
+    /* ========== INTERESTS SECTION ========== */
     .interests {
-      background: linear-gradient(135deg, #111 0%, var(--black) 100%);
+      background: linear-gradient(180deg, #0f0f0f 0%, var(--black) 100%);
+      padding: 150px 20px;
     }
 
     .interests-grid {
@@ -640,42 +1084,84 @@
 
     .interest-card {
       text-align: center;
-      padding: 60px 40px;
+      padding: 80px 50px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 24px;
-      transition: all 0.5s ease;
+      border-radius: 32px;
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interest-card::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(217, 79, 61, 0.1) 0%, transparent 70%);
+      transition: all 0.7s ease;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+
+    .interest-card:hover::before {
+      width: 400px;
+      height: 400px;
     }
 
     .interest-card:hover {
-      background: rgba(217, 79, 61, 0.05);
+      transform: translateY(-20px) scale(1.03);
       border-color: rgba(217, 79, 61, 0.3);
-      transform: scale(1.05);
     }
 
     .interest-icon {
-      font-size: 64px;
-      margin-bottom: 24px;
+      font-size: 80px;
+      margin-bottom: 30px;
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .interest-card:hover .interest-icon {
+      transform: scale(1.2) rotate(-10deg);
     }
 
     .interest-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
     }
 
     .interest-desc {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--gray);
-      line-height: 1.6;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Contact Section */
+    /* ========== CONTACT SECTION ========== */
     .contact {
       background: var(--white);
       color: var(--black);
       text-align: center;
+      padding: 150px 20px;
+      max-width: none;
+      margin: 0;
+    }
+
+    .contact .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .contact .section-label::before {
+      background: var(--coral);
     }
 
     .contact .section-title {
@@ -686,59 +1172,96 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 40px;
-      margin-top: 60px;
+      gap: 30px;
+      margin-top: 80px;
     }
 
     .contact-item {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 24px 40px;
+      gap: 20px;
+      padding: 28px 48px;
       background: var(--gray-light);
       border-radius: 100px;
-      transition: all 0.3s ease;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       text-decoration: none;
       color: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--coral);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
     }
 
     .contact-item:hover {
-      background: var(--coral);
       color: var(--white);
-      transform: translateY(-5px);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(217, 79, 61, 0.3);
+    }
+
+    .contact-item:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
     }
 
     .contact-icon {
-      font-size: 24px;
+      font-size: 28px;
+      position: relative;
+      z-index: 1;
     }
 
     .contact-text {
-      font-size: 16px;
-      font-weight: 500;
+      font-size: 18px;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Footer */
+    /* ========== FOOTER ========== */
     footer {
       background: var(--black);
       color: var(--gray);
       text-align: center;
-      padding: 40px 20px;
+      padding: 60px 20px;
       font-size: 14px;
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--coral), transparent);
     }
 
     footer span {
       color: var(--coral);
+      font-weight: 600;
     }
 
-    /* Responsive */
+    /* ========== RESPONSIVE ========== */
     @media (max-width: 1024px) {
       .about-content {
         grid-template-columns: 1fr;
-        gap: 60px;
+        gap: 80px;
       }
 
-      .projects-grid {
-        grid-template-columns: 1fr;
+      .skills-grid,
+      .projects-grid,
+      .formation-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .languages-grid {
@@ -752,35 +1275,37 @@
 
     @media (max-width: 768px) {
       section {
-        padding: 80px 20px;
+        padding: 100px 20px;
       }
 
       .hero h1 {
-        letter-spacing: -1px;
+        letter-spacing: -2px;
+      }
+
+      .section-label::before {
+        display: none;
       }
 
       .about-stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .timeline {
-        padding-left: 30px;
-      }
-
-      .timeline::before {
-        left: 0;
-      }
-
-      .timeline-item::before {
-        left: -34px;
-      }
-
+      .skills-grid,
+      .projects-grid,
       .formation-grid {
         grid-template-columns: 1fr;
       }
 
+      .timeline {
+        padding-left: 40px;
+      }
+
+      .timeline-item::before {
+        left: -46px;
+      }
+
       .languages-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .contact-info {
@@ -794,29 +1319,53 @@
 
   <!-- Hero Section -->
   <section class="hero">
+    <div class="hero-bg">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+    <div class="particles">
+      <div class="particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+      <div class="particle" style="top: 40%; left: 80%; animation-delay: 2s;"></div>
+      <div class="particle" style="top: 70%; left: 20%; animation-delay: 4s;"></div>
+      <div class="particle" style="top: 30%; left: 60%; animation-delay: 1s;"></div>
+      <div class="particle" style="top: 80%; left: 70%; animation-delay: 3s;"></div>
+      <div class="particle" style="top: 10%; left: 40%; animation-delay: 5s;"></div>
+    </div>
     <div class="hero-content">
       <div class="hero-badge reveal">Communication & Marketing</div>
-      <h1 class="reveal stagger">
-        <span>Lea Sevenig</span>
+      <h1>
+        <span class="line reveal stagger">
+          <span class="text-wrapper">Lea</span>
+        </span>
+        <span class="line reveal stagger-2">
+          <span class="text-wrapper">Sevenig</span>
+        </span>
       </h1>
-      <p class="hero-subtitle reveal stagger-2">
-        Responsable communication · Graphiste · Web Designer
+      <p class="hero-subtitle reveal stagger-3">
+        <span class="highlight">Responsable communication</span> · <span class="highlight">Graphiste</span> · <span class="highlight">Web Designer</span>
       </p>
-      <div class="hero-tags reveal stagger-3">
-        <span class="hero-tag">Stratégie de marque</span>
-        <span class="hero-tag">Création de contenus</span>
-        <span class="hero-tag">Identité visuelle</span>
-        <span class="hero-tag">Community management</span>
+      <div class="hero-tags">
+        <span class="hero-tag reveal-bounce stagger-4">Stratégie de marque</span>
+        <span class="hero-tag reveal-bounce stagger-5">Création de contenus</span>
+        <span class="hero-tag reveal-bounce stagger-6">Identité visuelle</span>
+        <span class="hero-tag reveal-bounce stagger-7">Community management</span>
       </div>
     </div>
-    <div class="scroll-indicator">Scroll</div>
+    <div class="scroll-indicator">
+      <div class="mouse"></div>
+      <span>Scroll</span>
+    </div>
   </section>
 
   <!-- About Section -->
   <section class="about">
     <div class="section-header">
-      <p class="section-label reveal">À propos</p>
-      <h2 class="section-title reveal stagger">De la stratégie<br>à l'exécution</h2>
+      <p class="section-label reveal-left">À propos</p>
+      <h2 class="section-title">
+        <span class="line reveal-blur">De la stratégie</span>
+        <span class="line reveal-blur stagger">à l'exécution</span>
+      </h2>
     </div>
     <div class="about-content">
       <div class="about-text">
@@ -831,19 +1380,19 @@
         </p>
       </div>
       <div class="about-stats">
-        <div class="stat reveal-scale">
-          <span class="stat-number">4+</span>
+        <div class="stat reveal-zoom">
+          <span class="stat-number" data-count="4">0</span>
           <span class="stat-label">Années d'expérience</span>
         </div>
-        <div class="stat reveal-scale stagger">
-          <span class="stat-number">4</span>
+        <div class="stat reveal-zoom stagger">
+          <span class="stat-number" data-count="4">0</span>
           <span class="stat-label">Langues courantes</span>
         </div>
-        <div class="stat reveal-scale stagger-2">
+        <div class="stat reveal-zoom stagger-2">
           <span class="stat-number">MBA</span>
           <span class="stat-label">Communication</span>
         </div>
-        <div class="stat reveal-scale stagger-3">
+        <div class="stat reveal-zoom stagger-3">
           <span class="stat-number">∞</span>
           <span class="stat-label">Créativité</span>
         </div>
@@ -853,125 +1402,140 @@
 
   <!-- Experience Section -->
   <section class="experience">
-    <div class="section-header">
-      <p class="section-label reveal">Parcours</p>
-      <h2 class="section-title reveal stagger">Expériences<br>professionnelles</h2>
-    </div>
-    <div class="timeline">
-      <!-- Brasseur Design -->
-      <div class="timeline-item reveal-left">
-        <span class="timeline-date">Depuis juin 2025 · Auto-entreprise</span>
-        <h3 class="timeline-company">Brasseur Design</h3>
-        <p class="timeline-role">Graphiste & Responsable de projet</p>
-        <ul class="timeline-desc">
-          <li>Accompagnement de restaurants et projets dans la création de leur identité visuelle</li>
-          <li>Conception de supports de communication adaptés aux usages terrain et aux clientèles</li>
-          <li>Suivi de projets audiovisuels et de tournages (YouTubeur Ludovik : La Poste, Winamax…)</li>
-          <li>Coordination entre clients, équipes créatives et prestataires</li>
-          <li>Supervision de projets de la conception à la livraison finale</li>
-        </ul>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal-right">Parcours</p>
+        <h2 class="section-title">
+          <span class="line reveal-flip">Expériences</span>
+          <span class="line reveal-flip stagger">professionnelles</span>
+        </h2>
       </div>
+      <div class="timeline">
+        <!-- Brasseur Design -->
+        <div class="timeline-item reveal-left">
+          <span class="timeline-date">Depuis juin 2025 · Auto-entreprise</span>
+          <h3 class="timeline-company">Brasseur Design</h3>
+          <p class="timeline-role">Graphiste & Responsable de projet</p>
+          <ul class="timeline-desc">
+            <li>Accompagnement de restaurants et projets dans la création de leur identité visuelle</li>
+            <li>Conception de supports de communication adaptés aux usages terrain et aux clientèles</li>
+            <li>Suivi de projets audiovisuels et de tournages (YouTubeur Ludovik : La Poste, Winamax…)</li>
+            <li>Coordination entre clients, équipes créatives et prestataires</li>
+            <li>Supervision de projets de la conception à la livraison finale</li>
+          </ul>
+        </div>
 
-      <!-- Groupe Nasther -->
-      <div class="timeline-item reveal-left stagger">
-        <span class="timeline-date">Avril 2024 - Décembre 2025 · CDI</span>
-        <h3 class="timeline-company">Groupe Nasther</h3>
-        <p class="timeline-role">Responsable communication – Graphiste & Web designer</p>
-        <ul class="timeline-desc">
-          <li>Pilotage de la communication globale de plusieurs lieux de restauration et de vie</li>
-          <li>Création et mise à jour des supports print et digitaux (affiches, menus, visuels, contenus réseaux sociaux)</li>
-          <li>Community management : création de contenus, animation des réseaux sociaux, mise en avant des temps forts</li>
-          <li>Coordination avec les équipes opérationnelles et les prestataires externes</li>
-          <li>Approche orientée terrain et expérience client, nourrie par une solide connaissance des réalités opérationnelles</li>
-        </ul>
-      </div>
+        <!-- Groupe Nasther -->
+        <div class="timeline-item reveal-left stagger-2">
+          <span class="timeline-date">Avril 2024 - Décembre 2025 · CDI</span>
+          <h3 class="timeline-company">Groupe Nasther</h3>
+          <p class="timeline-role">Responsable communication – Graphiste & Web designer</p>
+          <ul class="timeline-desc">
+            <li>Pilotage de la communication globale de plusieurs lieux de restauration et de vie</li>
+            <li>Création et mise à jour des supports print et digitaux (affiches, menus, visuels, contenus réseaux sociaux)</li>
+            <li>Community management : création de contenus, animation des réseaux sociaux, mise en avant des temps forts</li>
+            <li>Coordination avec les équipes opérationnelles et les prestataires externes</li>
+            <li>Approche orientée terrain et expérience client, nourrie par une solide connaissance des réalités opérationnelles</li>
+          </ul>
+        </div>
 
-      <!-- Restaurant Focacc' -->
-      <div class="timeline-item reveal-left stagger-2">
-        <span class="timeline-date">2022 · 6 mois · Restaurant éphémère</span>
-        <h3 class="timeline-company">Restaurant Focacc'</h3>
-        <p class="timeline-role">Directrice générale</p>
-        <ul class="timeline-desc">
-          <li>Co-création et ouverture d'un restaurant éphémère</li>
-          <li>Définition du concept, du positionnement et de l'identité visuelle</li>
-          <li>Gestion de la communication et de l'image de marque</li>
-          <li>Management d'une équipe de 3 personnes</li>
-          <li>Participation au recrutement et à l'intégration des équipes</li>
-          <li>Négociation de partenariats et gestion opérationnelle quotidienne</li>
-        </ul>
+        <!-- Restaurant Focacc' -->
+        <div class="timeline-item reveal-left stagger-4">
+          <span class="timeline-date">2022 · 6 mois · Restaurant éphémère</span>
+          <h3 class="timeline-company">Restaurant Focacc'</h3>
+          <p class="timeline-role">Directrice générale</p>
+          <ul class="timeline-desc">
+            <li>Co-création et ouverture d'un restaurant éphémère</li>
+            <li>Définition du concept, du positionnement et de l'identité visuelle</li>
+            <li>Gestion de la communication et de l'image de marque</li>
+            <li>Management d'une équipe de 3 personnes</li>
+            <li>Participation au recrutement et à l'intégration des équipes</li>
+            <li>Négociation de partenariats et gestion opérationnelle quotidienne</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Skills Section -->
   <section class="skills">
-    <div class="section-header">
-      <p class="section-label reveal">Expertise</p>
-      <h2 class="section-title reveal stagger">Compétences<br>Marketing</h2>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-card reveal-scale">
-        <div class="skill-icon">🎨</div>
-        <h3 class="skill-title">Identité visuelle</h3>
-        <p class="skill-desc">Création de chartes graphiques, logos, univers de marque cohérents et impactants</p>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal-down">Expertise</p>
+        <h2 class="section-title">
+          <span class="line reveal-blur">Compétences</span>
+          <span class="line reveal-blur stagger">Marketing</span>
+        </h2>
       </div>
-      <div class="skill-card reveal-scale stagger">
-        <div class="skill-icon">📱</div>
-        <h3 class="skill-title">Community Management</h3>
-        <p class="skill-desc">Animation des réseaux sociaux, création de contenus engageants, gestion de communautés</p>
-      </div>
-      <div class="skill-card reveal-scale stagger-2">
-        <div class="skill-icon">🖥️</div>
-        <h3 class="skill-title">Web Design</h3>
-        <p class="skill-desc">Conception d'interfaces utilisateur, création de sites web, expérience digitale</p>
-      </div>
-      <div class="skill-card reveal-scale stagger-3">
-        <div class="skill-icon">📊</div>
-        <h3 class="skill-title">Stratégie Marketing</h3>
-        <p class="skill-desc">Définition de positionnement, plans de communication, analyses de marché</p>
-      </div>
-      <div class="skill-card reveal-scale stagger-4">
-        <div class="skill-icon">🎬</div>
-        <h3 class="skill-title">Production audiovisuelle</h3>
-        <p class="skill-desc">Suivi de tournages, coordination de projets vidéo, post-production</p>
-      </div>
-      <div class="skill-card reveal-scale stagger-5">
-        <div class="skill-icon">✏️</div>
-        <h3 class="skill-title">Création de contenus</h3>
-        <p class="skill-desc">Rédaction, conception graphique, supports print et digitaux adaptés</p>
+      <div class="skills-grid">
+        <div class="skill-card reveal-scale">
+          <div class="skill-icon">🎨</div>
+          <h3 class="skill-title">Identité visuelle</h3>
+          <p class="skill-desc">Création de chartes graphiques, logos, univers de marque cohérents et impactants</p>
+        </div>
+        <div class="skill-card reveal-scale stagger">
+          <div class="skill-icon">📱</div>
+          <h3 class="skill-title">Community Management</h3>
+          <p class="skill-desc">Animation des réseaux sociaux, création de contenus engageants, gestion de communautés</p>
+        </div>
+        <div class="skill-card reveal-scale stagger-2">
+          <div class="skill-icon">🖥️</div>
+          <h3 class="skill-title">Web Design</h3>
+          <p class="skill-desc">Conception d'interfaces utilisateur, création de sites web, expérience digitale</p>
+        </div>
+        <div class="skill-card reveal-scale stagger-3">
+          <div class="skill-icon">📊</div>
+          <h3 class="skill-title">Stratégie Marketing</h3>
+          <p class="skill-desc">Définition de positionnement, plans de communication, analyses de marché</p>
+        </div>
+        <div class="skill-card reveal-scale stagger-4">
+          <div class="skill-icon">🎬</div>
+          <h3 class="skill-title">Production audiovisuelle</h3>
+          <p class="skill-desc">Suivi de tournages, coordination de projets vidéo, post-production</p>
+        </div>
+        <div class="skill-card reveal-scale stagger-5">
+          <div class="skill-icon">✏️</div>
+          <h3 class="skill-title">Création de contenus</h3>
+          <p class="skill-desc">Rédaction, conception graphique, supports print et digitaux adaptés</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Projects Section -->
   <section class="projects">
-    <div class="section-header">
-      <p class="section-label reveal">Portfolio</p>
-      <h2 class="section-title reveal stagger">Projets<br>sélectionnés</h2>
-    </div>
-    <div class="projects-grid">
-      <div class="project-card reveal">
-        <div class="project-image" data-category="Identité visuelle" style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);"></div>
-        <div class="project-content">
-          <h3 class="project-title">Maison Saint Martin</h3>
-          <p class="project-subtitle">Branding & Communication</p>
-          <p class="project-desc">Création de l'identité visuelle complète pour un lieu de vie parisien. Charte graphique, supports de communication, stratégie digitale.</p>
-        </div>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal-left">Portfolio</p>
+        <h2 class="section-title">
+          <span class="line reveal-flip">Projets</span>
+          <span class="line reveal-flip stagger">sélectionnés</span>
+        </h2>
       </div>
-      <div class="project-card reveal stagger">
-        <div class="project-image" data-category="Court métrage" style="background: linear-gradient(135deg, var(--coral) 0%, #ff8a7a 100%);"></div>
-        <div class="project-content">
-          <h3 class="project-title">Court ou Crève</h3>
-          <p class="project-subtitle">1er Prix · Banlieue Climat</p>
-          <p class="project-desc">Écriture du script d'un court métrage primé. Direction artistique et coordination de la production.</p>
+      <div class="projects-grid">
+        <div class="project-card reveal-left">
+          <div class="project-image" data-category="Identité visuelle" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);"></div>
+          <div class="project-content">
+            <h3 class="project-title">Maison Saint Martin</h3>
+            <p class="project-subtitle">Branding & Communication</p>
+            <p class="project-desc">Création de l'identité visuelle complète pour un lieu de vie parisien. Charte graphique, supports de communication, stratégie digitale.</p>
+          </div>
         </div>
-      </div>
-      <div class="project-card reveal stagger-2">
-        <div class="project-image" data-category="Restauration" style="background: linear-gradient(135deg, var(--lavender) 0%, #e8e0ff 100%);"></div>
-        <div class="project-content">
-          <h3 class="project-title">Break</h3>
-          <p class="project-subtitle">Concept & Design</p>
-          <p class="project-desc">Définition du concept et création de l'identité visuelle pour un nouveau concept de restauration.</p>
+        <div class="project-card reveal stagger">
+          <div class="project-image" data-category="Court métrage" style="background: linear-gradient(135deg, var(--coral) 0%, #ff8a7a 50%, var(--coral) 100%);"></div>
+          <div class="project-content">
+            <h3 class="project-title">Court ou Crève</h3>
+            <p class="project-subtitle">1er Prix · Banlieue Climat</p>
+            <p class="project-desc">Écriture du script d'un court métrage primé. Direction artistique et coordination de la production.</p>
+          </div>
+        </div>
+        <div class="project-card reveal-right stagger-2">
+          <div class="project-image" data-category="Restauration" style="background: linear-gradient(135deg, var(--lavender) 0%, #e8e0ff 50%, var(--lavender) 100%);"></div>
+          <div class="project-content">
+            <h3 class="project-title">Break</h3>
+            <p class="project-subtitle">Concept & Design</p>
+            <p class="project-desc">Définition du concept et création de l'identité visuelle pour un nouveau concept de restauration.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -979,27 +1543,31 @@
 
   <!-- Formation Section -->
   <section class="formation">
-    <div class="section-header">
-      <p class="section-label reveal">Parcours académique</p>
-      <h2 class="section-title reveal stagger">Formation</h2>
-    </div>
-    <div class="formation-grid">
-      <div class="formation-card reveal">
-        <span class="formation-year">2023 - 2024</span>
-        <h3 class="formation-degree">MBA Communication et production audiovisuelle</h3>
-        <p class="formation-school">EFAP · Paris</p>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal-right">Parcours académique</p>
+        <h2 class="section-title">
+          <span class="line reveal-blur">Formation</span>
+        </h2>
       </div>
-      <div class="formation-card reveal stagger">
-        <span class="formation-year">2019 - 2023</span>
-        <h3 class="formation-degree">Bachelor (Hons.) Management international de la restauration</h3>
-        <p class="formation-school">Institut Paul Bocuse · Lyon</p>
-        <p class="formation-spec">Spécialisation entrepreneuriat</p>
-      </div>
-      <div class="formation-card reveal stagger-2">
-        <span class="formation-year">2012 - 2019</span>
-        <h3 class="formation-degree">Baccalauréat économique et social</h3>
-        <p class="formation-school">Lycée Vauban · Luxembourg</p>
-        <p class="formation-spec">Spécialité mathématiques</p>
+      <div class="formation-grid">
+        <div class="formation-card reveal-bounce">
+          <span class="formation-year">2023 - 2024</span>
+          <h3 class="formation-degree">MBA Communication et production audiovisuelle</h3>
+          <p class="formation-school">EFAP · Paris</p>
+        </div>
+        <div class="formation-card reveal-bounce stagger">
+          <span class="formation-year">2019 - 2023</span>
+          <h3 class="formation-degree">Bachelor (Hons.) Management international de la restauration</h3>
+          <p class="formation-school">Institut Paul Bocuse · Lyon</p>
+          <p class="formation-spec">Spécialisation entrepreneuriat</p>
+        </div>
+        <div class="formation-card reveal-bounce stagger-2">
+          <span class="formation-year">2012 - 2019</span>
+          <h3 class="formation-degree">Baccalauréat économique et social</h3>
+          <p class="formation-school">Lycée Vauban · Luxembourg</p>
+          <p class="formation-spec">Spécialité mathématiques</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1007,26 +1575,29 @@
   <!-- Languages Section -->
   <section class="languages">
     <div class="section-header">
-      <p class="section-label reveal">International</p>
-      <h2 class="section-title reveal stagger">4 langues<br>courantes</h2>
+      <p class="section-label reveal-left">International</p>
+      <h2 class="section-title">
+        <span class="line reveal-flip">4 langues</span>
+        <span class="line reveal-flip stagger">courantes</span>
+      </h2>
     </div>
     <div class="languages-grid">
-      <div class="language-item reveal-scale">
+      <div class="language-item reveal-zoom">
         <div class="language-flag">🇫🇷</div>
         <h3 class="language-name">Français</h3>
         <p class="language-level">Courant (oral et écrit)</p>
       </div>
-      <div class="language-item reveal-scale stagger">
+      <div class="language-item reveal-zoom stagger">
         <div class="language-flag">🇬🇧</div>
         <h3 class="language-name">Anglais</h3>
         <p class="language-level">Courant (oral et écrit)</p>
       </div>
-      <div class="language-item reveal-scale stagger-2">
+      <div class="language-item reveal-zoom stagger-2">
         <div class="language-flag">🇩🇪</div>
         <h3 class="language-name">Allemand</h3>
         <p class="language-level">Courant (oral et écrit)</p>
       </div>
-      <div class="language-item reveal-scale stagger-3">
+      <div class="language-item reveal-zoom stagger-3">
         <div class="language-flag">🇱🇺</div>
         <h3 class="language-name">Luxembourgeois</h3>
         <p class="language-level">Courant (oral et écrit)</p>
@@ -1037,8 +1608,11 @@
   <!-- Interests Section -->
   <section class="interests">
     <div class="section-header">
-      <p class="section-label reveal">Personnalité</p>
-      <h2 class="section-title reveal stagger">Centres<br>d'intérêt</h2>
+      <p class="section-label reveal-right">Personnalité</p>
+      <h2 class="section-title">
+        <span class="line reveal-blur">Centres</span>
+        <span class="line reveal-blur stagger">d'intérêt</span>
+      </h2>
     </div>
     <div class="interests-grid">
       <div class="interest-card reveal-scale">
@@ -1061,22 +1635,27 @@
 
   <!-- Contact Section -->
   <section class="contact">
-    <div class="section-header">
-      <p class="section-label reveal">Contact</p>
-      <h2 class="section-title reveal stagger">Travaillons<br>ensemble</h2>
-    </div>
-    <div class="contact-info">
-      <a href="mailto:leasevenig13@icloud.com" class="contact-item reveal">
-        <span class="contact-icon">✉️</span>
-        <span class="contact-text">leasevenig13@icloud.com</span>
-      </a>
-      <a href="tel:+33664322024" class="contact-item reveal stagger">
-        <span class="contact-icon">📞</span>
-        <span class="contact-text">+33 6 64 32 20 24</span>
-      </a>
-      <div class="contact-item reveal stagger-2">
-        <span class="contact-icon">📍</span>
-        <span class="contact-text">Paris 75006</span>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal-down">Contact</p>
+        <h2 class="section-title">
+          <span class="line reveal-flip">Travaillons</span>
+          <span class="line reveal-flip stagger">ensemble</span>
+        </h2>
+      </div>
+      <div class="contact-info">
+        <a href="mailto:leasevenig13@icloud.com" class="contact-item reveal-left">
+          <span class="contact-icon">✉️</span>
+          <span class="contact-text">leasevenig13@icloud.com</span>
+        </a>
+        <a href="tel:+33664322024" class="contact-item reveal stagger">
+          <span class="contact-icon">📞</span>
+          <span class="contact-text">+33 6 64 32 20 24</span>
+        </a>
+        <div class="contact-item reveal-right stagger-2">
+          <span class="contact-icon">📍</span>
+          <span class="contact-text">Paris 75006</span>
+        </div>
       </div>
     </div>
   </section>
@@ -1086,12 +1665,12 @@
     <p>© 2026 <span>Lea Sevenig</span> · Tous droits réservés</p>
   </footer>
 
-  <!-- Scroll Animation Script -->
+  <!-- Scripts -->
   <script>
-    // Intersection Observer for reveal animations
+    // Intersection Observer for all reveal animations
     const observerOptions = {
       root: null,
-      rootMargin: '0px',
+      rootMargin: '-50px',
       threshold: 0.1
     };
 
@@ -1103,29 +1682,100 @@
       });
     }, observerOptions);
 
-    // Observe all reveal elements
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    // Observe all animated elements
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-down, .reveal-scale, .reveal-blur, .reveal-flip, .reveal-zoom, .reveal-bounce, .hero-subtitle, .word-reveal, .split-text').forEach(el => {
       observer.observe(el);
     });
 
-    // Parallax effect on hero
+    // Parallax effect on hero background shapes
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      const hero = document.querySelector('.hero-content');
-      if (hero && scrolled < window.innerHeight) {
-        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-        hero.style.opacity = 1 - (scrolled / window.innerHeight);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset;
+          const shapes = document.querySelectorAll('.hero-bg .shape');
+          const heroContent = document.querySelector('.hero-content');
+
+          if (scrolled < window.innerHeight) {
+            shapes.forEach((shape, i) => {
+              const speed = (i + 1) * 0.1;
+              shape.style.transform = `translate(${scrolled * speed * 0.5}px, ${scrolled * speed}px)`;
+            });
+
+            if (heroContent) {
+              heroContent.style.transform = `translateY(${scrolled * 0.4}px)`;
+              heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     });
 
-    // Smooth scroll for any anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
+    // Counter animation for stats
+    const animateCounters = () => {
+      document.querySelectorAll('.stat-number[data-count]').forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        const duration = 2000;
+        const start = performance.now();
+
+        const updateCounter = (currentTime) => {
+          const elapsed = currentTime - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          counter.textContent = Math.floor(target * easeOut) + '+';
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          }
+        };
+
+        requestAnimationFrame(updateCounter);
       });
+    };
+
+    // Trigger counter animation when stats are visible
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          statsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const statsSection = document.querySelector('.about-stats');
+    if (statsSection) {
+      statsObserver.observe(statsSection);
+    }
+
+    // Smooth mouse parallax on hero
+    document.addEventListener('mousemove', (e) => {
+      const shapes = document.querySelectorAll('.hero-bg .shape');
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+      shapes.forEach((shape, i) => {
+        const speed = (i + 1) * 15;
+        shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+      });
+    });
+
+    // Add character delays for split-text animation
+    document.querySelectorAll('.split-text').forEach(text => {
+      const chars = text.textContent.split('');
+      text.innerHTML = chars.map((char, i) =>
+        `<span class="char" style="transition-delay: ${i * 0.03}s">${char === ' ' ? '&nbsp;' : char}</span>`
+      ).join('');
+    });
+
+    // Add word delays for word-reveal animation
+    document.querySelectorAll('.word-reveal').forEach(text => {
+      const words = text.textContent.split(' ');
+      text.innerHTML = words.map((word, i) =>
+        `<span class="word" style="transition-delay: ${i * 0.1}s">${word}</span>`
+      ).join(' ');
     });
   </script>
 
