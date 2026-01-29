@@ -1301,92 +1301,18 @@
       justify-content: center;
     }
 
-    /* Theatre masks - custom CSS */
+    /* Theatre masks - emoji style */
     .theatre-masks {
-      width: 80px;
-      height: 50px;
-      position: relative;
+      font-size: 70px;
+      line-height: 1;
+      animation: masks-swing 3s ease-in-out infinite;
     }
 
-    .mask {
-      width: 35px;
-      height: 40px;
-      border-radius: 50% 50% 45% 45%;
-      position: absolute;
-      top: 5px;
-    }
-
-    .mask-happy {
-      left: 5px;
-      background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-      animation: mask-happy 3s ease-in-out infinite;
-      z-index: 2;
-    }
-
-    .mask-happy::before {
-      content: '';
-      position: absolute;
-      top: 12px;
-      left: 8px;
-      width: 6px;
-      height: 6px;
-      background: #1a1a1a;
-      border-radius: 50%;
-      box-shadow: 13px 0 0 #1a1a1a;
-    }
-
-    .mask-happy::after {
-      content: '';
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 15px;
-      height: 8px;
-      border: 3px solid #1a1a1a;
-      border-top: none;
-      border-radius: 0 0 15px 15px;
-    }
-
-    .mask-sad {
-      right: 5px;
-      background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%);
-      animation: mask-sad 3s ease-in-out infinite;
-    }
-
-    .mask-sad::before {
-      content: '';
-      position: absolute;
-      top: 12px;
-      left: 8px;
-      width: 6px;
-      height: 6px;
-      background: #1a1a1a;
-      border-radius: 50%;
-      box-shadow: 13px 0 0 #1a1a1a;
-    }
-
-    .mask-sad::after {
-      content: '';
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 15px;
-      height: 8px;
-      border: 3px solid #1a1a1a;
-      border-bottom: none;
-      border-radius: 15px 15px 0 0;
-    }
-
-    @keyframes mask-happy {
-      0%, 100% { transform: rotate(-10deg); }
-      50% { transform: rotate(-5deg) translateY(-3px); }
-    }
-
-    @keyframes mask-sad {
-      0%, 100% { transform: rotate(10deg); }
-      50% { transform: rotate(5deg) translateY(3px); }
+    @keyframes masks-swing {
+      0%, 100% { transform: rotate(-5deg) scale(1); }
+      25% { transform: rotate(5deg) scale(1.05); }
+      50% { transform: rotate(-3deg) scale(1); }
+      75% { transform: rotate(3deg) scale(1.05); }
     }
 
     /* Cinema clap - custom CSS */
@@ -1446,96 +1372,18 @@
       31% { transform: rotate(0deg); }
     }
 
-    /* Boxing gloves - custom CSS */
+    /* Boxing glove - emoji style */
     .boxing-gloves {
-      width: 80px;
-      height: 60px;
-      position: relative;
+      font-size: 70px;
+      line-height: 1;
+      animation: punch 1s ease-in-out infinite;
     }
 
-    .glove {
-      width: 35px;
-      height: 40px;
-      border-radius: 40% 40% 50% 50%;
-      position: absolute;
-      top: 10px;
-    }
-
-    .glove-left {
-      left: 0;
-      background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
-      transform-origin: bottom right;
-      animation: punch-left 1.5s ease-in-out infinite;
-    }
-
-    .glove-left::before {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 12px;
-      height: 10px;
-      background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
-      border-radius: 0 0 5px 5px;
-    }
-
-    .glove-left::after {
-      content: '';
-      position: absolute;
-      top: 8px;
-      left: 5px;
-      width: 20px;
-      height: 4px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 2px;
-      box-shadow: 0 6px 0 rgba(255,255,255,0.2);
-    }
-
-    .glove-right {
-      right: 0;
-      background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
-      transform-origin: bottom left;
-      animation: punch-right 1.5s ease-in-out infinite;
-      animation-delay: 0.75s;
-    }
-
-    .glove-right::before {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 12px;
-      height: 10px;
-      background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
-      border-radius: 0 0 5px 5px;
-    }
-
-    .glove-right::after {
-      content: '';
-      position: absolute;
-      top: 8px;
-      right: 5px;
-      width: 20px;
-      height: 4px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 2px;
-      box-shadow: 0 6px 0 rgba(255,255,255,0.2);
-    }
-
-    @keyframes punch-left {
-      0%, 100% { transform: rotate(0deg) translateX(0); }
-      20% { transform: rotate(-15deg) translateX(-5px); }
-      40% { transform: rotate(10deg) translateX(15px); }
-      60% { transform: rotate(0deg) translateX(0); }
-    }
-
-    @keyframes punch-right {
-      0%, 100% { transform: rotate(0deg) translateX(0); }
-      20% { transform: rotate(15deg) translateX(5px); }
-      40% { transform: rotate(-10deg) translateX(-15px); }
-      60% { transform: rotate(0deg) translateX(0); }
+    @keyframes punch {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      25% { transform: translateX(-10px) rotate(-15deg); }
+      50% { transform: translateX(20px) rotate(10deg) scale(1.1); }
+      75% { transform: translateX(-5px) rotate(-5deg); }
     }
 
     .interest-card:hover .interest-icon {
@@ -1668,13 +1516,32 @@
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 1024px) {
+      .hero-wrapper {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-text {
+        text-align: center;
+        order: 2;
+      }
+
+      .hero-photo {
+        order: 1;
+        width: 200px;
+        margin: 0 auto;
+      }
+
+      .hero-tags {
+        justify-content: center;
+      }
+
       .about-content {
         grid-template-columns: 1fr;
-        gap: 80px;
+        gap: 60px;
       }
 
       .skills-grid,
-      .projects-grid,
       .formation-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -1685,47 +1552,208 @@
 
       .interests-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .interest-card {
+        padding: 50px 30px;
+      }
+
+      .project-full-content {
+        grid-template-columns: 1fr;
+      }
+
+      .project-main-image {
+        max-width: 100%;
+      }
+
+      .project-gallery {
+        justify-content: center;
+      }
+
+      .gallery-item {
+        max-width: 250px;
       }
     }
 
     @media (max-width: 768px) {
       section {
-        padding: 100px 20px;
+        padding: 80px 15px;
+      }
+
+      .hero {
+        padding: 40px 20px;
+        min-height: auto;
+      }
+
+      .hero-photo {
+        width: 160px;
+      }
+
+      .hero-photo img {
+        border-radius: 16px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .hero-photo::before {
+        display: none;
+      }
+
+      .scroll-indicator {
+        display: none;
       }
 
       .hero h1 {
         letter-spacing: -2px;
       }
 
+      .hero-tags {
+        gap: 8px;
+      }
+
+      .hero-tag {
+        padding: 8px 14px;
+        font-size: 11px;
+      }
+
       .section-label::before {
         display: none;
       }
 
+      .section-header {
+        margin-bottom: 60px;
+      }
+
       .about-stats {
         grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .stat {
+        padding: 30px 20px;
+      }
+
+      .stat-number {
+        font-size: 48px;
       }
 
       .skills-grid,
-      .projects-grid,
       .formation-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .skill-card,
+      .formation-card {
+        padding: 30px 25px;
       }
 
       .timeline {
-        padding-left: 40px;
+        padding-left: 30px;
       }
 
       .timeline-item::before {
-        left: -46px;
+        left: -36px;
+        width: 12px;
+        height: 12px;
+      }
+
+      .timeline-company {
+        font-size: 24px;
       }
 
       .languages-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .language-item {
+        padding: 30px 15px;
+      }
+
+      .language-flag {
+        font-size: 40px;
+        margin-bottom: 15px;
+      }
+
+      .language-name {
+        font-size: 14px;
+      }
+
+      .language-level {
+        font-size: 11px;
+      }
+
+      .project-full {
+        margin-bottom: 60px;
+        padding-bottom: 60px;
+      }
+
+      .project-full-title {
+        font-size: 28px;
+      }
+
+      .project-gallery {
+        gap: 10px;
+      }
+
+      .gallery-item {
+        max-width: 100%;
+        flex: 1 1 45%;
+      }
+
+      .gallery-item img {
+        max-height: 150px;
+        object-fit: cover;
+        width: 100%;
+      }
+
+      .project-main-image {
+        max-width: 100%;
+      }
+
+      .project-main-image img {
+        max-height: 250px;
+        object-fit: cover;
       }
 
       .contact-info {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
+      }
+
+      .contact-item {
+        padding: 20px 30px;
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+
+      .contact-text {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-photo {
+        width: 150px;
+      }
+
+      .about-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stat-number {
+        font-size: 36px;
+      }
+
+      .languages-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .gallery-item {
+        flex: 1 1 100%;
       }
     }
   </style>
@@ -2085,10 +2113,7 @@
     <div class="interests-grid">
       <div class="interest-card reveal-scale">
         <div class="interest-icon">
-          <div class="theatre-masks">
-            <div class="mask mask-happy"></div>
-            <div class="mask mask-sad"></div>
-          </div>
+          <div class="theatre-masks">🎭</div>
         </div>
         <h3 class="interest-title">Théâtre</h3>
         <p class="interest-desc">Rôle dans « Gainsbourg, Gainsbarre faut voir » (2016)</p>
@@ -2105,10 +2130,7 @@
       </div>
       <div class="interest-card reveal-scale stagger-2">
         <div class="interest-icon">
-          <div class="boxing-gloves">
-            <div class="glove glove-left"></div>
-            <div class="glove glove-right"></div>
-          </div>
+          <div class="boxing-gloves">🥊</div>
         </div>
         <h3 class="interest-title">Boxe Anglaise</h3>
         <p class="interest-desc">Discipline, détermination et dépassement de soi</p>
