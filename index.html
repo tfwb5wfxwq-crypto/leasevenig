@@ -1503,6 +1503,31 @@
       z-index: 1;
     }
 
+    .cv-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 50px;
+      padding: 18px 40px;
+      background: var(--coral);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 30px rgba(217, 79, 61, 0.3);
+    }
+
+    .cv-download:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(217, 79, 61, 0.4);
+    }
+
+    .cv-download span {
+      font-size: 20px;
+    }
+
     /* ========== FOOTER ========== */
     footer {
       background: var(--black);
@@ -2187,6 +2212,9 @@
           <span class="contact-text">Paris 75006</span>
         </div>
       </div>
+      <a href="cv.html" target="_blank" class="cv-download reveal stagger-3">
+        <span>📄</span> Télécharger le CV
+      </a>
     </div>
   </section>
 
