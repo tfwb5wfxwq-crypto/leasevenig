@@ -17,7 +17,6 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     @page { size: A4; margin: 0; }
 
     body {
@@ -57,87 +56,108 @@
     .btn-save { background: var(--gold); color: white; }
     .btn-save:hover { background: var(--gold-light); transform: translateY(-2px); }
 
-    /* Instructions */
-    .instructions {
+    /* Controls panel */
+    .controls {
       max-width: 210mm;
       margin: 0 auto 20px;
-      padding: 15px 20px;
-      background: var(--edit-bg);
-      border-left: 4px solid var(--gold);
-      border-radius: 0 8px 8px 0;
-      font-size: 13px;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
-    .instructions strong { color: var(--gold); }
+    .controls-row {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .controls-row:last-child { margin-bottom: 0; }
+
+    .controls label {
+      font-size: 11px;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      min-width: 80px;
+    }
+
+    .controls input {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid var(--light-gray);
+      padding: 8px 0;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .controls input:focus { border-color: var(--gold); }
+
+    /* Profile buttons */
+    .profile-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .profile-btn {
+      padding: 10px 16px;
+      border: 2px solid var(--light-gray);
+      border-radius: 25px;
+      background: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--gray);
+    }
+
+    .profile-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .profile-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: white;
+    }
 
     /* Page */
     .page {
       width: 210mm;
       min-height: 297mm;
-      padding: 35mm 30mm 30mm 30mm;
+      padding: 30mm 28mm 25mm 28mm;
       margin: 0 auto;
       background: var(--cream);
       position: relative;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     }
 
-    /* Date */
     .date {
       text-align: right;
       font-size: 10pt;
       color: var(--gray);
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       font-style: italic;
     }
 
-    /* Company input */
-    .company-input {
-      background: var(--edit-bg);
-      border: 1px dashed var(--gold);
-      padding: 12px 15px;
-      border-radius: 6px;
-      margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .company-input label {
-      font-size: 11px;
-      color: var(--gray);
-      white-space: nowrap;
-    }
-
-    .company-input input {
-      flex: 1;
-      border: none;
-      border-bottom: 1px solid var(--gold);
-      background: transparent;
-      padding: 5px 0;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11pt;
-      color: var(--charcoal);
-      outline: none;
-    }
-
-    .company-input input:focus {
-      border-bottom-width: 2px;
-    }
-
-    /* Header */
     .header {
-      margin-bottom: 35px;
-      padding-bottom: 20px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
       border-bottom: 1px solid var(--gold);
     }
 
     .name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 28pt;
+      font-size: 26pt;
       font-weight: 500;
       letter-spacing: 3px;
       color: var(--charcoal);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .contact-info {
@@ -148,10 +168,9 @@
 
     .contact-info a { color: var(--gold); text-decoration: none; }
 
-    /* Subject */
     .subject {
-      margin-bottom: 25px;
-      padding: 12px 0;
+      margin-bottom: 20px;
+      padding: 10px 0;
       border-top: 1px solid var(--light-gray);
       border-bottom: 1px solid var(--light-gray);
     }
@@ -161,48 +180,46 @@
       color: var(--gold);
       text-transform: uppercase;
       letter-spacing: 2px;
-      font-size: 9pt;
+      font-size: 8pt;
     }
 
     .subject p {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 13pt;
+      font-size: 12pt;
       font-style: italic;
-      margin-top: 5px;
+      margin-top: 4px;
     }
 
-    /* Body */
-    .salutation { margin-bottom: 20px; font-weight: 500; }
+    .salutation { margin-bottom: 15px; font-weight: 500; font-size: 10.5pt; }
 
     .body p {
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       text-align: justify;
-      font-size: 10.5pt;
+      font-size: 10pt;
+      line-height: 1.65;
     }
 
     .highlight {
       background: linear-gradient(to bottom, transparent 60%, rgba(201, 169, 98, 0.2) 60%);
     }
 
-    /* Signature */
-    .closing { margin-top: 30px; }
-    .closing p { margin-bottom: 5px; }
+    .closing { margin-top: 20px; }
+    .closing p { margin-bottom: 4px; font-size: 10pt; }
 
     .signature {
-      margin-top: 25px;
+      margin-top: 20px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 16pt;
+      font-size: 14pt;
       font-style: italic;
     }
 
-    /* Footer */
     .footer {
       position: absolute;
-      bottom: 20mm;
-      left: 30mm;
-      right: 30mm;
+      bottom: 15mm;
+      left: 28mm;
+      right: 28mm;
       text-align: center;
-      padding-top: 15px;
+      padding-top: 10px;
       border-top: 1px solid var(--light-gray);
     }
 
@@ -218,35 +235,31 @@
     body.fr .lang-en-inline { display: none; }
     body.en .lang-fr-inline { display: none; }
 
-    /* Print styles */
+    /* Print */
     @media print {
       body { background: white; padding: 0; margin: 0; }
-      .toolbar, .instructions, .company-input { display: none !important; }
+      .toolbar, .controls { display: none !important; }
       .page {
         width: 100%;
-        padding: 20mm 25mm 25mm 25mm;
+        padding: 18mm 22mm 20mm 22mm;
         box-shadow: none;
         min-height: auto;
-      }
-      .body p {
-        font-size: 10pt;
-        margin-bottom: 12px;
-        line-height: 1.6;
       }
       .footer {
         position: relative;
         bottom: auto;
         left: auto;
         right: auto;
-        margin-top: 30px;
+        margin-top: 25px;
       }
     }
 
-    /* Mobile */
     @media (max-width: 800px) {
       body { padding: 10px; }
       .page { width: 100%; padding: 20px; min-height: auto; }
       .toolbar { position: static; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
+      .controls { padding: 15px; }
+      .controls-row { flex-direction: column; align-items: stretch; }
       .name { font-size: 20pt; }
     }
   </style>
@@ -257,69 +270,74 @@
       <span class="lang-fr-inline">English</span>
       <span class="lang-en-inline">Français</span>
     </button>
-    <button class="btn-save" onclick="savePDF()">
+    <button class="btn-save" onclick="window.print()">
       <span class="lang-fr-inline">📄 Sauvegarder PDF</span>
       <span class="lang-en-inline">📄 Save PDF</span>
     </button>
   </div>
 
-  <div class="instructions">
-    <span class="lang-fr-inline">Ajoute le <strong>nom de l'entreprise</strong> si besoin, puis <strong>Sauvegarder PDF</strong>. La date est automatique.</span>
-    <span class="lang-en-inline">Add the <strong>company name</strong> if needed, then <strong>Save PDF</strong>. Date is automatic.</span>
+  <div class="controls">
+    <div class="controls-row">
+      <label class="lang-fr-inline">Profil</label>
+      <label class="lang-en-inline">Profile</label>
+      <div class="profile-buttons">
+        <button class="profile-btn active" onclick="setProfile('general')">Généraliste</button>
+        <button class="profile-btn" onclick="setProfile('marketing')">Marketing</button>
+        <button class="profile-btn" onclick="setProfile('hospitality')">Hôtellerie luxe</button>
+        <button class="profile-btn" onclick="setProfile('communication')">Communication</button>
+        <button class="profile-btn" onclick="setProfile('design')">Graphisme</button>
+      </div>
+    </div>
+    <div class="controls-row">
+      <label class="lang-fr-inline">Entreprise</label>
+      <label class="lang-en-inline">Company</label>
+      <input type="text" id="companyName" placeholder="Optionnel – Ex: Paperjam" oninput="updateCompany()">
+    </div>
+    <div class="controls-row">
+      <label class="lang-fr-inline">Sujet</label>
+      <label class="lang-en-inline">Subject</label>
+      <input type="text" id="subjectInput" placeholder="Ex: Marketing & Événementiel" oninput="updateSubject()">
+    </div>
   </div>
 
   <div class="page">
+    <p class="date" id="currentDate"></p>
+
     <header class="header">
       <h1 class="name">LEA SEVENIG</h1>
-      <p class="contact-info">
-        Paris, France · +33 6 64 32 20 24 · leasevenig13@icloud.com
-      </p>
+      <p class="contact-info">Paris, France · +33 6 64 32 20 24 · leasevenig13@icloud.com</p>
       <p class="contact-info" style="margin-top: 5px;">
         <a href="https://leasevenig.cv" style="font-weight: 500;">leasevenig.cv</a>
       </p>
     </header>
 
-    <p class="date" id="currentDate"></p>
-
     <div class="subject">
       <span class="subject-label lang-fr-inline">Objet</span>
       <span class="subject-label lang-en-inline">Subject</span>
       <p>
-        <span class="lang-fr-inline">Candidature spontanée<span id="companyFr"></span> – Événementiel & Communication</span>
-        <span class="lang-en-inline">Spontaneous Application<span id="companyEn"></span> – Events & Communication</span>
+        <span class="lang-fr-inline">Candidature spontanée<span id="companyFr"></span> – <span id="subjectFr">Événementiel & Communication</span></span>
+        <span class="lang-en-inline">Spontaneous Application<span id="companyEn"></span> – <span id="subjectEn">Events & Communication</span></span>
       </p>
-    </div>
-
-    <div class="company-input">
-      <label class="lang-fr-inline">Nom de l'entreprise (optionnel) :</label>
-      <label class="lang-en-inline">Company name (optional):</label>
-      <input type="text" id="companyName" placeholder="Ex: Paperjam" oninput="updateCompany()">
     </div>
 
     <!-- FRENCH VERSION -->
     <div class="lang-fr">
       <p class="salutation">Madame, Monsieur,</p>
-
       <div class="body">
-        <p>Passionnée par l'événementiel et la communication, je me permets de vous adresser ma candidature spontanée. Bien qu'en début de parcours professionnel, les compétences développées lors de mes expériences professionnelles, associatives et académiques font de moi une candidate motivée et opérationnelle.</p>
+        <p id="intro-fr">Passionnée par l'événementiel et la communication, je me permets de vous adresser ma candidature spontanée. Bien qu'en début de parcours professionnel, les compétences développées lors de mes expériences professionnelles, associatives et académiques font de moi une candidate motivée et opérationnelle.</p>
 
-        <p>Diplômée du <span class="highlight">Bachelor de Management International de l'hôtellerie et de la restauration</span> avec spécialisation entrepreneuriat à l'Institut Lyfe à Lyon (anciennement Institut Paul Bocuse), j'ai régulièrement participé à la création et à l'organisation d'événements : conception de restaurants éphémères, identité visuelle, communication, gestion logistique. En tant que responsable communication du BDE, j'ai réalisé des vidéos promotionnelles et participé à l'organisation d'événements étudiants.</p>
+        <p id="formation-fr">Diplômée du <span class="highlight">Bachelor de Management International de l'hôtellerie et de la restauration</span> avec spécialisation entrepreneuriat à l'Institut Lyfe à Lyon (anciennement Institut Paul Bocuse), j'ai régulièrement participé à la création et à l'organisation d'événements : conception de restaurants éphémères, identité visuelle, communication, gestion logistique.</p>
 
-        <p>J'ai également cofondé <span class="highlight">"Focacc'"</span>, un restaurant éphémère de 6 mois à La Commune à Lyon. J'y ai développé des concepts pour accroître les ventes, notamment un rendez-vous apéritif innovant qui nous a permis d'animer les périodes creuses, de prendre un avantage compétitif et de valoriser nos produits.</p>
+        <p id="experience1-fr">J'ai cofondé <span class="highlight">"Focacc'"</span>, un restaurant éphémère de 6 mois à Lyon où j'ai développé des concepts innovants pour accroître les ventes et fidéliser la clientèle.</p>
 
-        <p>Durant un an, j'ai travaillé en extra pour <span class="highlight">La Dimanche</span>, l'une des plus grandes soirées LGBTQ+ de Paris. J'y ai géré la mise en place des bars, l'anticipation des commandes, l'organisation des vestiaires et l'optimisation des process. Cette expérience m'a appris l'importance de la rigueur et de la communication en environnement événementiel.</p>
+        <p id="experience2-fr">Durant un an, j'ai travaillé pour <span class="highlight">La Dimanche</span>, l'une des plus grandes soirées LGBTQ+ de Paris, où j'ai géré la logistique bar, les commandes et l'optimisation des process.</p>
 
-        <p>Actuellement <span class="highlight">Community Manager et graphiste</span> pour le groupe Nasther (Le Next, Le Maze, Le Café A, La Maison Saint Martin), j'accompagne de nombreux événements : rencontre avec les organisateurs, traduction de leur vision en supports visuels. J'ai également pris l'initiative de créer le Brunch sans gluten au Café A, en partenariat avec NoGlu : campagne de communication, distribution de flyers, négociation de partenariats. L'événement a affiché complet.</p>
+        <p id="experience3-fr">Actuellement <span class="highlight">Community Manager et graphiste</span> pour le groupe Nasther (Le Next, Le Maze, Le Café A, La Maison Saint Martin), j'accompagne de nombreux événements et j'ai créé le Brunch sans gluten au Café A en partenariat avec NoGlu – événement complet.</p>
 
-        <p>En parallèle, je collabore avec le créateur de contenu Ludovik, pour lequel j'organise les caterings et prépare une projection spéciale pour sa Masterclass "Court ou Crève" : recherche de salle, création du compte Instagram, coordination logistique.</p>
+        <p id="skills-fr"><span class="highlight">Luxembourgeoise</span>, je parle couramment luxembourgeois, français, allemand et anglais. Autonome et polyvalente, je maîtrise MS Office et Adobe Creative Suite.</p>
 
-        <p><span class="highlight">Luxembourgeoise</span>, je parle couramment luxembourgeois, français, allemand et anglais. Habituée au travail sous pression grâce à mes expériences en restauration et à la création de ma propre entreprise, je suis autonome, réactive et polyvalente. Je maîtrise les logiciels MS Office et Adobe Creative Suite.</p>
-
-        <p>Avec un an et demi d'expérience professionnelle et plusieurs années d'engagement dans l'organisation d'événements, je suis extrêmement motivée à poursuivre sur cette voie et à rejoindre une structure dynamique où je pourrai m'épanouir et évoluer.</p>
-
-        <p>Je serais ravie de pouvoir échanger avec vous lors d'un entretien afin de vous exposer plus en détail mon parcours et mes motivations.</p>
+        <p>Je serais ravie d'échanger avec vous lors d'un entretien pour vous présenter mon parcours plus en détail.</p>
       </div>
-
       <div class="closing">
         <p>Je vous remercie pour l'attention portée à ma candidature.</p>
         <p>Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</p>
@@ -330,27 +348,21 @@
     <!-- ENGLISH VERSION -->
     <div class="lang-en">
       <p class="salutation">Dear Sir or Madam,</p>
-
       <div class="body">
-        <p>Passionate about events and communication, I am writing to submit my spontaneous application. Although at the beginning of my professional career, the skills I have developed through my work, associative, and academic experiences make me a motivated and operational candidate.</p>
+        <p id="intro-en">Passionate about events and communication, I am writing to submit my spontaneous application. Although at the beginning of my professional career, the skills I have developed through my work and academic experiences make me a motivated and operational candidate.</p>
 
-        <p>I hold a <span class="highlight">Bachelor's degree in International Hospitality Management</span> with a specialization in entrepreneurship from Institut Lyfe in Lyon (formerly Institut Paul Bocuse). I have regularly participated in creating and organizing events: pop-up restaurant design, visual identity, communication, and logistics management. As the communication manager of the Student Union, I produced promotional videos and helped organize student events.</p>
+        <p id="formation-en">I hold a <span class="highlight">Bachelor's degree in International Hospitality Management</span> with a specialization in entrepreneurship from Institut Lyfe in Lyon (formerly Institut Paul Bocuse). I have regularly participated in creating and organizing events: pop-up restaurant design, visual identity, communication, and logistics.</p>
 
-        <p>I also co-founded <span class="highlight">"Focacc'"</span>, a 6-month pop-up restaurant at La Commune in Lyon. There, I developed concepts to increase sales, including an innovative aperitif event that allowed us to animate slow periods, gain a competitive advantage, and add value to our products.</p>
+        <p id="experience1-en">I co-founded <span class="highlight">"Focacc'"</span>, a 6-month pop-up restaurant in Lyon where I developed innovative concepts to increase sales and build customer loyalty.</p>
 
-        <p>For one year, I worked as extra staff at <span class="highlight">La Dimanche</span>, one of the largest LGBTQ+ events in Paris. I managed bar setups, order anticipation, cloakroom organization, and process optimization. This experience taught me the importance of rigor and communication in an event environment.</p>
+        <p id="experience2-en">For one year, I worked at <span class="highlight">La Dimanche</span>, one of the largest LGBTQ+ events in Paris, managing bar logistics, orders, and process optimization.</p>
 
-        <p>Currently working as a <span class="highlight">Community Manager and Graphic Designer</span> for the Nasther group (Le Next, Le Maze, Le Café A, La Maison Saint Martin), I support numerous events: meeting with organizers, translating their vision into visual materials. I also took the initiative to create the Gluten-Free Brunch at Café A, in partnership with NoGlu: communication campaign, flyer distribution, partnership negotiations. The event was fully booked.</p>
+        <p id="experience3-en">Currently working as a <span class="highlight">Community Manager and Graphic Designer</span> for the Nasther group (Le Next, Le Maze, Le Café A, La Maison Saint Martin), I support numerous events and created the Gluten-Free Brunch at Café A in partnership with NoGlu – fully booked event.</p>
 
-        <p>Additionally, I collaborate with content creator Ludovik, for whom I organize catering and am preparing a special screening for his Masterclass "Court ou Crève": venue search, Instagram account creation, and logistics coordination.</p>
+        <p id="skills-en">As a <span class="highlight">Luxembourger</span>, I am fluent in Luxembourgish, French, German, and English. Autonomous and versatile, I am proficient in MS Office and Adobe Creative Suite.</p>
 
-        <p>As a <span class="highlight">Luxembourger</span>, I am fluent in Luxembourgish, French, German, and English. Accustomed to working under pressure through my restaurant experiences and creating my own business, I am autonomous, responsive, and versatile. I am proficient in MS Office and Adobe Creative Suite.</p>
-
-        <p>With one and a half years of professional experience and several years of involvement in event organization, I am extremely motivated to continue on this path and join a dynamic organization where I can thrive and grow.</p>
-
-        <p>I would be delighted to discuss my background and motivations in more detail during an interview.</p>
+        <p>I would be delighted to discuss my background in more detail during an interview.</p>
       </div>
-
       <div class="closing">
         <p>Thank you for considering my application.</p>
         <p>Yours faithfully,</p>
@@ -364,30 +376,74 @@
   </div>
 
   <script>
-    // Set current date
-    const months = {
-      fr: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
-      en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    const profiles = {
+      general: {
+        subject: { fr: "Événementiel & Communication", en: "Events & Communication" },
+        intro: {
+          fr: "Passionnée par l'événementiel et la communication, je me permets de vous adresser ma candidature spontanée. Bien qu'en début de parcours professionnel, les compétences développées lors de mes expériences professionnelles, associatives et académiques font de moi une candidate motivée et opérationnelle.",
+          en: "Passionate about events and communication, I am writing to submit my spontaneous application. Although at the beginning of my professional career, the skills I have developed through my work and academic experiences make me a motivated and operational candidate."
+        }
+      },
+      marketing: {
+        subject: { fr: "Marketing & Événementiel", en: "Marketing & Events" },
+        intro: {
+          fr: "Passionnée par le <span class='highlight'>marketing événementiel</span> et les stratégies de communication, je me permets de vous adresser ma candidature spontanée. Mes expériences en création de concepts, partenariats stratégiques et campagnes de communication font de moi une candidate opérationnelle et créative.",
+          en: "Passionate about <span class='highlight'>event marketing</span> and communication strategies, I am writing to submit my spontaneous application. My experience in concept creation, strategic partnerships, and communication campaigns make me an operational and creative candidate."
+        }
+      },
+      hospitality: {
+        subject: { fr: "Hôtellerie & Événementiel de luxe", en: "Luxury Hospitality & Events" },
+        intro: {
+          fr: "Diplômée de l'<span class='highlight'>Institut Paul Bocuse</span>, passionnée par l'hôtellerie haut de gamme et l'événementiel de luxe, je me permets de vous adresser ma candidature spontanée. Ma formation d'excellence et mes expériences dans la restauration et l'événementiel font de moi une candidate exigeante et soucieuse du détail.",
+          en: "A graduate of the prestigious <span class='highlight'>Institut Paul Bocuse</span>, passionate about luxury hospitality and high-end events, I am writing to submit my spontaneous application. My excellent training and experience in fine dining and events make me a demanding candidate with attention to detail."
+        }
+      },
+      communication: {
+        subject: { fr: "Communication & Création de contenu", en: "Communication & Content Creation" },
+        intro: {
+          fr: "Passionnée par la <span class='highlight'>communication digitale</span> et la création de contenu, je me permets de vous adresser ma candidature spontanée. Actuellement en Master Communication à l'EFAP Paris, j'ai développé des compétences solides en stratégie de contenu, gestion de communauté et communication visuelle.",
+          en: "Passionate about <span class='highlight'>digital communication</span> and content creation, I am writing to submit my spontaneous application. Currently pursuing a Master's in Communication at EFAP Paris, I have developed strong skills in content strategy, community management, and visual communication."
+        }
+      },
+      design: {
+        subject: { fr: "Direction artistique & Graphisme", en: "Art Direction & Graphic Design" },
+        intro: {
+          fr: "Passionnée par le <span class='highlight'>design graphique</span> et la direction artistique, je me permets de vous adresser ma candidature spontanée. Ma maîtrise d'Adobe Creative Suite et mon expérience en création d'identités visuelles pour des événements et établissements font de moi une candidate créative et rigoureuse.",
+          en: "Passionate about <span class='highlight'>graphic design</span> and art direction, I am writing to submit my spontaneous application. My proficiency in Adobe Creative Suite and experience creating visual identities for events and venues make me a creative and rigorous candidate."
+        }
+      }
     };
 
-    function updateDate() {
-      const now = new Date();
-      const day = now.getDate();
-      const month = now.getMonth();
-      const year = now.getFullYear();
+    let currentProfile = 'general';
+
+    function setProfile(profile) {
+      currentProfile = profile;
+
+      // Update buttons
+      document.querySelectorAll('.profile-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Update content
+      const p = profiles[profile];
       const isFr = document.body.classList.contains('fr');
-
-      const dateStr = isFr
-        ? `Paris, le ${day} ${months.fr[month]} ${year}`
-        : `Paris, ${months.en[month]} ${day}, ${year}`;
-
-      document.getElementById('currentDate').textContent = dateStr;
+      document.getElementById('subjectInput').value = isFr ? p.subject.fr : p.subject.en;
+      document.getElementById('subjectFr').textContent = p.subject.fr;
+      document.getElementById('subjectEn').textContent = p.subject.en;
+      document.getElementById('intro-fr').innerHTML = p.intro.fr;
+      document.getElementById('intro-en').innerHTML = p.intro.en;
     }
 
-    function toggleLang() {
-      document.body.classList.toggle('fr');
-      document.body.classList.toggle('en');
-      updateDate();
+    function updateSubject() {
+      const subject = document.getElementById('subjectInput').value.trim();
+      if (subject) {
+        document.getElementById('subjectFr').textContent = subject;
+        document.getElementById('subjectEn').textContent = subject;
+      } else {
+        // Revert to profile default if empty
+        const p = profiles[currentProfile];
+        document.getElementById('subjectFr').textContent = p.subject.fr;
+        document.getElementById('subjectEn').textContent = p.subject.en;
+      }
     }
 
     function updateCompany() {
@@ -396,12 +452,36 @@
       document.getElementById('companyEn').textContent = company ? ` – ${company}` : '';
     }
 
-    function savePDF() {
-      window.print();
+    function toggleLang() {
+      document.body.classList.toggle('fr');
+      document.body.classList.toggle('en');
+      updateDate();
+
+      // Update subject input if it's still a profile default
+      const p = profiles[currentProfile];
+      const input = document.getElementById('subjectInput');
+      const isFr = document.body.classList.contains('fr');
+      if (input.value === p.subject.fr || input.value === p.subject.en) {
+        input.value = isFr ? p.subject.fr : p.subject.en;
+      }
     }
 
-    // Init
+    function updateDate() {
+      const months = {
+        fr: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+        en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      };
+      const now = new Date();
+      const isFr = document.body.classList.contains('fr');
+      const dateStr = isFr
+        ? `Paris, le ${now.getDate()} ${months.fr[now.getMonth()]} ${now.getFullYear()}`
+        : `Paris, ${months.en[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+      document.getElementById('currentDate').textContent = dateStr;
+    }
+
     updateDate();
+    // Initialize subject field with default profile
+    document.getElementById('subjectInput').value = profiles.general.subject.fr;
   </script>
 </body>
 </html>
