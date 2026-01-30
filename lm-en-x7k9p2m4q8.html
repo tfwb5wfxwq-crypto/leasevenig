@@ -52,6 +52,28 @@
     .btn-save { background: var(--gold); color: white; }
     .btn-save:hover { background: var(--gold-light); transform: translateY(-2px); }
 
+    .lang-switch {
+      display: flex;
+      gap: 5px;
+      background: white;
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .lang-btn {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--gray);
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn:hover { color: var(--gold); }
+    .lang-btn.active { background: var(--gold); color: white; }
+
     .controls {
       max-width: 210mm;
       margin: 0 auto 20px;
@@ -246,6 +268,10 @@
 </head>
 <body>
   <div class="toolbar">
+    <div class="lang-switch">
+      <a href="lm-x7k9p2m4q8.html" class="lang-btn">FR</a>
+      <a href="lm-en-x7k9p2m4q8.html" class="lang-btn active">EN</a>
+    </div>
     <button class="btn-save" onclick="window.print()">Save as PDF</button>
   </div>
 
