@@ -74,6 +74,15 @@
     .lang-btn:hover { color: var(--gold); }
     .lang-btn.active { background: var(--gold); color: white; }
 
+    /* Page transition */
+    body {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+    body.fade-out {
+      opacity: 0;
+    }
+
     .controls {
       max-width: 210mm;
       margin: 0 auto 20px;
@@ -269,8 +278,8 @@
 <body>
   <div class="toolbar">
     <div class="lang-switch">
-      <a href="lm-x7k9p2m4q8.html" class="lang-btn active">FR</a>
-      <a href="lm-en-x7k9p2m4q8.html" class="lang-btn">EN</a>
+      <span class="lang-btn active">FR</span>
+      <a href="lm-en-x7k9p2m4q8.html" class="lang-btn" onclick="switchLang(event)">EN</a>
     </div>
     <button class="btn-save" onclick="window.print()">Sauvegarder PDF</button>
   </div>
@@ -458,6 +467,16 @@
     document.getElementById('subjectInput').value = profiles.general.subject;
     document.getElementById('subjectDisplay').textContent = profiles.general.subject;
     document.getElementById('letterBody').innerHTML = profiles.general.body;
+
+    // Smooth language switch
+    function switchLang(e) {
+      e.preventDefault();
+      const href = e.target.getAttribute('href');
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = href;
+      }, 300);
+    }
   </script>
 </body>
 </html>
