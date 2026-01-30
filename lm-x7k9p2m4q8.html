@@ -220,9 +220,26 @@
 
     /* Print styles */
     @media print {
-      body { background: white; padding: 0; }
+      body { background: white; padding: 0; margin: 0; }
       .toolbar, .instructions, .company-input { display: none !important; }
-      .page { width: 100%; padding: 15mm 20mm; box-shadow: none; min-height: auto; }
+      .page {
+        width: 100%;
+        padding: 20mm 25mm 25mm 25mm;
+        box-shadow: none;
+        min-height: auto;
+      }
+      .body p {
+        font-size: 10pt;
+        margin-bottom: 12px;
+        line-height: 1.6;
+      }
+      .footer {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-top: 30px;
+      }
     }
 
     /* Mobile */
