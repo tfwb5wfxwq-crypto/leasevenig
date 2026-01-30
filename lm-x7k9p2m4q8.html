@@ -13,37 +13,93 @@
       --gold-light: #D4BC7B;
       --gray: #6B6B6B;
       --light-gray: #E8E4DF;
+      --edit-bg: rgba(201, 169, 98, 0.15);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    @page {
-      size: A4;
-      margin: 0;
-    }
+    @page { size: A4; margin: 0; }
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background: var(--cream);
+      background: #e0e0e0;
       color: var(--charcoal);
       line-height: 1.7;
       font-size: 11pt;
+      padding: 20px;
     }
 
+    /* Toolbar */
+    .toolbar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .toolbar button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-lang { background: var(--charcoal); color: white; }
+    .btn-lang:hover { background: #444; }
+    .btn-save { background: var(--gold); color: white; }
+    .btn-save:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* Instructions */
+    .instructions {
+      max-width: 210mm;
+      margin: 0 auto 20px;
+      padding: 15px 20px;
+      background: var(--edit-bg);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+    }
+
+    .instructions strong { color: var(--gold); }
+
+    /* Page */
     .page {
       width: 210mm;
       min-height: 297mm;
-      padding: 40mm 30mm 30mm 30mm;
+      padding: 35mm 30mm 30mm 30mm;
       margin: 0 auto;
       background: var(--cream);
       position: relative;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     }
 
-    /* Header avec ligne dorée */
+    /* Editable zones */
+    .editable {
+      background: var(--edit-bg);
+      border: 1px dashed var(--gold);
+      padding: 2px 6px;
+      border-radius: 3px;
+      outline: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .editable:hover { background: rgba(201, 169, 98, 0.25); }
+    .editable:focus {
+      background: white;
+      border-style: solid;
+      box-shadow: 0 0 0 3px rgba(201, 169, 98, 0.3);
+    }
+
+    /* Header */
     .header {
       margin-bottom: 35px;
       padding-bottom: 20px;
@@ -65,32 +121,9 @@
       letter-spacing: 1px;
     }
 
-    .contact-info a {
-      color: var(--gold);
-      text-decoration: none;
-    }
+    .contact-info a { color: var(--gold); text-decoration: none; }
 
-    /* Destinataire */
-    .recipient {
-      margin-bottom: 30px;
-      text-align: right;
-    }
-
-    .recipient p {
-      font-size: 10pt;
-      color: var(--gray);
-      margin-bottom: 3px;
-    }
-
-    .date {
-      text-align: right;
-      font-size: 10pt;
-      color: var(--gray);
-      margin-bottom: 25px;
-      font-style: italic;
-    }
-
-    /* Objet */
+    /* Subject */
     .subject {
       margin-bottom: 25px;
       padding: 12px 0;
@@ -98,7 +131,7 @@
       border-bottom: 1px solid var(--light-gray);
     }
 
-    .subject span {
+    .subject-label {
       font-weight: 600;
       color: var(--gold);
       text-transform: uppercase;
@@ -113,11 +146,8 @@
       margin-top: 5px;
     }
 
-    /* Corps de lettre */
-    .salutation {
-      margin-bottom: 20px;
-      font-weight: 500;
-    }
+    /* Body */
+    .salutation { margin-bottom: 20px; font-weight: 500; }
 
     .body p {
       margin-bottom: 15px;
@@ -125,39 +155,22 @@
       font-size: 10.5pt;
     }
 
-    .body p:first-child::first-letter {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 32pt;
-      float: left;
-      line-height: 1;
-      padding-right: 8px;
-      color: var(--gold);
-      font-weight: 500;
-    }
-
-    /* Highlights */
     .highlight {
       background: linear-gradient(to bottom, transparent 60%, rgba(201, 169, 98, 0.2) 60%);
     }
 
     /* Signature */
-    .closing {
-      margin-top: 30px;
-    }
-
-    .closing p {
-      margin-bottom: 5px;
-    }
+    .closing { margin-top: 30px; }
+    .closing p { margin-bottom: 5px; }
 
     .signature {
       margin-top: 25px;
       font-family: 'Cormorant Garamond', serif;
       font-size: 16pt;
       font-style: italic;
-      color: var(--charcoal);
     }
 
-    /* Pied de page */
+    /* Footer */
     .footer {
       position: absolute;
       bottom: 20mm;
@@ -168,47 +181,59 @@
       border-top: 1px solid var(--light-gray);
     }
 
-    .footer p {
-      font-size: 8pt;
-      color: var(--gray);
-      letter-spacing: 1px;
-    }
+    .footer p { font-size: 8pt; color: var(--gray); letter-spacing: 1px; }
+    .footer a { color: var(--gold); text-decoration: none; }
 
-    .footer a {
-      color: var(--gold);
-      text-decoration: none;
-    }
+    /* Language toggle */
+    .lang-fr, .lang-en { display: none; }
+    body.fr .lang-fr { display: block; }
+    body.en .lang-en { display: block; }
+    body.fr .lang-fr-inline { display: inline; }
+    body.en .lang-en-inline { display: inline; }
+    body.fr .lang-en-inline { display: none; }
+    body.en .lang-fr-inline { display: none; }
 
     /* Print styles */
     @media print {
-      body {
-        background: white;
-      }
-      .page {
-        width: 100%;
-        padding: 15mm 20mm 20mm 20mm;
-        box-shadow: none;
-      }
+      body { background: white; padding: 0; }
+      .toolbar, .instructions { display: none !important; }
+      .page { width: 100%; padding: 15mm 20mm; box-shadow: none; min-height: auto; }
+      .editable { background: transparent !important; border: none !important; padding: 0 !important; }
     }
 
-    /* Screen preview */
-    @media screen {
-      body {
-        padding: 20px;
-        background: #e0e0e0;
-      }
-      .page {
-        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-      }
+    /* Mobile */
+    @media (max-width: 800px) {
+      body { padding: 10px; }
+      .page { width: 100%; padding: 20px; min-height: auto; }
+      .toolbar { position: static; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
+      .name { font-size: 20pt; }
     }
   </style>
 </head>
-<body>
+<body class="fr">
+  <div class="toolbar">
+    <button class="btn-lang" onclick="toggleLang()">
+      <span class="lang-fr-inline">English</span>
+      <span class="lang-en-inline">Français</span>
+    </button>
+    <button class="btn-save" onclick="savePDF()">
+      <span class="lang-fr-inline">📄 Sauvegarder PDF</span>
+      <span class="lang-en-inline">📄 Save PDF</span>
+    </button>
+  </div>
+
+  <div class="instructions">
+    <span class="lang-fr-inline"><strong>Zones dorées</strong> = à personnaliser. Clique pour modifier, puis <strong>Sauvegarder PDF</strong>.</span>
+    <span class="lang-en-inline"><strong>Golden zones</strong> = customize. Click to edit, then <strong>Save PDF</strong>.</span>
+  </div>
+
   <div class="page">
     <header class="header">
       <h1 class="name">LEA SEVENIG</h1>
       <p class="contact-info">
-        Paris, France · +33 6 XX XX XX XX · <a href="mailto:lea.sevenig@email.com">lea.sevenig@email.com</a>
+        <span contenteditable="true" class="editable">Paris, France</span> ·
+        <span contenteditable="true" class="editable">+352 621 XXX XXX</span> ·
+        <span contenteditable="true" class="editable">lea.sevenig@email.com</span>
       </p>
       <p class="contact-info" style="margin-top: 5px;">
         <a href="https://leasevenig.cv" style="font-weight: 500;">leasevenig.cv</a>
@@ -216,42 +241,87 @@
     </header>
 
     <div class="subject">
-      <span>Objet</span>
-      <p>Candidature spontanée – Événementiel & Communication</p>
+      <span class="subject-label lang-fr-inline">Objet</span>
+      <span class="subject-label lang-en-inline">Subject</span>
+      <p><span contenteditable="true" class="editable lang-fr-inline">Candidature spontanée – Événementiel & Communication</span><span contenteditable="true" class="editable lang-en-inline">Spontaneous Application – Events & Communication</span></p>
     </div>
 
-    <p class="salutation">Madame, Monsieur,</p>
+    <!-- FRENCH VERSION -->
+    <div class="lang-fr">
+      <p class="salutation">Madame, Monsieur,</p>
 
-    <div class="body">
-      <p>Passionnée par l'événementiel et la communication, je me permets de vous adresser ma candidature spontanée. Bien qu'en début de parcours professionnel, les compétences développées lors de mes expériences professionnelles, associatives et académiques font de moi une candidate motivée et opérationnelle.</p>
+      <div class="body">
+        <p>Passionnée par l'événementiel et la communication, je me permets de vous adresser ma candidature spontanée. Bien qu'en début de parcours professionnel, les compétences développées lors de mes expériences professionnelles, associatives et académiques font de moi une candidate motivée et opérationnelle.</p>
 
-      <p>Diplômée du <span class="highlight">Bachelor de Management International de l'hôtellerie et de la restauration</span> avec spécialisation entrepreneuriat à l'Institut Lyfe à Lyon (anciennement Institut Paul Bocuse), j'ai régulièrement participé à la création et à l'organisation d'événements : conception de restaurants éphémères, identité visuelle, communication, gestion logistique. En tant que responsable communication du BDE, j'ai réalisé des vidéos promotionnelles et participé à l'organisation d'événements étudiants.</p>
+        <p>Diplômée du <span class="highlight">Bachelor de Management International de l'hôtellerie et de la restauration</span> avec spécialisation entrepreneuriat à l'Institut Lyfe à Lyon (anciennement Institut Paul Bocuse), j'ai régulièrement participé à la création et à l'organisation d'événements : conception de restaurants éphémères, identité visuelle, communication, gestion logistique. En tant que responsable communication du BDE, j'ai réalisé des vidéos promotionnelles et participé à l'organisation d'événements étudiants.</p>
 
-      <p>J'ai également cofondé <span class="highlight">« Focacc' »</span>, un restaurant éphémère de 6 mois à La Commune à Lyon. J'y ai développé des concepts pour accroître les ventes, notamment un rendez-vous apéritif innovant qui nous a permis d'animer les périodes creuses, de prendre un avantage compétitif et de valoriser nos produits.</p>
+        <p>J'ai également cofondé <span class="highlight">« Focacc' »</span>, un restaurant éphémère de 6 mois à La Commune à Lyon. J'y ai développé des concepts pour accroître les ventes, notamment un rendez-vous apéritif innovant qui nous a permis d'animer les périodes creuses, de prendre un avantage compétitif et de valoriser nos produits.</p>
 
-      <p>Durant un an, j'ai travaillé en extra pour <span class="highlight">La Dimanche</span>, l'une des plus grandes soirées LGBTQ+ de Paris. J'y ai géré la mise en place des bars, l'anticipation des commandes, l'organisation des vestiaires et l'optimisation des process. Cette expérience m'a appris l'importance de la rigueur et de la communication en environnement événementiel.</p>
+        <p>Durant un an, j'ai travaillé en extra pour <span class="highlight">La Dimanche</span>, l'une des plus grandes soirées LGBTQ+ de Paris. J'y ai géré la mise en place des bars, l'anticipation des commandes, l'organisation des vestiaires et l'optimisation des process. Cette expérience m'a appris l'importance de la rigueur et de la communication en environnement événementiel.</p>
 
-      <p>Actuellement <span class="highlight">Community Manager et graphiste</span> pour le groupe Nasther (Le Next, Le Maze, Le Café A, La Maison Saint Martin), j'accompagne de nombreux événements : rencontre avec les organisateurs, traduction de leur vision en supports visuels. J'ai également pris l'initiative de créer le Brunch sans gluten au Café A, en partenariat avec NoGlu : campagne de communication, distribution de flyers, négociation de partenariats. L'événement a affiché complet.</p>
+        <p>Actuellement <span class="highlight">Community Manager et graphiste</span> pour le groupe Nasther (Le Next, Le Maze, Le Café A, La Maison Saint Martin), j'accompagne de nombreux événements : rencontre avec les organisateurs, traduction de leur vision en supports visuels. J'ai également pris l'initiative de créer le Brunch sans gluten au Café A, en partenariat avec NoGlu : campagne de communication, distribution de flyers, négociation de partenariats. L'événement a affiché complet.</p>
 
-      <p>En parallèle, je collabore avec le créateur de contenu Ludovik, pour lequel j'organise les caterings et prépare une projection spéciale pour sa Masterclass « Court ou Crève » : recherche de salle, création du compte Instagram, coordination logistique.</p>
+        <p>En parallèle, je collabore avec le créateur de contenu Ludovik, pour lequel j'organise les caterings et prépare une projection spéciale pour sa Masterclass « Court ou Crève » : recherche de salle, création du compte Instagram, coordination logistique.</p>
 
-      <p><span class="highlight">Luxembourgeoise</span>, je parle couramment luxembourgeois, français, allemand et anglais. Habituée au travail sous pression grâce à mes expériences en restauration et à la création de ma propre entreprise, je suis autonome, réactive et polyvalente. Je maîtrise les logiciels MS Office et Adobe Creative Suite.</p>
+        <p><span class="highlight">Luxembourgeoise</span>, je parle couramment luxembourgeois, français, allemand et anglais. Habituée au travail sous pression grâce à mes expériences en restauration et à la création de ma propre entreprise, je suis autonome, réactive et polyvalente. Je maîtrise les logiciels MS Office et Adobe Creative Suite.</p>
 
-      <p>Avec un an et demi d'expérience professionnelle et plusieurs années d'engagement dans l'organisation d'événements, je suis extrêmement motivée à poursuivre sur cette voie et à rejoindre une structure dynamique où je pourrai m'épanouir et évoluer.</p>
+        <p>Avec un an et demi d'expérience professionnelle et plusieurs années d'engagement dans l'organisation d'événements, je suis extrêmement motivée à poursuivre sur cette voie et à rejoindre une structure dynamique où je pourrai m'épanouir et évoluer.</p>
 
-      <p>Je serais ravie de pouvoir échanger avec vous lors d'un entretien afin de vous exposer plus en détail mon parcours et mes motivations.</p>
+        <p>Je serais ravie de pouvoir échanger avec vous lors d'un entretien afin de vous exposer plus en détail mon parcours et mes motivations.</p>
+      </div>
+
+      <div class="closing">
+        <p>Je vous remercie pour l'attention portée à ma candidature.</p>
+        <p>Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</p>
+        <p class="signature">Lea Sevenig</p>
+      </div>
     </div>
 
-    <div class="closing">
-      <p>Je vous remercie pour l'attention portée à ma candidature.</p>
-      <p>Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</p>
+    <!-- ENGLISH VERSION -->
+    <div class="lang-en">
+      <p class="salutation">Dear Sir or Madam,</p>
 
-      <p class="signature">Lea Sevenig</p>
+      <div class="body">
+        <p>Passionate about events and communication, I am writing to submit my spontaneous application. Although at the beginning of my professional career, the skills I have developed through my work, associative, and academic experiences make me a motivated and operational candidate.</p>
+
+        <p>I hold a <span class="highlight">Bachelor's degree in International Hospitality Management</span> with a specialization in entrepreneurship from Institut Lyfe in Lyon (formerly Institut Paul Bocuse). I have regularly participated in creating and organizing events: pop-up restaurant design, visual identity, communication, and logistics management. As the communication manager of the Student Union, I produced promotional videos and helped organize student events.</p>
+
+        <p>I also co-founded <span class="highlight">"Focacc'"</span>, a 6-month pop-up restaurant at La Commune in Lyon. There, I developed concepts to increase sales, including an innovative aperitif event that allowed us to animate slow periods, gain a competitive advantage, and add value to our products.</p>
+
+        <p>For one year, I worked as extra staff at <span class="highlight">La Dimanche</span>, one of the largest LGBTQ+ events in Paris. I managed bar setups, order anticipation, cloakroom organization, and process optimization. This experience taught me the importance of rigor and communication in an event environment.</p>
+
+        <p>Currently working as a <span class="highlight">Community Manager and Graphic Designer</span> for the Nasther group (Le Next, Le Maze, Le Café A, La Maison Saint Martin), I support numerous events: meeting with organizers, translating their vision into visual materials. I also took the initiative to create the Gluten-Free Brunch at Café A, in partnership with NoGlu: communication campaign, flyer distribution, partnership negotiations. The event was fully booked.</p>
+
+        <p>Additionally, I collaborate with content creator Ludovik, for whom I organize catering and am preparing a special screening for his Masterclass "Court ou Crève": venue search, Instagram account creation, and logistics coordination.</p>
+
+        <p>As a <span class="highlight">Luxembourger</span>, I am fluent in Luxembourgish, French, German, and English. Accustomed to working under pressure through my restaurant experiences and creating my own business, I am autonomous, responsive, and versatile. I am proficient in MS Office and Adobe Creative Suite.</p>
+
+        <p>With one and a half years of professional experience and several years of involvement in event organization, I am extremely motivated to continue on this path and join a dynamic organization where I can thrive and grow.</p>
+
+        <p>I would be delighted to discuss my background and motivations in more detail during an interview.</p>
+      </div>
+
+      <div class="closing">
+        <p>Thank you for considering my application.</p>
+        <p>Yours faithfully,</p>
+        <p class="signature">Lea Sevenig</p>
+      </div>
     </div>
 
     <footer class="footer">
-      <p>Portfolio : <a href="https://leasevenig.cv">leasevenig.cv</a> · LinkedIn : <a href="#">linkedin.com/in/leasevenig</a></p>
+      <p>Portfolio : <a href="https://leasevenig.cv">leasevenig.cv</a></p>
     </footer>
   </div>
+
+  <script>
+    function toggleLang() {
+      document.body.classList.toggle('fr');
+      document.body.classList.toggle('en');
+    }
+
+    function savePDF() {
+      window.print();
+    }
+  </script>
 </body>
 </html>
