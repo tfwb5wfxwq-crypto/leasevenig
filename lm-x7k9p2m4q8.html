@@ -462,11 +462,33 @@
       document.getElementById('currentDate').textContent = `Paris, le ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
     }
 
-    // Init
+    // Init - Lire les paramètres URL
     updateDate();
-    document.getElementById('subjectInput').value = profiles.general.subject;
-    document.getElementById('subjectDisplay').textContent = profiles.general.subject;
-    document.getElementById('letterBody').innerHTML = profiles.general.body;
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramCompany = urlParams.get('company');
+    const paramSubject = urlParams.get('subject');
+    const paramProfile = urlParams.get('profile');
+
+    // Appliquer le profil si spécifié
+    if (paramProfile && profiles[paramProfile]) {
+      currentProfile = paramProfile;
+      document.querySelectorAll('.profile-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(paramProfile.substring(0, 4)));
+      });
+      document.getElementById('letterBody').innerHTML = profiles[paramProfile].body;
+      document.getElementById('subjectInput').value = paramSubject || profiles[paramProfile].subject;
+      document.getElementById('subjectDisplay').textContent = paramSubject || profiles[paramProfile].subject;
+    } else {
+      document.getElementById('subjectInput').value = paramSubject || profiles.general.subject;
+      document.getElementById('subjectDisplay').textContent = paramSubject || profiles.general.subject;
+      document.getElementById('letterBody').innerHTML = profiles.general.body;
+    }
+
+    // Appliquer l'entreprise si spécifiée
+    if (paramCompany) {
+      document.getElementById('companyName').value = paramCompany;
+      document.getElementById('companyDisplay').textContent = ` - ${paramCompany}`;
+    }
 
     // Smooth language switch
     function switchLang(e) {
