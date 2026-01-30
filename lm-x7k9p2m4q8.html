@@ -283,6 +283,7 @@
       <div class="profile-buttons">
         <button class="profile-btn active" onclick="setProfile('general')">Généraliste</button>
         <button class="profile-btn" onclick="setProfile('marketing')">Marketing</button>
+        <button class="profile-btn" onclick="setProfile('event')">Événementiel</button>
         <button class="profile-btn" onclick="setProfile('hospitality')">Hôtellerie luxe</button>
         <button class="profile-btn" onclick="setProfile('communication')">Communication</button>
         <button class="profile-btn" onclick="setProfile('design')">Graphisme</button>
@@ -316,8 +317,8 @@
       <span class="subject-label lang-fr-inline">Objet</span>
       <span class="subject-label lang-en-inline">Subject</span>
       <p>
-        <span class="lang-fr-inline">Candidature spontanée<span id="companyFr"></span> – <span id="subjectFr">Événementiel & Communication</span></span>
-        <span class="lang-en-inline">Spontaneous Application<span id="companyEn"></span> – <span id="subjectEn">Events & Communication</span></span>
+        <span class="lang-fr-inline">Candidature spontanée<span id="companyFr"></span> – <span id="subjectFr">Candidature spontanée</span></span>
+        <span class="lang-en-inline">Spontaneous Application<span id="companyEn"></span> – <span id="subjectEn">Spontaneous Application</span></span>
       </p>
     </div>
 
@@ -379,45 +380,52 @@
   <script>
     const profiles = {
       general: {
-        subject: { fr: "Événementiel & Communication", en: "Events & Communication" },
+        subject: { fr: "Candidature spontanée", en: "Spontaneous Application" },
         intro: {
-          fr: "Passionnée par l'événementiel et la communication, je me permets de vous adresser ma candidature spontanée. Bien qu'en début de parcours professionnel, les compétences développées lors de mes expériences professionnelles, associatives et académiques font de moi une candidate motivée et opérationnelle.",
-          en: "Passionate about events and communication, I am writing to submit my spontaneous application. Although at the beginning of my professional career, the skills I have developed through my work and academic experiences make me a motivated and operational candidate."
+          fr: "Diplômée du <span class='highlight'>Bachelor de Management International</span> de l'Institut Lyfe (ex-Paul Bocuse) et actuellement en Master Communication à l'EFAP Paris, je me permets de vous adresser ma candidature spontanée. Mon parcours polyvalent, entre gestion, création et communication, fait de moi une candidate adaptable et opérationnelle.",
+          en: "Holding a <span class='highlight'>Bachelor's in International Management</span> from Institut Lyfe (formerly Paul Bocuse) and currently pursuing a Master's in Communication at EFAP Paris, I am writing to submit my spontaneous application. My versatile background spanning management, creation, and communication makes me an adaptable and operational candidate."
         }
       },
       marketing: {
-        subject: { fr: "Marketing & Événementiel", en: "Marketing & Events" },
+        subject: { fr: "Marketing & Stratégie de marque", en: "Marketing & Brand Strategy" },
         intro: {
-          fr: "Passionnée par le <span class='highlight'>marketing événementiel</span> et les stratégies de communication, je me permets de vous adresser ma candidature spontanée. Mes expériences en création de concepts, partenariats stratégiques et campagnes de communication font de moi une candidate opérationnelle et créative.",
-          en: "Passionate about <span class='highlight'>event marketing</span> and communication strategies, I am writing to submit my spontaneous application. My experience in concept creation, strategic partnerships, and communication campaigns make me an operational and creative candidate."
+          fr: "Passionnée par le <span class='highlight'>marketing et la stratégie de marque</span>, je me permets de vous adresser ma candidature spontanée. En cofondant Focacc', j'ai développé des concepts pour accroître les ventes et fidéliser la clientèle. Mon partenariat avec NoGlu pour le Café A m'a permis de créer une offre différenciante qui a affiché complet.",
+          en: "Passionate about <span class='highlight'>marketing and brand strategy</span>, I am writing to submit my spontaneous application. By co-founding Focacc', I developed concepts to increase sales and build customer loyalty. My partnership with NoGlu for Café A allowed me to create a differentiating offer that was fully booked."
+        }
+      },
+      event: {
+        subject: { fr: "Chef de projet événementiel", en: "Event Project Manager" },
+        intro: {
+          fr: "Passionnée par l'<span class='highlight'>événementiel</span>, je me permets de vous adresser ma candidature spontanée. J'ai coordonné la logistique de La Dimanche, l'une des plus grandes soirées LGBTQ+ de Paris, et organisé de nombreux événements : restaurants éphémères, lancements, brunches. La gestion de projet, la coordination des équipes et le respect des délais sont au cœur de mon approche.",
+          en: "Passionate about <span class='highlight'>events</span>, I am writing to submit my spontaneous application. I coordinated logistics for La Dimanche, one of Paris' largest LGBTQ+ events, and organized numerous events: pop-up restaurants, launches, brunches. Project management, team coordination, and meeting deadlines are at the heart of my approach."
         }
       },
       hospitality: {
-        subject: { fr: "Hôtellerie & Événementiel de luxe", en: "Luxury Hospitality & Events" },
+        subject: { fr: "Hôtellerie-Restauration de luxe", en: "Luxury Hospitality" },
         intro: {
-          fr: "Diplômée de l'<span class='highlight'>Institut Paul Bocuse</span>, passionnée par l'hôtellerie haut de gamme et l'événementiel de luxe, je me permets de vous adresser ma candidature spontanée. Ma formation d'excellence et mes expériences dans la restauration et l'événementiel font de moi une candidate exigeante et soucieuse du détail.",
-          en: "A graduate of the prestigious <span class='highlight'>Institut Paul Bocuse</span>, passionate about luxury hospitality and high-end events, I am writing to submit my spontaneous application. My excellent training and experience in fine dining and events make me a demanding candidate with attention to detail."
+          fr: "Diplômée du <span class='highlight'>Bachelor de l'Institut Paul Bocuse</span> avec spécialisation entrepreneuriat, je me permets de vous adresser ma candidature spontanée. Ma formation d'excellence m'a inculqué l'exigence du service haut de gamme, le souci du détail et la culture de l'hospitalité. J'ai mis ces valeurs en pratique en cofondant un restaurant à Lyon.",
+          en: "A graduate of the <span class='highlight'>Institut Paul Bocuse Bachelor's program</span> with a specialization in entrepreneurship, I am writing to submit my spontaneous application. My excellent training instilled in me the standards of high-end service, attention to detail, and hospitality culture. I put these values into practice by co-founding a restaurant in Lyon."
         }
       },
       communication: {
-        subject: { fr: "Communication & Création de contenu", en: "Communication & Content Creation" },
+        subject: { fr: "Communication digitale", en: "Digital Communication" },
         intro: {
-          fr: "Passionnée par la <span class='highlight'>communication digitale</span> et la création de contenu, je me permets de vous adresser ma candidature spontanée. Actuellement en Master Communication à l'EFAP Paris, j'ai développé des compétences solides en stratégie de contenu, gestion de communauté et communication visuelle.",
-          en: "Passionate about <span class='highlight'>digital communication</span> and content creation, I am writing to submit my spontaneous application. Currently pursuing a Master's in Communication at EFAP Paris, I have developed strong skills in content strategy, community management, and visual communication."
+          fr: "Actuellement en <span class='highlight'>Master Communication à l'EFAP Paris</span> et Community Manager pour le groupe Nasther (Le Next, Le Maze, Le Café A), je me permets de vous adresser ma candidature spontanée. Je gère au quotidien les réseaux sociaux, la création de contenu et la stratégie digitale de plusieurs établissements parisiens.",
+          en: "Currently pursuing a <span class='highlight'>Master's in Communication at EFAP Paris</span> and working as Community Manager for the Nasther group (Le Next, Le Maze, Le Café A), I am writing to submit my spontaneous application. I manage daily social media, content creation, and digital strategy for several Parisian establishments."
         }
       },
       design: {
-        subject: { fr: "Direction artistique & Graphisme", en: "Art Direction & Graphic Design" },
+        subject: { fr: "Graphisme & Direction artistique", en: "Graphic Design & Art Direction" },
         intro: {
-          fr: "Passionnée par le <span class='highlight'>design graphique</span> et la direction artistique, je me permets de vous adresser ma candidature spontanée. Ma maîtrise d'Adobe Creative Suite et mon expérience en création d'identités visuelles pour des événements et établissements font de moi une candidate créative et rigoureuse.",
-          en: "Passionate about <span class='highlight'>graphic design</span> and art direction, I am writing to submit my spontaneous application. My proficiency in Adobe Creative Suite and experience creating visual identities for events and venues make me a creative and rigorous candidate."
+          fr: "Passionnée par le <span class='highlight'>design graphique</span>, je me permets de vous adresser ma candidature spontanée. Je maîtrise Adobe Creative Suite (Photoshop, Illustrator, InDesign) et crée des identités visuelles, supports print et digitaux pour le groupe Nasther. Mon œil créatif et ma rigueur font de moi une graphiste autonome et fiable.",
+          en: "Passionate about <span class='highlight'>graphic design</span>, I am writing to submit my spontaneous application. I am proficient in Adobe Creative Suite (Photoshop, Illustrator, InDesign) and create visual identities, print and digital materials for the Nasther group. My creative eye and rigor make me an autonomous and reliable designer."
         }
       },
       production: {
-        subject: { fr: "Production vidéo & Événementiel", en: "Video Production & Events" },
+        subject: { fr: "Production audiovisuelle", en: "Audiovisual Production" },
         intro: {
-          fr: "Passionnée par la <span class='highlight'>production audiovisuelle</span> et l'événementiel, je me permets de vous adresser ma candidature spontanée. Mon expérience en organisation d'événements, coordination logistique et gestion de projets créatifs fait de moi une candidate polyvalente et réactive, prête à m'investir dans vos productions.",
-          en: "Passionate about <span class='highlight'>audiovisual production</span> and events, I am writing to submit my spontaneous application. My experience in event organization, logistics coordination, and creative project management makes me a versatile and responsive candidate, ready to commit to your productions."
+          fr: "Passionnée par la <span class='highlight'>production audiovisuelle</span>, je me permets de vous adresser ma candidature spontanée. Mon expérience en coordination logistique, gestion de prestataires et suivi de projets créatifs fait de moi une candidate organisée et réactive. Je sais gérer les imprévus et m'adapter aux contraintes de production.",
+          en: "Passionate about <span class='highlight'>audiovisual production</span>, I am writing to submit my spontaneous application. My experience in logistics coordination, vendor management, and creative project oversight makes me an organized and responsive candidate. I know how to handle unexpected situations and adapt to production constraints."
         }
       }
     };
