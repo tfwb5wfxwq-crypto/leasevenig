@@ -13,7 +13,6 @@
       --gold-light: #D4BC7B;
       --gray: #6B6B6B;
       --light-gray: #E8E4DF;
-      --edit-bg: rgba(201, 169, 98, 0.15);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,7 +27,6 @@
       padding: 20px;
     }
 
-    /* Toolbar */
     .toolbar {
       position: fixed;
       top: 20px;
@@ -51,12 +49,9 @@
       letter-spacing: 1px;
     }
 
-    .btn-lang { background: var(--charcoal); color: white; }
-    .btn-lang:hover { background: #444; }
     .btn-save { background: var(--gold); color: white; }
     .btn-save:hover { background: var(--gold-light); transform: translateY(-2px); }
 
-    /* Controls panel */
     .controls {
       max-width: 210mm;
       margin: 0 auto 20px;
@@ -95,7 +90,6 @@
 
     .controls input:focus { border-color: var(--gold); }
 
-    /* Profile buttons */
     .profile-buttons {
       display: flex;
       gap: 8px;
@@ -126,11 +120,10 @@
       color: white;
     }
 
-    /* Page */
     .page {
       width: 210mm;
       min-height: 297mm;
-      padding: 30mm 28mm 25mm 28mm;
+      padding: 25mm 25mm 20mm 25mm;
       margin: 0 auto;
       background: var(--cream);
       position: relative;
@@ -141,23 +134,23 @@
       text-align: right;
       font-size: 10pt;
       color: var(--gray);
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       font-style: italic;
     }
 
     .header {
-      margin-bottom: 25px;
-      padding-bottom: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--gold);
     }
 
     .name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 26pt;
+      font-size: 24pt;
       font-weight: 500;
       letter-spacing: 3px;
       color: var(--charcoal);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .contact-info {
@@ -169,8 +162,8 @@
     .contact-info a { color: var(--gold); text-decoration: none; }
 
     .subject {
-      margin-bottom: 20px;
-      padding: 10px 0;
+      margin-bottom: 15px;
+      padding: 8px 0;
       border-top: 1px solid var(--light-gray);
       border-bottom: 1px solid var(--light-gray);
     }
@@ -185,72 +178,59 @@
 
     .subject p {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 12pt;
+      font-size: 11pt;
       font-style: italic;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
-    .salutation { margin-bottom: 15px; font-weight: 500; font-size: 10.5pt; }
+    .salutation { margin-bottom: 12px; font-weight: 500; font-size: 9.5pt; }
 
     .body p {
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       text-align: justify;
-      font-size: 10pt;
-      line-height: 1.65;
+      font-size: 9pt;
+      line-height: 1.55;
     }
 
-    .highlight {
-      background: linear-gradient(to bottom, transparent 60%, rgba(201, 169, 98, 0.2) 60%);
-    }
-
-    .closing { margin-top: 20px; }
-    .closing p { margin-bottom: 4px; font-size: 10pt; }
+    .closing { margin-top: 15px; }
+    .closing p { margin-bottom: 3px; font-size: 9pt; line-height: 1.55; }
 
     .signature {
-      margin-top: 20px;
+      margin-top: 15px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 14pt;
+      font-size: 13pt;
       font-style: italic;
     }
 
     .footer {
       position: absolute;
-      bottom: 15mm;
-      left: 28mm;
-      right: 28mm;
+      bottom: 12mm;
+      left: 25mm;
+      right: 25mm;
       text-align: center;
-      padding-top: 10px;
+      padding-top: 8px;
       border-top: 1px solid var(--light-gray);
     }
 
     .footer p { font-size: 8pt; color: var(--gray); letter-spacing: 1px; }
     .footer a { color: var(--gold); text-decoration: none; }
 
-    /* Language toggle */
-    .lang-fr, .lang-en { display: none; }
-    body.fr .lang-fr { display: block; }
-    body.en .lang-en { display: block; }
-    body.fr .lang-fr-inline { display: inline; }
-    body.en .lang-en-inline { display: inline; }
-    body.fr .lang-en-inline { display: none; }
-    body.en .lang-fr-inline { display: none; }
-
-    /* Print */
     @media print {
       body { background: white; padding: 0; margin: 0; }
       .toolbar, .controls { display: none !important; }
       .page {
         width: 100%;
-        padding: 18mm 22mm 20mm 22mm;
+        padding: 20mm 22mm 18mm 22mm;
         box-shadow: none;
         min-height: auto;
       }
+      .body p { font-size: 9pt; line-height: 1.5; margin-bottom: 8px; }
       .footer {
         position: relative;
         bottom: auto;
         left: auto;
         right: auto;
-        margin-top: 25px;
+        margin-top: 20px;
       }
     }
 
@@ -264,41 +244,30 @@
     }
   </style>
 </head>
-<body class="fr">
+<body>
   <div class="toolbar">
-    <button class="btn-lang" onclick="toggleLang()">
-      <span class="lang-fr-inline">English</span>
-      <span class="lang-en-inline">Français</span>
-    </button>
-    <button class="btn-save" onclick="window.print()">
-      <span class="lang-fr-inline">📄 Sauvegarder PDF</span>
-      <span class="lang-en-inline">📄 Save PDF</span>
-    </button>
+    <button class="btn-save" onclick="window.print()">Sauvegarder PDF</button>
   </div>
 
   <div class="controls">
     <div class="controls-row">
-      <label class="lang-fr-inline">Profil</label>
-      <label class="lang-en-inline">Profile</label>
+      <label>Profil</label>
       <div class="profile-buttons">
-        <button class="profile-btn active" onclick="setProfile('general')">Généraliste</button>
+        <button class="profile-btn active" onclick="setProfile('general')">Général</button>
         <button class="profile-btn" onclick="setProfile('marketing')">Marketing</button>
         <button class="profile-btn" onclick="setProfile('event')">Événementiel</button>
         <button class="profile-btn" onclick="setProfile('hospitality')">Hôtellerie luxe</button>
         <button class="profile-btn" onclick="setProfile('communication')">Communication</button>
-        <button class="profile-btn" onclick="setProfile('design')">Graphisme</button>
-        <button class="profile-btn" onclick="setProfile('production')">Production vidéo</button>
+        <button class="profile-btn" onclick="setProfile('audiovisual')">Audiovisuel</button>
       </div>
     </div>
     <div class="controls-row">
-      <label class="lang-fr-inline">Entreprise</label>
-      <label class="lang-en-inline">Company</label>
+      <label>Entreprise</label>
       <input type="text" id="companyName" placeholder="Optionnel – Ex: Paperjam" oninput="updateCompany()">
     </div>
     <div class="controls-row">
-      <label class="lang-fr-inline">Sujet</label>
-      <label class="lang-en-inline">Subject</label>
-      <input type="text" id="subjectInput" placeholder="Ex: Marketing & Événementiel" oninput="updateSubject()">
+      <label>Objet</label>
+      <input type="text" id="subjectInput" placeholder="Ex: Chef de projet marketing" oninput="updateSubject()">
     </div>
   </div>
 
@@ -308,68 +277,24 @@
     <header class="header">
       <h1 class="name">LEA SEVENIG</h1>
       <p class="contact-info">Paris, France · +33 6 64 32 20 24 · leasevenig13@icloud.com</p>
-      <p class="contact-info" style="margin-top: 5px;">
+      <p class="contact-info" style="margin-top: 4px;">
         <a href="https://leasevenig.cv" style="font-weight: 500;">leasevenig.cv</a>
       </p>
     </header>
 
     <div class="subject">
-      <span class="subject-label lang-fr-inline">Objet</span>
-      <span class="subject-label lang-en-inline">Subject</span>
-      <p>
-        <span class="lang-fr-inline">Candidature spontanée<span id="companyFr"></span> – <span id="subjectFr">Candidature spontanée</span></span>
-        <span class="lang-en-inline">Spontaneous Application<span id="companyEn"></span> – <span id="subjectEn">Spontaneous Application</span></span>
-      </p>
+      <span class="subject-label">Objet</span>
+      <p><span id="subjectDisplay">Candidature</span><span id="companyDisplay"></span></p>
     </div>
 
-    <!-- FRENCH VERSION -->
-    <div class="lang-fr">
-      <p class="salutation">Madame, Monsieur,</p>
-      <div class="body">
-        <p id="intro-fr">Passionnée par l'événementiel et la communication, je me permets de vous adresser ma candidature spontanée. Bien qu'en début de parcours professionnel, les compétences développées lors de mes expériences professionnelles, associatives et académiques font de moi une candidate motivée et opérationnelle.</p>
+    <p class="salutation">Madame, Monsieur,</p>
 
-        <p id="formation-fr">Diplômée du <span class="highlight">Bachelor de Management International de l'hôtellerie et de la restauration</span> avec spécialisation entrepreneuriat à l'Institut Lyfe à Lyon (anciennement Institut Paul Bocuse), j'ai régulièrement participé à la création et à l'organisation d'événements : conception de restaurants éphémères, identité visuelle, communication, gestion logistique.</p>
+    <div class="body" id="letterBody"></div>
 
-        <p id="experience1-fr">J'ai cofondé <span class="highlight">"Focacc'"</span>, un restaurant éphémère de 6 mois à Lyon où j'ai développé des concepts innovants pour accroître les ventes et fidéliser la clientèle.</p>
-
-        <p id="experience2-fr">Durant un an, j'ai travaillé pour <span class="highlight">La Dimanche</span>, l'une des plus grandes soirées LGBTQ+ de Paris, où j'ai géré la logistique bar, les commandes et l'optimisation des process.</p>
-
-        <p id="experience3-fr">Actuellement <span class="highlight">Community Manager et graphiste</span> pour le groupe Nasther (Le Next, Le Maze, Le Café A, La Maison Saint Martin), j'accompagne de nombreux événements et j'ai créé le Brunch sans gluten au Café A en partenariat avec NoGlu – événement complet.</p>
-
-        <p id="skills-fr"><span class="highlight">Luxembourgeoise</span>, je parle couramment luxembourgeois, français, allemand et anglais. Autonome et polyvalente, je maîtrise MS Office et Adobe Creative Suite.</p>
-
-        <p>Je serais ravie d'échanger avec vous lors d'un entretien pour vous présenter mon parcours plus en détail.</p>
-      </div>
-      <div class="closing">
-        <p>Je vous remercie pour l'attention portée à ma candidature.</p>
-        <p>Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</p>
-        <p class="signature">Lea Sevenig</p>
-      </div>
-    </div>
-
-    <!-- ENGLISH VERSION -->
-    <div class="lang-en">
-      <p class="salutation">Dear Sir or Madam,</p>
-      <div class="body">
-        <p id="intro-en">Passionate about events and communication, I am writing to submit my spontaneous application. Although at the beginning of my professional career, the skills I have developed through my work and academic experiences make me a motivated and operational candidate.</p>
-
-        <p id="formation-en">I hold a <span class="highlight">Bachelor's degree in International Hospitality Management</span> with a specialization in entrepreneurship from Institut Lyfe in Lyon (formerly Institut Paul Bocuse). I have regularly participated in creating and organizing events: pop-up restaurant design, visual identity, communication, and logistics.</p>
-
-        <p id="experience1-en">I co-founded <span class="highlight">"Focacc'"</span>, a 6-month pop-up restaurant in Lyon where I developed innovative concepts to increase sales and build customer loyalty.</p>
-
-        <p id="experience2-en">For one year, I worked at <span class="highlight">La Dimanche</span>, one of the largest LGBTQ+ events in Paris, managing bar logistics, orders, and process optimization.</p>
-
-        <p id="experience3-en">Currently working as a <span class="highlight">Community Manager and Graphic Designer</span> for the Nasther group (Le Next, Le Maze, Le Café A, La Maison Saint Martin), I support numerous events and created the Gluten-Free Brunch at Café A in partnership with NoGlu – fully booked event.</p>
-
-        <p id="skills-en">As a <span class="highlight">Luxembourger</span>, I am fluent in Luxembourgish, French, German, and English. Autonomous and versatile, I am proficient in MS Office and Adobe Creative Suite.</p>
-
-        <p>I would be delighted to discuss my background in more detail during an interview.</p>
-      </div>
-      <div class="closing">
-        <p>Thank you for considering my application.</p>
-        <p>Yours faithfully,</p>
-        <p class="signature">Lea Sevenig</p>
-      </div>
+    <div class="closing">
+      <p>Je serais ravie d'échanger avec vous lors d'un entretien afin de vous présenter plus en détail mon parcours et ma motivation.</p>
+      <p>Je vous remercie pour l'attention portée à ma candidature et vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</p>
+      <p class="signature">Lea Sevenig</p>
     </div>
 
     <footer class="footer">
@@ -380,53 +305,96 @@
   <script>
     const profiles = {
       general: {
-        subject: { fr: "Candidature spontanée", en: "Spontaneous Application" },
-        intro: {
-          fr: "Diplômée du <span class='highlight'>Bachelor de Management International</span> de l'Institut Lyfe (ex-Paul Bocuse) et actuellement en Master Communication à l'EFAP Paris, je me permets de vous adresser ma candidature spontanée. Mon parcours polyvalent, entre gestion, création et communication, fait de moi une candidate adaptable et opérationnelle.",
-          en: "Holding a <span class='highlight'>Bachelor's in International Management</span> from Institut Lyfe (formerly Paul Bocuse) and currently pursuing a Master's in Communication at EFAP Paris, I am writing to submit my spontaneous application. My versatile background spanning management, creation, and communication makes me an adaptable and operational candidate."
-        }
+        subject: "Candidature",
+        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
+
+<p>Mon parcours s'inscrit à l'interface du marketing, de la communication et du développement de marque, avec une forte dimension opérationnelle. Issue du terrain, j'ai acquis une compréhension concrète des enjeux business, de positionnement et de performance, notamment dans les secteurs de la restauration et des lieux de vie.</p>
+
+<p>Lors de mes études puis de mes expériences professionnelles, j'ai contribué à la construction et au déploiement de stratégies marketing complètes, allant de la définition de l'identité de marque à la création de contenus, en passant par la gestion des canaux digitaux et l'optimisation de la visibilité. Ces expériences m'ont permis de travailler sur la cohérence des messages, l'attractivité des concepts et la fidélisation des publics.</p>
+
+<p>En 2022, j'ai cofondé et dirigé le restaurant éphémère Focacc' à Lyon. J'y ai piloté le positionnement de marque, la stratégie de communication et les leviers d'acquisition, avec pour objectif d'augmenter la fréquentation et les ventes sur une durée limitée.</p>
+
+<p>Après l'obtention de mon master, j'ai intégré le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai assuré le pilotage marketing de plusieurs établissements parisiens, incluant la stratégie de marque, la création de supports print et digitaux, le community management et le suivi des performances. J'y ai notamment développé des concepts marketing visant à accroître la visibilité et l'engagement des clients.</p>
+
+<p>Luxembourgeoise, je parle couramment le luxembourgeois, le français, l'allemand et l'anglais. Autonome et polyvalente, je maîtrise les outils bureautiques ainsi que la suite Adobe.</p>
+
+<p>Je souhaite aujourd'hui rejoindre votre structure afin de compléter mon parcours et d'enrichir mon expérience professionnelle au sein d'une équipe exigeante et engagée. Convaincue que mon profil à la fois stratégique et opérationnel peut constituer un réel atout, je suis persuadée de pouvoir contribuer efficacement au développement de vos projets marketing et à la performance de votre marque.</p>`
       },
       marketing: {
-        subject: { fr: "Marketing & Stratégie de marque", en: "Marketing & Brand Strategy" },
-        intro: {
-          fr: "Passionnée par le <span class='highlight'>marketing et la stratégie de marque</span>, je me permets de vous adresser ma candidature spontanée. En cofondant Focacc', j'ai développé des concepts pour accroître les ventes et fidéliser la clientèle. Mon partenariat avec NoGlu pour le Café A m'a permis de créer une offre différenciante qui a affiché complet.",
-          en: "Passionate about <span class='highlight'>marketing and brand strategy</span>, I am writing to submit my spontaneous application. By co-founding Focacc', I developed concepts to increase sales and build customer loyalty. My partnership with NoGlu for Café A allowed me to create a differentiating offer that was fully booked."
-        }
-      },
-      event: {
-        subject: { fr: "Chef de projet événementiel", en: "Event Project Manager" },
-        intro: {
-          fr: "Passionnée par l'<span class='highlight'>événementiel</span>, je me permets de vous adresser ma candidature spontanée. J'ai coordonné la logistique de La Dimanche, l'une des plus grandes soirées LGBTQ+ de Paris, et organisé de nombreux événements : restaurants éphémères, lancements, brunches. La gestion de projet, la coordination des équipes et le respect des délais sont au cœur de mon approche.",
-          en: "Passionate about <span class='highlight'>events</span>, I am writing to submit my spontaneous application. I coordinated logistics for La Dimanche, one of Paris' largest LGBTQ+ events, and organized numerous events: pop-up restaurants, launches, brunches. Project management, team coordination, and meeting deadlines are at the heart of my approach."
-        }
+        subject: "Candidature - Marketing",
+        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
+
+<p>Mon parcours s'inscrit dans une logique marketing orientée marque, performance et cohérence des dispositifs de communication. Issue d'un environnement opérationnel, j'ai développé une vision globale des enjeux business, allant du positionnement stratégique à l'activation des leviers marketing, avec une attention particulière portée à l'image, aux messages et à l'expérience client.</p>
+
+<p>Au cours de mes expériences, j'ai contribué à la définition et au déploiement de stratégies marketing multi-canales, en travaillant sur l'identité de marque, la production de contenus, la gestion des supports print et digitaux ainsi que le pilotage des réseaux sociaux. Ces missions m'ont permis de renforcer la cohérence des prises de parole, d'optimiser la visibilité des marques et de soutenir leurs objectifs de développement.</p>
+
+<p>En parallèle, la cofondation et la direction d'un restaurant éphémère m'ont apporté une compréhension concrète des enjeux de lancement, d'acquisition et de fidélisation, ainsi qu'une approche orientée résultats et optimisation des ressources.</p>
+
+<p>Après l'obtention de mon master, j'ai rejoint le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai piloté la communication et le marketing de plusieurs établissements, en lien étroit avec les équipes opérationnelles et la direction, en veillant à la cohérence des marques, à la performance des actions menées et à l'alignement avec les objectifs stratégiques du groupe.</p>
+
+<p>Aujourd'hui, je souhaite intégrer votre structure afin de compléter mon parcours et d'enrichir mon expérience professionnelle dans un environnement structuré. Convaincue que mon profil polyvalent, alliant vision stratégique et capacité d'exécution, peut constituer un réel atout, je suis persuadée de pouvoir contribuer efficacement à vos projets marketing.</p>`
       },
       hospitality: {
-        subject: { fr: "Hôtellerie-Restauration de luxe", en: "Luxury Hospitality" },
-        intro: {
-          fr: "Diplômée du <span class='highlight'>Bachelor de l'Institut Paul Bocuse</span> avec spécialisation entrepreneuriat, je me permets de vous adresser ma candidature spontanée. Ma formation d'excellence m'a inculqué l'exigence du service haut de gamme, le souci du détail et la culture de l'hospitalité. J'ai mis ces valeurs en pratique en cofondant un restaurant à Lyon.",
-          en: "A graduate of the <span class='highlight'>Institut Paul Bocuse Bachelor's program</span> with a specialization in entrepreneurship, I am writing to submit my spontaneous application. My excellent training instilled in me the standards of high-end service, attention to detail, and hospitality culture. I put these values into practice by co-founding a restaurant in Lyon."
-        }
+        subject: "Candidature - Hôtellerie de luxe",
+        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
+
+<p>Mon parcours s'inscrit dans une approche marketing orientée image, positionnement de marque et expérience client, avec une sensibilité particulière aux codes du luxe et aux standards d'excellence propres à l'hôtellerie haut de gamme. Issue du terrain, j'ai développé une compréhension concrète des enjeux de service, de cohérence de marque et de perception client.</p>
+
+<p>Au fil de mes expériences, j'ai contribué à la construction et au déploiement de stratégies marketing visant à renforcer l'identité des lieux, la qualité des prises de parole et la valorisation de l'expérience proposée. J'ai travaillé sur la création de contenus, la gestion des supports print et digitaux, ainsi que sur la cohérence des messages diffusés auprès de publics exigeants, en accord avec le positionnement des marques.</p>
+
+<p>La cofondation et la direction d'un restaurant m'ont permis d'acquérir une vision globale des enjeux liés à l'image, à l'attractivité et à la fidélisation, tout en intégrant les impératifs opérationnels et économiques. Cette expérience a renforcé mon sens du détail, de la qualité perçue et de la constance, essentiels dans l'univers du luxe.</p>
+
+<p>Après l'obtention de mon master, j'ai intégré le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai piloté la communication et le marketing de plusieurs établissements, en veillant à la cohérence des marques, à la qualité des supports et à l'alignement entre image, discours et expérience client.</p>
+
+<p>Aujourd'hui, je souhaite orienter mon parcours vers le marketing dans l'hôtellerie de luxe ou le secteur du luxe, afin de mettre mes compétences au service de marques à forte identité et à haut niveau d'exigence. Mon profil, à la fois stratégique et opérationnel, me permet de comprendre les attentes d'une clientèle premium tout en contribuant concrètement au rayonnement et à la valorisation d'une marque.</p>`
       },
       communication: {
-        subject: { fr: "Communication digitale", en: "Digital Communication" },
-        intro: {
-          fr: "Actuellement en <span class='highlight'>Master Communication à l'EFAP Paris</span> et Community Manager pour le groupe Nasther (Le Next, Le Maze, Le Café A), je me permets de vous adresser ma candidature spontanée. Je gère au quotidien les réseaux sociaux, la création de contenu et la stratégie digitale de plusieurs établissements parisiens.",
-          en: "Currently pursuing a <span class='highlight'>Master's in Communication at EFAP Paris</span> and working as Community Manager for the Nasther group (Le Next, Le Maze, Le Café A), I am writing to submit my spontaneous application. I manage daily social media, content creation, and digital strategy for several Parisian establishments."
-        }
+        subject: "Candidature - Communication",
+        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
+
+<p>Mon parcours est résolument orienté communication de marque et stratégie de contenus, avec une attention particulière portée à l'image, aux messages et à leur cohérence sur l'ensemble des supports. Issue d'un environnement opérationnel, j'ai développé une approche exigeante de la communication, pensée comme un levier de valorisation, de différenciation et de crédibilité des marques.</p>
+
+<p>Au cours de mes expériences, j'ai conçu et déployé des dispositifs de communication globaux, incluant la définition des axes éditoriaux, la création de contenus print et digitaux, la gestion des réseaux sociaux et la coordination de projets visuels. Ces missions m'ont permis d'assurer une communication cohérente, qualitative et alignée avec le positionnement des marques, notamment auprès de publics exigeants.</p>
+
+<p>La cofondation et la direction d'un restaurant m'ont apporté une compréhension concrète des enjeux d'image et de prise de parole, ainsi qu'une forte culture du détail et de la qualité perçue. Cette expérience terrain nourrit aujourd'hui ma manière de concevoir des messages justes, crédibles et en adéquation avec l'expérience réellement vécue par le client.</p>
+
+<p>Après l'obtention de mon master, j'ai rejoint le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai piloté la communication de plusieurs établissements, en veillant à la cohérence des supports, à la qualité des contenus et à l'alignement entre discours, image et identité de marque.</p>
+
+<p>Aujourd'hui, je souhaite poursuivre mon parcours au sein d'une structure où la communication occupe une place stratégique et structurante. Je suis convaincue que mon profil, à la fois créatif, rigoureux et opérationnel, peut constituer un réel atout pour votre équipe et contribuer efficacement à la valorisation de votre image et de vos projets.</p>`
       },
-      design: {
-        subject: { fr: "Graphisme & Direction artistique", en: "Graphic Design & Art Direction" },
-        intro: {
-          fr: "Passionnée par le <span class='highlight'>design graphique</span>, je me permets de vous adresser ma candidature spontanée. Je maîtrise Adobe Creative Suite (Photoshop, Illustrator, InDesign) et crée des identités visuelles, supports print et digitaux pour le groupe Nasther. Mon œil créatif et ma rigueur font de moi une graphiste autonome et fiable.",
-          en: "Passionate about <span class='highlight'>graphic design</span>, I am writing to submit my spontaneous application. I am proficient in Adobe Creative Suite (Photoshop, Illustrator, InDesign) and create visual identities, print and digital materials for the Nasther group. My creative eye and rigor make me an autonomous and reliable designer."
-        }
+      audiovisual: {
+        subject: "Candidature - Audiovisuel",
+        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
+
+<p>Mon parcours est principalement orienté vers la communication visuelle et la production de contenus, avec une forte sensibilité à l'image, à la cohérence des supports et à la qualité des prises de parole. Issue du terrain de la restauration et de l'hôtellerie haut de gamme, j'ai développé une compréhension concrète des enjeux d'image, d'expérience client et de positionnement de marque.</p>
+
+<p>Au cours de mes expériences, j'ai conçu et produit des dispositifs de communication visuelle complets, de la définition de l'identité graphique à la déclinaison des supports print et digitaux, en passant par le web design et la production audiovisuelle. J'interviens sur l'ensemble de la chaîne de production, de la conception à la livraison, en coordonnant les différents intervenants et en veillant à la cohérence esthétique, au respect des délais et aux exigences de qualité.</p>
+
+<p>Dans le cadre d'un projet de master, j'ai également travaillé sur la communication et la production de contenus pour la masterclass "Court ou Crève", développée en collaboration avec le youtubeur Ludovic. J'ai participé à la création d'une vidéo virale, au lancement et à la gestion du compte Instagram ainsi qu'à la conception du site web du projet. Cette expérience m'a permis d'approfondir ma compréhension des codes du digital, de la production audiovisuelle et de la stratégie de contenus, en lien avec une audience engagée et des objectifs de visibilité précis.</p>
+
+<p>Après l'obtention de mon master, j'ai intégré le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai piloté la production visuelle et la communication de plusieurs établissements, incluant la création de contenus graphiques, la gestion des réseaux sociaux, la conception de sites web et le suivi de projets visuels. J'y ai également travaillé sur des projets de storytelling, de rebranding et de valorisation d'image, en lien étroit avec les équipes opérationnelles.</p>
+
+<p>En parallèle, mon activité indépendante en tant que graphiste et responsable de projet m'a permis d'accompagner différents restaurants dans la création ou l'évolution de leur identité visuelle, ainsi que dans le suivi de projets audiovisuels. Ces expériences ont renforcé ma capacité à gérer des productions visuelles exigeantes, adaptées à des univers de marque variés, tout en restant attentive aux contraintes opérationnelles.</p>
+
+<p>Aujourd'hui, je souhaite rejoindre une structure où la production visuelle et la communication occupent une place stratégique, afin de compléter mon parcours et d'enrichir mon expérience professionnelle. Mon profil, à la fois créatif, rigoureux et opérationnel, me permet de m'intégrer rapidement au sein d'une équipe et de contribuer concrètement à la qualité et à la cohérence des supports de communication.</p>`
       },
-      production: {
-        subject: { fr: "Production audiovisuelle", en: "Audiovisual Production" },
-        intro: {
-          fr: "Passionnée par la <span class='highlight'>production audiovisuelle</span>, je me permets de vous adresser ma candidature spontanée. Mon expérience en coordination logistique, gestion de prestataires et suivi de projets créatifs fait de moi une candidate organisée et réactive. Je sais gérer les imprévus et m'adapter aux contraintes de production.",
-          en: "Passionate about <span class='highlight'>audiovisual production</span>, I am writing to submit my spontaneous application. My experience in logistics coordination, vendor management, and creative project oversight makes me an organized and responsive candidate. I know how to handle unexpected situations and adapt to production constraints."
-        }
+      event: {
+        subject: "Candidature - Événementiel",
+        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
+
+<p>Mon parcours s'est construit autour de la conception, de l'organisation et de la coordination de projets événementiels, avec une forte dimension opérationnelle. Issue du terrain de la restauration et de l'hôtellerie, j'ai développé une approche pragmatique de l'événementiel, intégrant à la fois les enjeux logistiques, la communication et l'expérience du public.</p>
+
+<p>Au cours de mes expériences professionnelles, j'ai participé à la création et à l'organisation de différents projets événementiels, incluant des restaurants éphémères, des lancements de concepts et des formats associant communication et production de contenus. J'ai été amenée à intervenir sur la conception des projets, la coordination des équipes, la gestion logistique ainsi que la mise en place des supports de communication liés aux événements.</p>
+
+<p>J'ai également collaboré à la conception et à la production de la masterclass "Court ou Crève", développée avec le youtubeur Ludovic. J'ai participé à la coordination du projet, à la production de la vidéo principale, au lancement et à la gestion du compte Instagram ainsi qu'à la création du site web. Ce projet m'a permis de travailler sur un format événementiel à forte visibilité, mêlant production de contenu, gestion de planning et coordination, en lien avec une audience large et engagée.</p>
+
+<p>En 2022, j'ai cofondé et dirigé le restaurant éphémère Focacc' à Lyon pendant six mois. Ce projet m'a permis de piloter l'ensemble de l'organisation, de la définition du concept à sa mise en œuvre opérationnelle, en passant par la communication, la gestion des équipes et l'optimisation des process sur la durée.</p>
+
+<p>J'ai également travaillé pendant un an pour La Dimanche, l'une des soirées LGBTQ+ majeures à Paris, où j'étais en charge de la logistique bar, de la gestion des commandes et de l'optimisation des flux, dans un contexte événementiel à forte affluence et à contraintes opérationnelles élevées.</p>
+
+<p>Par la suite, au sein du groupe Nasther, j'ai accompagné de nombreux événements en lien avec les différents établissements, en assurant la coordination entre les équipes, la production des supports de communication et le suivi opérationnel. Ces expériences m'ont permis de renforcer mon sens de l'organisation, ma capacité d'adaptation et ma rigueur dans la gestion simultanée de plusieurs projets.</p>
+
+<p>Aujourd'hui, je souhaite poursuivre mon parcours dans le domaine de l'événementiel, au sein d'une structure où l'exigence opérationnelle, la créativité et la qualité de l'expérience proposée occupent une place centrale. Mon profil polyvalent, à la fois organisé, autonome et habitué au terrain, me permet de m'intégrer rapidement et de contribuer efficacement à vos projets.</p>`
       }
     };
 
@@ -434,70 +402,36 @@
 
     function setProfile(profile) {
       currentProfile = profile;
-
-      // Update buttons
       document.querySelectorAll('.profile-btn').forEach(btn => btn.classList.remove('active'));
       event.target.classList.add('active');
 
-      // Update content
       const p = profiles[profile];
-      const isFr = document.body.classList.contains('fr');
-      document.getElementById('subjectInput').value = isFr ? p.subject.fr : p.subject.en;
-      document.getElementById('subjectFr').textContent = p.subject.fr;
-      document.getElementById('subjectEn').textContent = p.subject.en;
-      document.getElementById('intro-fr').innerHTML = p.intro.fr;
-      document.getElementById('intro-en').innerHTML = p.intro.en;
+      document.getElementById('subjectInput').value = p.subject;
+      document.getElementById('subjectDisplay').textContent = p.subject;
+      document.getElementById('letterBody').innerHTML = p.body;
     }
 
     function updateSubject() {
       const subject = document.getElementById('subjectInput').value.trim();
-      if (subject) {
-        document.getElementById('subjectFr').textContent = subject;
-        document.getElementById('subjectEn').textContent = subject;
-      } else {
-        // Revert to profile default if empty
-        const p = profiles[currentProfile];
-        document.getElementById('subjectFr').textContent = p.subject.fr;
-        document.getElementById('subjectEn').textContent = p.subject.en;
-      }
+      document.getElementById('subjectDisplay').textContent = subject || profiles[currentProfile].subject;
     }
 
     function updateCompany() {
       const company = document.getElementById('companyName').value.trim();
-      document.getElementById('companyFr').textContent = company ? ` – ${company}` : '';
-      document.getElementById('companyEn').textContent = company ? ` – ${company}` : '';
-    }
-
-    function toggleLang() {
-      document.body.classList.toggle('fr');
-      document.body.classList.toggle('en');
-      updateDate();
-
-      // Update subject input if it's still a profile default
-      const p = profiles[currentProfile];
-      const input = document.getElementById('subjectInput');
-      const isFr = document.body.classList.contains('fr');
-      if (input.value === p.subject.fr || input.value === p.subject.en) {
-        input.value = isFr ? p.subject.fr : p.subject.en;
-      }
+      document.getElementById('companyDisplay').textContent = company ? ` - ${company}` : '';
     }
 
     function updateDate() {
-      const months = {
-        fr: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
-        en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-      };
+      const months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
       const now = new Date();
-      const isFr = document.body.classList.contains('fr');
-      const dateStr = isFr
-        ? `Paris, le ${now.getDate()} ${months.fr[now.getMonth()]} ${now.getFullYear()}`
-        : `Paris, ${months.en[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
-      document.getElementById('currentDate').textContent = dateStr;
+      document.getElementById('currentDate').textContent = `Paris, le ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
     }
 
+    // Init
     updateDate();
-    // Initialize subject field with default profile
-    document.getElementById('subjectInput').value = profiles.general.subject.fr;
+    document.getElementById('subjectInput').value = profiles.general.subject;
+    document.getElementById('subjectDisplay').textContent = profiles.general.subject;
+    document.getElementById('letterBody').innerHTML = profiles.general.body;
   </script>
 </body>
 </html>
