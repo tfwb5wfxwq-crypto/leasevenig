@@ -81,22 +81,47 @@
       box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     }
 
-    /* Editable zones */
-    .editable {
-      background: var(--edit-bg);
-      border: 1px dashed var(--gold);
-      padding: 2px 6px;
-      border-radius: 3px;
-      outline: none;
-      transition: all 0.3s ease;
-      display: inline-block;
+    /* Date */
+    .date {
+      text-align: right;
+      font-size: 10pt;
+      color: var(--gray);
+      margin-bottom: 20px;
+      font-style: italic;
     }
 
-    .editable:hover { background: rgba(201, 169, 98, 0.25); }
-    .editable:focus {
-      background: white;
-      border-style: solid;
-      box-shadow: 0 0 0 3px rgba(201, 169, 98, 0.3);
+    /* Company input */
+    .company-input {
+      background: var(--edit-bg);
+      border: 1px dashed var(--gold);
+      padding: 12px 15px;
+      border-radius: 6px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .company-input label {
+      font-size: 11px;
+      color: var(--gray);
+      white-space: nowrap;
+    }
+
+    .company-input input {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid var(--gold);
+      background: transparent;
+      padding: 5px 0;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11pt;
+      color: var(--charcoal);
+      outline: none;
+    }
+
+    .company-input input:focus {
+      border-bottom-width: 2px;
     }
 
     /* Header */
@@ -196,9 +221,8 @@
     /* Print styles */
     @media print {
       body { background: white; padding: 0; }
-      .toolbar, .instructions { display: none !important; }
+      .toolbar, .instructions, .company-input { display: none !important; }
       .page { width: 100%; padding: 15mm 20mm; box-shadow: none; min-height: auto; }
-      .editable { background: transparent !important; border: none !important; padding: 0 !important; }
     }
 
     /* Mobile */
@@ -223,27 +247,36 @@
   </div>
 
   <div class="instructions">
-    <span class="lang-fr-inline"><strong>Zones dorées</strong> = à personnaliser. Clique pour modifier, puis <strong>Sauvegarder PDF</strong>.</span>
-    <span class="lang-en-inline"><strong>Golden zones</strong> = customize. Click to edit, then <strong>Save PDF</strong>.</span>
+    <span class="lang-fr-inline">Ajoute le <strong>nom de l'entreprise</strong> si besoin, puis <strong>Sauvegarder PDF</strong>. La date est automatique.</span>
+    <span class="lang-en-inline">Add the <strong>company name</strong> if needed, then <strong>Save PDF</strong>. Date is automatic.</span>
   </div>
 
   <div class="page">
     <header class="header">
       <h1 class="name">LEA SEVENIG</h1>
       <p class="contact-info">
-        <span contenteditable="true" class="editable">Paris, France</span> ·
-        <span contenteditable="true" class="editable">+352 621 XXX XXX</span> ·
-        <span contenteditable="true" class="editable">lea.sevenig@email.com</span>
+        Paris, France · +352 621 367 684 · lea.sevenig@gmail.com
       </p>
       <p class="contact-info" style="margin-top: 5px;">
         <a href="https://leasevenig.cv" style="font-weight: 500;">leasevenig.cv</a>
       </p>
     </header>
 
+    <p class="date" id="currentDate"></p>
+
     <div class="subject">
       <span class="subject-label lang-fr-inline">Objet</span>
       <span class="subject-label lang-en-inline">Subject</span>
-      <p><span contenteditable="true" class="editable lang-fr-inline">Candidature spontanée – Événementiel & Communication</span><span contenteditable="true" class="editable lang-en-inline">Spontaneous Application – Events & Communication</span></p>
+      <p>
+        <span class="lang-fr-inline">Candidature spontanée<span id="companyFr"></span> – Événementiel & Communication</span>
+        <span class="lang-en-inline">Spontaneous Application<span id="companyEn"></span> – Events & Communication</span>
+      </p>
+    </div>
+
+    <div class="company-input">
+      <label class="lang-fr-inline">Nom de l'entreprise (optionnel) :</label>
+      <label class="lang-en-inline">Company name (optional):</label>
+      <input type="text" id="companyName" placeholder="Ex: Paperjam" oninput="updateCompany()">
     </div>
 
     <!-- FRENCH VERSION -->
@@ -314,14 +347,44 @@
   </div>
 
   <script>
+    // Set current date
+    const months = {
+      fr: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+      en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    };
+
+    function updateDate() {
+      const now = new Date();
+      const day = now.getDate();
+      const month = now.getMonth();
+      const year = now.getFullYear();
+      const isFr = document.body.classList.contains('fr');
+
+      const dateStr = isFr
+        ? `Paris, le ${day} ${months.fr[month]} ${year}`
+        : `Paris, ${months.en[month]} ${day}, ${year}`;
+
+      document.getElementById('currentDate').textContent = dateStr;
+    }
+
     function toggleLang() {
       document.body.classList.toggle('fr');
       document.body.classList.toggle('en');
+      updateDate();
+    }
+
+    function updateCompany() {
+      const company = document.getElementById('companyName').value.trim();
+      document.getElementById('companyFr').textContent = company ? ` – ${company}` : '';
+      document.getElementById('companyEn').textContent = company ? ` – ${company}` : '';
     }
 
     function savePDF() {
       window.print();
     }
+
+    // Init
+    updateDate();
   </script>
 </body>
 </html>
