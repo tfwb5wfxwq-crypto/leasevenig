@@ -138,17 +138,20 @@
       }
     }
 
-    /* Mobile - zoom the CV to fit screen */
+    /* Mobile - scale CV to fit screen */
     @media screen and (max-width: 800px) {
       body {
-        padding: 10px;
-        align-items: flex-start;
-        justify-content: center;
+        padding: 0;
+        margin: 0;
         min-height: auto;
-        padding-bottom: 80px;
+        display: block;
+        overflow-x: hidden;
       }
       .cv {
-        zoom: 0.47;
+        transform: scale(0.47);
+        transform-origin: top left;
+        margin-left: calc((100vw - 793px * 0.47) / 2);
+        margin-bottom: calc(-1122px * 0.53);
       }
       .print-btn {
         position: fixed;
@@ -160,11 +163,17 @@
         font-size: 15px;
         z-index: 1000;
       }
+      .lang-selector {
+        top: 10px;
+        right: 10px;
+      }
     }
 
     @media screen and (max-width: 400px) {
       .cv {
-        zoom: 0.38;
+        transform: scale(0.38);
+        margin-left: calc((100vw - 793px * 0.38) / 2);
+        margin-bottom: calc(-1122px * 0.62);
       }
     }
 
