@@ -2595,6 +2595,74 @@
     document.querySelectorAll('a[href="/en/cv"]').forEach(link => {
       link.addEventListener('click', () => trackEvent('cv_click'));
     });
+
+    // ========== ENGAGEMENT TRACKING ==========
+    const engagementData = {
+      scrollDepth: 0,
+      timeOnPage: 0,
+      sections: [],
+      startTime: Date.now()
+    };
+
+    // Track scroll depth
+    let maxScroll = 0;
+    window.addEventListener('scroll', () => {
+      const scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      if (scrollPct > maxScroll) {
+        maxScroll = scrollPct;
+        engagementData.scrollDepth = maxScroll;
+      }
+    }, { passive: true });
+
+    // Track sections viewed with Intersection Observer
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionName = entry.target.classList[0];
+          if (sectionName && !engagementData.sections.includes(sectionName)) {
+            engagementData.sections.push(sectionName);
+          }
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('section').forEach(section => {
+      sectionObserver.observe(section);
+    });
+
+    // Send engagement data when leaving
+    let engagementSent = false;
+    async function sendEngagement() {
+      if (engagementSent) return;
+      engagementSent = true;
+      engagementData.timeOnPage = Math.round((Date.now() - engagementData.startTime) / 1000);
+
+      // Only send if user spent more than 3 seconds
+      if (engagementData.timeOnPage < 3) return;
+
+      try {
+        await fetch(TRACKING_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({
+            event: 'engagement',
+            page: window.location.pathname,
+            visitorId: visitorId,
+            userAgent: navigator.userAgent,
+            referrer: '',
+            engagement: engagementData
+          })
+        });
+      } catch (e) {}
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') sendEngagement();
+    });
+    window.addEventListener('beforeunload', sendEngagement);
   </script>
 
 </body>
