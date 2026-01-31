@@ -2579,9 +2579,13 @@
       }
     }
 
-    // Track page visit (only once per session)
-    if (!sessionStorage.getItem('lea_visited')) {
-      sessionStorage.setItem('lea_visited', '1');
+    // Track page visit (only once per 24h from same browser)
+    const VISIT_COOLDOWN = 24 * 60 * 60 * 1000; // 24 hours
+    const lastVisit = localStorage.getItem('lea_home_last_visit');
+    const now = Date.now();
+
+    if (!lastVisit || (now - parseInt(lastVisit)) > VISIT_COOLDOWN) {
+      localStorage.setItem('lea_home_last_visit', now.toString());
       trackEvent('visit');
     }
 
