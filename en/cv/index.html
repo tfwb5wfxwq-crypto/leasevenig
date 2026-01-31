@@ -870,11 +870,73 @@
     </main>
   </div>
 
-  <button class="print-btn" onclick="window.print()">
+  <button class="print-btn" id="downloadBtn">
     <span>📄</span> Print / PDF
   </button>
 
+  <!-- html2pdf.js for reliable PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <script>
+    // ========== PDF GENERATION ==========
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    downloadBtn.addEventListener('click', async function() {
+      const btn = this;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span>⏳</span> Generating...';
+      btn.disabled = true;
+
+      const cv = document.querySelector('.cv');
+
+      // Save original mobile styles
+      const originalTransform = cv.style.transform;
+      const originalMargin = cv.style.margin;
+      const originalMarginLeft = cv.style.marginLeft;
+      const originalMarginBottom = cv.style.marginBottom;
+
+      // Reset to A4 desktop size for PDF capture
+      cv.style.transform = 'none';
+      cv.style.margin = '0';
+      cv.style.marginLeft = '0';
+      cv.style.marginBottom = '0';
+
+      const opt = {
+        margin: 0,
+        filename: 'CV_Lea_Sevenig_EN.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          windowWidth: 794,
+          windowHeight: 1123
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait'
+        }
+      };
+
+      try {
+        await html2pdf().set(opt).from(cv).save();
+        trackEvent('cv_print');
+      } catch (e) {
+        console.error('PDF generation failed:', e);
+        window.print();
+      }
+
+      // Restore mobile styles
+      cv.style.transform = originalTransform;
+      cv.style.margin = originalMargin;
+      cv.style.marginLeft = originalMarginLeft;
+      cv.style.marginBottom = originalMarginBottom;
+
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    });
+
     // ========== TRACKING ==========
     const TRACKING_URL = 'https://xhpsdbmajanmoztijbnx.supabase.co/functions/v1/lea-tracking';
 
@@ -903,25 +965,6 @@
     if (!lastVisit || (now - parseInt(lastVisit)) > VISIT_COOLDOWN) {
       localStorage.setItem('lea_cv_last_visit', now.toString());
       trackEvent('cv_view');
-    }
-
-    // Track print/download
-    let printTracked = false;
-    window.addEventListener('beforeprint', () => {
-      if (!printTracked) {
-        printTracked = true;
-        trackEvent('cv_print');
-      }
-    });
-
-    // Also detect via matchMedia for browsers that support it
-    if (window.matchMedia) {
-      window.matchMedia('print').addEventListener('change', (e) => {
-        if (e.matches && !printTracked) {
-          printTracked = true;
-          trackEvent('cv_print');
-        }
-      });
     }
   </script>
 
