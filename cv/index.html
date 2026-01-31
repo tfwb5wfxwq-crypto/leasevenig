@@ -138,141 +138,33 @@
       }
     }
 
-    /* Mobile - clean scaled view */
+    /* Mobile - zoom the CV to fit screen */
     @media screen and (max-width: 800px) {
       body {
-        padding: 15px;
+        padding: 10px;
         align-items: flex-start;
         justify-content: center;
         min-height: auto;
-        padding-bottom: 100px;
+        padding-bottom: 80px;
       }
       .cv {
-        width: calc(100vw - 30px);
-        height: auto;
-        aspect-ratio: 210 / 297;
-        transform: none;
-      }
-      .sidebar {
-        padding: 5vw 3vw;
-      }
-      .main {
-        padding: 5vw 4vw 5vw 3vw;
-      }
-      .photo-ring {
-        width: 18vw;
-        height: 18vw;
-      }
-      .name {
-        font-size: 5vw;
-      }
-      .title {
-        font-size: 2.2vw;
-      }
-      .section-label {
-        font-size: 2.5vw;
-        margin-bottom: 3vw;
-      }
-      .contact-item {
-        font-size: 2.3vw;
-        margin-bottom: 2.5vw;
-        gap: 2vw;
-      }
-      .contact-icon {
-        width: 7vw;
-        height: 7vw;
-        font-size: 3vw;
-      }
-      .lang-item {
-        margin-bottom: 2.5vw;
-      }
-      .lang-name {
-        font-size: 2.5vw;
-      }
-      .lang-level {
-        font-size: 2vw;
-      }
-      .skill {
-        font-size: 2vw;
-        padding: 1.5vw 3vw;
-      }
-      .interest-icon {
-        font-size: 5vw;
-      }
-      .interest-label {
-        font-size: 2vw;
-      }
-      .header-name {
-        font-size: 9vw;
-      }
-      .header-role {
-        font-size: 3vw;
-      }
-      .profile {
-        font-size: 2.5vw;
-        padding: 3vw;
-      }
-      .main-section-title {
-        font-size: 2.8vw;
-        margin-bottom: 3vw;
-      }
-      .exp-company {
-        font-size: 3vw;
-      }
-      .exp-date {
-        font-size: 2.2vw;
-        padding: 1vw 2.5vw;
-      }
-      .exp-role {
-        font-size: 2.5vw;
-      }
-      .exp-desc {
-        font-size: 2.3vw;
-      }
-      .exp-dot {
-        width: 2.5vw;
-        height: 2.5vw;
-      }
-      .project {
-        padding: 2.5vw;
-      }
-      .project-type {
-        font-size: 1.8vw;
-      }
-      .project-name {
-        font-size: 2.5vw;
-      }
-      .project-desc {
-        font-size: 2.2vw;
-      }
-      .edu-year {
-        font-size: 2.8vw;
-        min-width: 12vw;
-      }
-      .edu-degree {
-        font-size: 2.5vw;
-      }
-      .edu-school {
-        font-size: 2.3vw;
-      }
-      .sidebar-section {
-        margin-bottom: 4vw;
-      }
-      .identity {
-        margin-bottom: 4vw;
-      }
-      .photo-container {
-        margin-bottom: 3vw;
+        zoom: 0.47;
       }
       .print-btn {
         position: fixed;
-        bottom: 20px;
+        bottom: 15px;
         left: 50%;
         transform: translateX(-50%);
         right: auto;
-        padding: 14px 24px;
-        font-size: 16px;
+        padding: 12px 20px;
+        font-size: 15px;
         z-index: 1000;
+      }
+    }
+
+    @media screen and (max-width: 400px) {
+      .cv {
+        zoom: 0.38;
       }
     }
 
