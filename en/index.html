@@ -2550,6 +2550,7 @@
 
     // ========== TRACKING ==========
     const TRACKING_URL = 'https://xhpsdbmajanmoztijbnx.supabase.co/functions/v1/lea-tracking';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhocHNkYm1hamFubW96dGlqYm54Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk3NTY2MjksImV4cCI6MjA4NTMzMjYyOX0.HwFRHULHBBQlWoOwD9lMav5Icjlfe92o1QZspxI_2DQ';
 
     // Get or create unique visitor ID
     function getVisitorId() {
@@ -2567,7 +2568,10 @@
       try {
         await fetch(TRACKING_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+          },
           body: JSON.stringify({
             event: eventType,
             page: window.location.pathname,
