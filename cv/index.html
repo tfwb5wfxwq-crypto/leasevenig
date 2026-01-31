@@ -137,25 +137,16 @@
       }
     }
 
-    /* Mobile & Tablet - use zoom instead of transform for proper sizing */
-    @media screen and (max-width: 850px) {
+    /* Mobile - will be scaled via JavaScript */
+    @media screen and (max-width: 800px) {
       body {
-        padding: 0;
+        padding: 10px;
         align-items: flex-start;
         justify-content: center;
+        overflow: hidden;
       }
       .cv {
-        zoom: 0.5;
-        -moz-transform: scale(0.5);
-        -moz-transform-origin: top center;
-      }
-    }
-
-    @media screen and (max-width: 500px) {
-      .cv {
-        zoom: 0.38;
-        -moz-transform: scale(0.38);
-        -moz-transform-origin: top center;
+        transform-origin: top center;
       }
     }
 
@@ -879,6 +870,27 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
+    // ========== MOBILE SCALING ==========
+    const cv = document.querySelector('.cv');
+    const CV_WIDTH = 793; // 210mm in pixels
+
+    function scaleCVForMobile() {
+      if (window.innerWidth <= 800) {
+        const availableWidth = window.innerWidth - 20; // 10px padding each side
+        const scale = Math.min(1, availableWidth / CV_WIDTH);
+        cv.style.transform = `scale(${scale})`;
+        // Adjust body height to account for scaled CV
+        const scaledHeight = 1122 * scale; // 297mm in pixels
+        document.body.style.minHeight = (scaledHeight + 100) + 'px';
+      } else {
+        cv.style.transform = '';
+        document.body.style.minHeight = '';
+      }
+    }
+
+    scaleCVForMobile();
+    window.addEventListener('resize', scaleCVForMobile);
+
     // ========== PDF GENERATION ==========
     const downloadBtn = document.getElementById('downloadBtn');
 
@@ -888,11 +900,9 @@
       btn.innerHTML = '<span>⏳</span> Génération...';
       btn.disabled = true;
 
-      const cv = document.querySelector('.cv');
-
-      // Save and reset zoom for PDF capture
-      const originalZoom = cv.style.zoom;
-      cv.style.zoom = '1';
+      // Save original transform and reset for PDF
+      const originalTransform = cv.style.transform;
+      cv.style.transform = 'none';
 
       const opt = {
         margin: 0,
@@ -901,14 +911,15 @@
         html2canvas: {
           scale: 2,
           useCORS: true,
-          logging: false
+          logging: false,
+          width: 793,
+          height: 1122
         },
         jsPDF: {
           unit: 'mm',
           format: 'a4',
           orientation: 'portrait'
-        },
-        pagebreak: { mode: 'avoid-all' }
+        }
       };
 
       try {
@@ -919,8 +930,9 @@
         window.print();
       }
 
-      // Restore zoom
-      cv.style.zoom = originalZoom;
+      // Restore transform
+      cv.style.transform = originalTransform;
+      scaleCVForMobile();
 
       btn.innerHTML = originalText;
       btn.disabled = false;
