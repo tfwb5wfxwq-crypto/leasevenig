@@ -932,10 +932,10 @@
       }
     }
 
-    // Track CV view (once per session)
+    // Track CV view (once per session) - délai pour laisser la session se créer
     if (!sessionStorage.getItem('lea_cv_tracked')) {
       sessionStorage.setItem('lea_cv_tracked', '1');
-      trackEvent('cv_view');
+      setTimeout(() => trackEvent('cv_view'), 1000);
     }
 
     // Track PDF download
