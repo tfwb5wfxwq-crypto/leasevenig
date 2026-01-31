@@ -73,57 +73,74 @@
       body {
         background: white;
         padding: 0;
+        display: block;
       }
       .cv {
         box-shadow: none;
-        width: 210mm;
-        height: 297mm;
+        width: 210mm !important;
+        height: 297mm !important;
+        min-height: 297mm !important;
         transform: none !important;
+        grid-template-columns: 78mm 1fr !important;
+      }
+      .sidebar {
+        padding: 18mm 8mm !important;
+      }
+      .main {
+        padding: 18mm 14mm 18mm 12mm !important;
+      }
+      .photo-ring {
+        width: 52mm !important;
+        height: 52mm !important;
+      }
+      .header-name {
+        font-size: 42px !important;
+      }
+      .projects-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 12px !important;
+      }
+      .exp {
+        gap: 14px !important;
+      }
+      .edu {
+        flex-direction: row !important;
+        gap: 16px !important;
+      }
+      .edu-year {
+        min-width: 60px !important;
       }
       .print-btn {
         display: none !important;
       }
+      .lang-selector {
+        display: none !important;
+      }
     }
 
-    /* Mobile responsive - scale CV to fit screen */
-    @media screen and (max-width: 900px) {
+    /* Mobile - keep A4 layout, just scale down */
+    @media screen and (max-width: 600px) {
       body {
         padding: 10px;
         align-items: flex-start;
       }
       .cv {
-        width: 100%;
-        height: auto;
-        min-height: auto;
-        transform: none;
-        grid-template-columns: 1fr;
+        transform: scale(0.45);
+        transform-origin: top center;
+        margin-bottom: -450px;
       }
-      .sidebar {
-        padding: 8mm 6mm;
+    }
+
+    /* Small tablet */
+    @media screen and (min-width: 601px) and (max-width: 900px) {
+      body {
+        padding: 15px;
+        align-items: flex-start;
       }
-      .main {
-        padding: 8mm 6mm;
-      }
-      .photo-ring {
-        width: 35mm;
-        height: 35mm;
-      }
-      .header-name {
-        font-size: 28px;
-      }
-      .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-      .exp {
-        gap: 10px;
-      }
-      .edu {
-        flex-direction: column;
-        gap: 5px;
-      }
-      .edu-year {
-        min-width: auto;
+      .cv {
+        transform: scale(0.65);
+        transform-origin: top center;
+        margin-bottom: -200px;
       }
     }
 
