@@ -137,41 +137,25 @@
       }
     }
 
-    /* Mobile - keep A4 layout, just scale down */
-    @media screen and (max-width: 600px) {
+    /* Mobile & Tablet - use zoom instead of transform for proper sizing */
+    @media screen and (max-width: 850px) {
       body {
-        padding: 10px;
+        padding: 0;
         align-items: flex-start;
-        justify-content: flex-start;
+        justify-content: center;
       }
       .cv {
-        transform: scale(0.38);
-        transform-origin: top left;
-        margin-left: calc((100vw - 210mm * 0.38) / 2 - 10px);
-        margin-bottom: -500px;
+        zoom: 0.5;
+        -moz-transform: scale(0.5);
+        -moz-transform-origin: top center;
       }
     }
 
-    /* Small tablet */
-    @media screen and (min-width: 601px) and (max-width: 900px) {
-      body {
-        padding: 15px;
-        align-items: flex-start;
-        justify-content: flex-start;
-      }
+    @media screen and (max-width: 500px) {
       .cv {
-        transform: scale(0.55);
-        transform-origin: top left;
-        margin-left: calc((100vw - 210mm * 0.55) / 2 - 15px);
-        margin-bottom: -280px;
-      }
-    }
-
-    /* Tablet - scale down A4 */
-    @media screen and (min-width: 901px) and (max-width: 1200px) {
-      .cv {
-        transform: scale(0.8);
-        transform-origin: top center;
+        zoom: 0.38;
+        -moz-transform: scale(0.38);
+        -moz-transform-origin: top center;
       }
     }
 
@@ -889,34 +873,25 @@
 
       const cv = document.querySelector('.cv');
 
-      // Save original mobile styles
-      const originalTransform = cv.style.transform;
-      const originalMargin = cv.style.margin;
-      const originalMarginLeft = cv.style.marginLeft;
-      const originalMarginBottom = cv.style.marginBottom;
-
-      // Reset to A4 desktop size for PDF capture
-      cv.style.transform = 'none';
-      cv.style.margin = '0';
-      cv.style.marginLeft = '0';
-      cv.style.marginBottom = '0';
+      // Save and reset zoom for PDF capture
+      const originalZoom = cv.style.zoom;
+      cv.style.zoom = '1';
 
       const opt = {
         margin: 0,
         filename: 'CV_Lea_Sevenig_EN.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'png', quality: 1 },
         html2canvas: {
           scale: 2,
           useCORS: true,
-          logging: false,
-          windowWidth: 794,
-          windowHeight: 1123
+          logging: false
         },
         jsPDF: {
           unit: 'mm',
           format: 'a4',
           orientation: 'portrait'
-        }
+        },
+        pagebreak: { mode: 'avoid-all' }
       };
 
       try {
@@ -927,11 +902,8 @@
         window.print();
       }
 
-      // Restore mobile styles
-      cv.style.transform = originalTransform;
-      cv.style.margin = originalMargin;
-      cv.style.marginLeft = originalMarginLeft;
-      cv.style.marginBottom = originalMarginBottom;
+      // Restore zoom
+      cv.style.zoom = originalZoom;
 
       btn.innerHTML = originalText;
       btn.disabled = false;
