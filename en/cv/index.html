@@ -137,16 +137,141 @@
       }
     }
 
-    /* Mobile - will be scaled via JavaScript */
+    /* Mobile - clean scaled view */
     @media screen and (max-width: 800px) {
       body {
-        padding: 10px;
+        padding: 15px;
         align-items: flex-start;
         justify-content: center;
-        overflow: hidden;
+        min-height: auto;
+        padding-bottom: 100px;
       }
       .cv {
-        transform-origin: top center;
+        width: calc(100vw - 30px);
+        height: auto;
+        aspect-ratio: 210 / 297;
+        transform: none;
+      }
+      .sidebar {
+        padding: 5vw 3vw;
+      }
+      .main {
+        padding: 5vw 4vw 5vw 3vw;
+      }
+      .photo-ring {
+        width: 18vw;
+        height: 18vw;
+      }
+      .name {
+        font-size: 5vw;
+      }
+      .title {
+        font-size: 2.2vw;
+      }
+      .section-label {
+        font-size: 2.5vw;
+        margin-bottom: 3vw;
+      }
+      .contact-item {
+        font-size: 2.3vw;
+        margin-bottom: 2.5vw;
+        gap: 2vw;
+      }
+      .contact-icon {
+        width: 7vw;
+        height: 7vw;
+        font-size: 3vw;
+      }
+      .lang-item {
+        margin-bottom: 2.5vw;
+      }
+      .lang-name {
+        font-size: 2.5vw;
+      }
+      .lang-level {
+        font-size: 2vw;
+      }
+      .skill {
+        font-size: 2vw;
+        padding: 1.5vw 3vw;
+      }
+      .interest-icon {
+        font-size: 5vw;
+      }
+      .interest-label {
+        font-size: 2vw;
+      }
+      .header-name {
+        font-size: 9vw;
+      }
+      .header-role {
+        font-size: 3vw;
+      }
+      .profile {
+        font-size: 2.5vw;
+        padding: 3vw;
+      }
+      .main-section-title {
+        font-size: 2.8vw;
+        margin-bottom: 3vw;
+      }
+      .exp-company {
+        font-size: 3vw;
+      }
+      .exp-date {
+        font-size: 2.2vw;
+        padding: 1vw 2.5vw;
+      }
+      .exp-role {
+        font-size: 2.5vw;
+      }
+      .exp-desc {
+        font-size: 2.3vw;
+      }
+      .exp-dot {
+        width: 2.5vw;
+        height: 2.5vw;
+      }
+      .project {
+        padding: 2.5vw;
+      }
+      .project-type {
+        font-size: 1.8vw;
+      }
+      .project-name {
+        font-size: 2.5vw;
+      }
+      .project-desc {
+        font-size: 2.2vw;
+      }
+      .edu-year {
+        font-size: 2.8vw;
+        min-width: 12vw;
+      }
+      .edu-degree {
+        font-size: 2.5vw;
+      }
+      .edu-school {
+        font-size: 2.3vw;
+      }
+      .sidebar-section {
+        margin-bottom: 4vw;
+      }
+      .identity {
+        margin-bottom: 4vw;
+      }
+      .photo-container {
+        margin-bottom: 3vw;
+      }
+      .print-btn {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        padding: 14px 24px;
+        font-size: 16px;
+        z-index: 1000;
       }
     }
 
@@ -845,83 +970,13 @@
     </main>
   </div>
 
-  <button class="print-btn" id="downloadBtn">
-    <span>📄</span> Print / PDF
-  </button>
-
-  <!-- html2pdf.js for reliable PDF generation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <a href="CV_Lea_Sevenig_EN.pdf" download class="print-btn" id="downloadBtn">
+    <span>📄</span> Download PDF
+  </a>
 
   <script>
-    // ========== MOBILE SCALING ==========
-    const cv = document.querySelector('.cv');
-    const CV_WIDTH = 793; // 210mm in pixels
-
-    function scaleCVForMobile() {
-      if (window.innerWidth <= 800) {
-        const availableWidth = window.innerWidth - 20; // 10px padding each side
-        const scale = Math.min(1, availableWidth / CV_WIDTH);
-        cv.style.transform = `scale(${scale})`;
-        // Adjust body height to account for scaled CV
-        const scaledHeight = 1122 * scale; // 297mm in pixels
-        document.body.style.minHeight = (scaledHeight + 100) + 'px';
-      } else {
-        cv.style.transform = '';
-        document.body.style.minHeight = '';
-      }
-    }
-
-    scaleCVForMobile();
-    window.addEventListener('resize', scaleCVForMobile);
-
-    // ========== PDF GENERATION ==========
-    const downloadBtn = document.getElementById('downloadBtn');
-
-    downloadBtn.addEventListener('click', async function() {
-      const btn = this;
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '<span>⏳</span> Generating...';
-      btn.disabled = true;
-
-      // Save original transform and reset for PDF
-      const originalTransform = cv.style.transform;
-      cv.style.transform = 'none';
-
-      const opt = {
-        margin: 0,
-        filename: 'CV_Lea_Sevenig_EN.pdf',
-        image: { type: 'png', quality: 1 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          logging: false,
-          width: 793,
-          height: 1122
-        },
-        jsPDF: {
-          unit: 'mm',
-          format: 'a4',
-          orientation: 'portrait'
-        }
-      };
-
-      try {
-        await html2pdf().set(opt).from(cv).save();
-        trackEvent('cv_print');
-      } catch (e) {
-        console.error('PDF generation failed:', e);
-        window.print();
-      }
-
-      // Restore transform
-      cv.style.transform = originalTransform;
-      scaleCVForMobile();
-
-      btn.innerHTML = originalText;
-      btn.disabled = false;
-    });
-
     // ========== TRACKING ==========
+    document.getElementById('downloadBtn').addEventListener('click', () => trackEvent('cv_print'));
     const TRACKING_URL = 'https://xhpsdbmajanmoztijbnx.supabase.co/functions/v1/lea-tracking';
 
     async function trackEvent(eventType) {
