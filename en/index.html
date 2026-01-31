@@ -2595,9 +2595,15 @@
     const engagementData = {
       scrollDepth: 0,
       timeOnPage: 0,
-      sections: [],
       startTime: Date.now(),
-      exitType: 'left' // 'left' = parti, 'cv' = cliqué CV
+      exitType: 'left',
+      // Advanced tracking
+      sectionTimes: {},
+      readingPauses: 0,
+      totalPauseTime: 0,
+      scrollBackCount: 0,
+      avgScrollSpeed: 0,
+      readingScore: 0
     };
 
     // Track CV clicks
@@ -2608,40 +2614,92 @@
       });
     });
 
-    // Track scroll depth
+    // Tracking variables
     let maxScroll = 0;
+    let lastScrollY = 0;
+    let lastScrollTime = Date.now();
+    let scrollSpeeds = [];
+    let pauseTimer = null;
+    let currentSection = null;
+    let sectionStartTime = null;
+
+    function detectPause() {
+      engagementData.readingPauses++;
+      engagementData.totalPauseTime += 2;
+    }
+
     window.addEventListener('scroll', () => {
-      const scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      const now = Date.now();
+      const scrollY = window.scrollY;
+      const scrollPct = Math.round((scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+
       if (scrollPct > maxScroll) {
         maxScroll = scrollPct;
         engagementData.scrollDepth = maxScroll;
       }
+
+      if (scrollY < lastScrollY - 100) {
+        engagementData.scrollBackCount++;
+      }
+
+      const timeDiff = now - lastScrollTime;
+      if (timeDiff > 50) {
+        const distance = Math.abs(scrollY - lastScrollY);
+        const speed = distance / timeDiff * 1000;
+        scrollSpeeds.push(speed);
+        if (scrollSpeeds.length > 20) scrollSpeeds.shift();
+      }
+
+      lastScrollY = scrollY;
+      lastScrollTime = now;
+
+      clearTimeout(pauseTimer);
+      pauseTimer = setTimeout(detectPause, 2000);
     }, { passive: true });
 
-    // Track sections viewed with Intersection Observer
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        const sectionId = entry.target.id || entry.target.classList[0];
         if (entry.isIntersecting) {
-          const sectionName = entry.target.classList[0];
-          if (sectionName && !engagementData.sections.includes(sectionName)) {
-            engagementData.sections.push(sectionName);
+          if (currentSection && sectionStartTime) {
+            const timeSpent = Math.round((Date.now() - sectionStartTime) / 1000);
+            engagementData.sectionTimes[currentSection] = (engagementData.sectionTimes[currentSection] || 0) + timeSpent;
           }
+          currentSection = sectionId;
+          sectionStartTime = Date.now();
         }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.5 });
 
-    document.querySelectorAll('section').forEach(section => {
+    document.querySelectorAll('section[id], .hero, .experience, .skills, .contact').forEach(section => {
       sectionObserver.observe(section);
     });
 
-    // Send engagement data when leaving
+    function calculateReadingScore() {
+      const timeOnPage = Math.round((Date.now() - engagementData.startTime) / 1000);
+      const avgSpeed = scrollSpeeds.length > 0 ? scrollSpeeds.reduce((a,b) => a+b, 0) / scrollSpeeds.length : 0;
+      engagementData.avgScrollSpeed = Math.round(avgSpeed);
+
+      if (currentSection && sectionStartTime) {
+        const timeSpent = Math.round((Date.now() - sectionStartTime) / 1000);
+        engagementData.sectionTimes[currentSection] = (engagementData.sectionTimes[currentSection] || 0) + timeSpent;
+      }
+
+      let score = 0;
+      score += Math.min(30, timeOnPage / 4);
+      score += Math.min(30, engagementData.readingPauses * 5);
+      score += Math.max(0, 20 - avgSpeed / 50);
+      score += Math.min(20, engagementData.scrollBackCount * 5);
+      engagementData.readingScore = Math.round(Math.min(100, score));
+    }
+
     let engagementSent = false;
     async function sendEngagement() {
       if (engagementSent) return;
       engagementSent = true;
       engagementData.timeOnPage = Math.round((Date.now() - engagementData.startTime) / 1000);
+      calculateReadingScore();
 
-      // Only send if user spent more than 3 seconds
       if (engagementData.timeOnPage < 3) return;
 
       try {

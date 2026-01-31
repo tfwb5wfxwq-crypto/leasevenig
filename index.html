@@ -2610,40 +2610,116 @@
       });
     });
 
-    // ========== ENGAGEMENT TRACKING ==========
+    // ========== ENGAGEMENT TRACKING AVANCÉ ==========
     const engagementData = {
       scrollDepth: 0,
       timeOnPage: 0,
-      sections: [],
       startTime: Date.now(),
-      exitType: 'left' // 'left' = parti, 'cv' = cliqué CV, 'link' = cliqué lien externe
+      exitType: 'left',
+      // Tracking avancé
+      sectionTimes: {},      // Temps passé par section
+      readingPauses: 0,      // Nombre de pauses >2s (lecture réelle)
+      totalPauseTime: 0,     // Temps total en pause
+      scrollBackCount: 0,    // Nombre de retours en arrière
+      avgScrollSpeed: 0,     // Vitesse moyenne de scroll
+      readingScore: 0        // Score de lecture 0-100
     };
 
-    // Track scroll depth
+    // Variables pour le tracking
     let maxScroll = 0;
+    let lastScrollY = 0;
+    let lastScrollTime = Date.now();
+    let scrollSpeeds = [];
+    let pauseTimer = null;
+    let currentSection = null;
+    let sectionStartTime = null;
+
+    // Détecter les pauses de scroll (>2s = lecture)
+    function detectPause() {
+      engagementData.readingPauses++;
+      engagementData.totalPauseTime += 2;
+    }
+
+    // Track scroll avec analyse de vitesse et direction
     window.addEventListener('scroll', () => {
-      const scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      const now = Date.now();
+      const scrollY = window.scrollY;
+      const scrollPct = Math.round((scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+
+      // Scroll depth max
       if (scrollPct > maxScroll) {
         maxScroll = scrollPct;
         engagementData.scrollDepth = maxScroll;
       }
+
+      // Détecter retour en arrière (scroll up significatif)
+      if (scrollY < lastScrollY - 100) {
+        engagementData.scrollBackCount++;
+      }
+
+      // Calculer vitesse de scroll
+      const timeDiff = now - lastScrollTime;
+      if (timeDiff > 50) {
+        const distance = Math.abs(scrollY - lastScrollY);
+        const speed = distance / timeDiff * 1000; // pixels/seconde
+        scrollSpeeds.push(speed);
+        if (scrollSpeeds.length > 20) scrollSpeeds.shift();
+      }
+
+      lastScrollY = scrollY;
+      lastScrollTime = now;
+
+      // Reset pause timer
+      clearTimeout(pauseTimer);
+      pauseTimer = setTimeout(detectPause, 2000);
     }, { passive: true });
 
-    // Track sections viewed with Intersection Observer
+    // Track temps par section avec Intersection Observer
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        const sectionId = entry.target.id || entry.target.classList[0];
+
         if (entry.isIntersecting) {
-          const sectionName = entry.target.classList[0];
-          if (sectionName && !engagementData.sections.includes(sectionName)) {
-            engagementData.sections.push(sectionName);
+          // Entrer dans une section
+          if (currentSection && sectionStartTime) {
+            const timeSpent = Math.round((Date.now() - sectionStartTime) / 1000);
+            engagementData.sectionTimes[currentSection] = (engagementData.sectionTimes[currentSection] || 0) + timeSpent;
           }
+          currentSection = sectionId;
+          sectionStartTime = Date.now();
         }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.5 });
 
-    document.querySelectorAll('section').forEach(section => {
+    document.querySelectorAll('section[id], .hero, .experience, .skills, .contact').forEach(section => {
       sectionObserver.observe(section);
     });
+
+    // Calculer le score de lecture avant d'envoyer
+    function calculateReadingScore() {
+      const timeOnPage = Math.round((Date.now() - engagementData.startTime) / 1000);
+      const avgSpeed = scrollSpeeds.length > 0 ? scrollSpeeds.reduce((a,b) => a+b, 0) / scrollSpeeds.length : 0;
+      engagementData.avgScrollSpeed = Math.round(avgSpeed);
+
+      // Sauver temps de la section courante
+      if (currentSection && sectionStartTime) {
+        const timeSpent = Math.round((Date.now() - sectionStartTime) / 1000);
+        engagementData.sectionTimes[currentSection] = (engagementData.sectionTimes[currentSection] || 0) + timeSpent;
+      }
+
+      // Score de lecture (0-100)
+      let score = 0;
+      // Temps passé (max 30 points pour >2min)
+      score += Math.min(30, timeOnPage / 4);
+      // Pauses de lecture (max 30 points)
+      score += Math.min(30, engagementData.readingPauses * 5);
+      // Scroll lent (max 20 points si <500px/s)
+      score += Math.max(0, 20 - avgSpeed / 50);
+      // Retours en arrière = intérêt (max 20 points)
+      score += Math.min(20, engagementData.scrollBackCount * 5);
+
+      engagementData.readingScore = Math.round(Math.min(100, score));
+    }
 
     // Send engagement data when leaving
     let engagementSent = false;
@@ -2651,6 +2727,7 @@
       if (engagementSent) return;
       engagementSent = true;
       engagementData.timeOnPage = Math.round((Date.now() - engagementData.startTime) / 1000);
+      calculateReadingScore();
 
       // Only send if user spent more than 3 seconds
       if (engagementData.timeOnPage < 3) return;
