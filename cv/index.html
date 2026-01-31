@@ -896,8 +896,19 @@
 
   <script>
     // ========== TRACKING ==========
-    document.getElementById('downloadBtn').addEventListener('click', () => trackEvent('cv_print'));
     const TRACKING_URL = 'https://xhpsdbmajanmoztijbnx.supabase.co/functions/v1/lea-tracking';
+
+    // Get or create unique visitor ID
+    function getVisitorId() {
+      let id = localStorage.getItem('lea_visitor_id');
+      if (!id) {
+        id = 'v_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now().toString(36);
+        localStorage.setItem('lea_visitor_id', id);
+      }
+      return id;
+    }
+
+    const visitorId = getVisitorId();
 
     async function trackEvent(eventType) {
       try {
@@ -907,6 +918,7 @@
           body: JSON.stringify({
             event: eventType,
             page: '/cv',
+            visitorId: visitorId,
             userAgent: navigator.userAgent,
             referrer: document.referrer
           })
@@ -916,15 +928,14 @@
       }
     }
 
-    // Track CV view (only once per 24h from same browser)
-    const VISIT_COOLDOWN = 24 * 60 * 60 * 1000; // 24 hours
-    const lastVisit = localStorage.getItem('lea_cv_last_visit');
-    const now = Date.now();
-
-    if (!lastVisit || (now - parseInt(lastVisit)) > VISIT_COOLDOWN) {
-      localStorage.setItem('lea_cv_last_visit', now.toString());
+    // Track CV view (once per session)
+    if (!sessionStorage.getItem('lea_cv_tracked')) {
+      sessionStorage.setItem('lea_cv_tracked', '1');
       trackEvent('cv_view');
     }
+
+    // Track PDF download
+    document.getElementById('downloadBtn').addEventListener('click', () => trackEvent('cv_print'));
   </script>
 
 </body>

@@ -2551,6 +2551,18 @@
     // ========== TRACKING ==========
     const TRACKING_URL = 'https://xhpsdbmajanmoztijbnx.supabase.co/functions/v1/lea-tracking';
 
+    // Get or create unique visitor ID
+    function getVisitorId() {
+      let id = localStorage.getItem('lea_visitor_id');
+      if (!id) {
+        id = 'v_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now().toString(36);
+        localStorage.setItem('lea_visitor_id', id);
+      }
+      return id;
+    }
+
+    const visitorId = getVisitorId();
+
     async function trackEvent(eventType) {
       try {
         await fetch(TRACKING_URL, {
@@ -2559,22 +2571,19 @@
           body: JSON.stringify({
             event: eventType,
             page: window.location.pathname,
+            visitorId: visitorId,
             userAgent: navigator.userAgent,
             referrer: document.referrer
           })
         });
       } catch (e) {
-        // Silent fail - don't break the site
+        // Silent fail
       }
     }
 
-    // Track page visit (only once per 24h from same browser)
-    const VISIT_COOLDOWN = 24 * 60 * 60 * 1000; // 24 hours
-    const lastVisit = localStorage.getItem('lea_home_last_visit');
-    const now = Date.now();
-
-    if (!lastVisit || (now - parseInt(lastVisit)) > VISIT_COOLDOWN) {
-      localStorage.setItem('lea_home_last_visit', now.toString());
+    // Track homepage visit (once per session to avoid spam on refresh)
+    if (!sessionStorage.getItem('lea_home_tracked')) {
+      sessionStorage.setItem('lea_home_tracked', '1');
       trackEvent('visit');
     }
 
