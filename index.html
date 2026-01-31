@@ -2603,8 +2603,11 @@
     }
 
     // Track CV clicks
-    document.querySelectorAll('a[href="/cv"]').forEach(link => {
-      link.addEventListener('click', () => trackEvent('cv_click'));
+    document.querySelectorAll('a[href="/cv"], a[href="/en/cv"]').forEach(link => {
+      link.addEventListener('click', () => {
+        engagementData.exitType = 'cv';
+        trackEvent('cv_click');
+      });
     });
 
     // ========== ENGAGEMENT TRACKING ==========
@@ -2612,7 +2615,8 @@
       scrollDepth: 0,
       timeOnPage: 0,
       sections: [],
-      startTime: Date.now()
+      startTime: Date.now(),
+      exitType: 'left' // 'left' = parti, 'cv' = cliqué CV, 'link' = cliqué lien externe
     };
 
     // Track scroll depth

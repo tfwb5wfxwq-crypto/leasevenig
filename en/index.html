@@ -2591,18 +2591,22 @@
       trackEvent('visit');
     }
 
-    // Track CV clicks
-    document.querySelectorAll('a[href="/en/cv"]').forEach(link => {
-      link.addEventListener('click', () => trackEvent('cv_click'));
-    });
-
     // ========== ENGAGEMENT TRACKING ==========
     const engagementData = {
       scrollDepth: 0,
       timeOnPage: 0,
       sections: [],
-      startTime: Date.now()
+      startTime: Date.now(),
+      exitType: 'left' // 'left' = parti, 'cv' = cliqué CV
     };
+
+    // Track CV clicks
+    document.querySelectorAll('a[href="/en/cv"], a[href="/cv"]').forEach(link => {
+      link.addEventListener('click', () => {
+        engagementData.exitType = 'cv';
+        trackEvent('cv_click');
+      });
+    });
 
     // Track scroll depth
     let maxScroll = 0;
