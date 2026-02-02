@@ -2597,13 +2597,13 @@
       timeOnPage: 0,
       startTime: Date.now(),
       exitType: 'left',
-      // Advanced tracking
       sectionTimes: {},
-      readingPauses: 0,
-      totalPauseTime: 0,
-      scrollBackCount: 0,
-      avgScrollSpeed: 0,
-      readingScore: 0
+
+      // Important actions
+      emailClicked: false,
+      phoneClicked: false,
+      linkedinClicked: false,
+      externalLinksClicked: []
     };
 
     // Track CV clicks
@@ -2614,49 +2614,39 @@
       });
     });
 
-    // Tracking variables
+    // Variables
     let maxScroll = 0;
-    let lastScrollY = 0;
-    let lastScrollTime = Date.now();
-    let scrollSpeeds = [];
-    let pauseTimer = null;
     let currentSection = null;
     let sectionStartTime = null;
 
-    function detectPause() {
-      engagementData.readingPauses++;
-      engagementData.totalPauseTime += 2;
-    }
-
     window.addEventListener('scroll', () => {
-      const now = Date.now();
-      const scrollY = window.scrollY;
-      const scrollPct = Math.round((scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-
+      const scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
       if (scrollPct > maxScroll) {
         maxScroll = scrollPct;
         engagementData.scrollDepth = maxScroll;
       }
-
-      if (scrollY < lastScrollY - 100) {
-        engagementData.scrollBackCount++;
-      }
-
-      const timeDiff = now - lastScrollTime;
-      if (timeDiff > 50) {
-        const distance = Math.abs(scrollY - lastScrollY);
-        const speed = distance / timeDiff * 1000;
-        scrollSpeeds.push(speed);
-        if (scrollSpeeds.length > 20) scrollSpeeds.shift();
-      }
-
-      lastScrollY = scrollY;
-      lastScrollTime = now;
-
-      clearTimeout(pauseTimer);
-      pauseTimer = setTimeout(detectPause, 2000);
     }, { passive: true });
 
+    // === CONTACT ACTIONS ===
+    document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
+      el.addEventListener('click', () => { engagementData.emailClicked = true; });
+    });
+    document.querySelectorAll('a[href^="tel:"]').forEach(el => {
+      el.addEventListener('click', () => { engagementData.phoneClicked = true; });
+    });
+    document.querySelectorAll('a[href*="linkedin"]').forEach(el => {
+      el.addEventListener('click', () => { engagementData.linkedinClicked = true; });
+    });
+    document.querySelectorAll('a[href^="http"]:not([href*="leasevenig"])').forEach(el => {
+      el.addEventListener('click', () => {
+        const text = el.textContent?.trim()?.slice(0, 20) || new URL(el.href).hostname;
+        if (!engagementData.externalLinksClicked.includes(text)) {
+          engagementData.externalLinksClicked.push(text);
+        }
+      });
+    });
+
+    // Section time tracking
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const sectionId = entry.target.id || entry.target.classList[0];
@@ -2671,60 +2661,62 @@
       });
     }, { threshold: 0.5 });
 
-    document.querySelectorAll('section[id], .hero, .experience, .skills, .contact').forEach(section => {
+    // Important sections to track (not hero/contact)
+    document.querySelectorAll('section.about, section.experience, section.skills, section.projects').forEach(section => {
       sectionObserver.observe(section);
     });
 
-    function calculateReadingScore() {
-      const timeOnPage = Math.round((Date.now() - engagementData.startTime) / 1000);
-      const avgSpeed = scrollSpeeds.length > 0 ? scrollSpeeds.reduce((a,b) => a+b, 0) / scrollSpeeds.length : 0;
-      engagementData.avgScrollSpeed = Math.round(avgSpeed);
-
+    let engagementSent = false;
+    function prepareEngagementData() {
+      engagementData.timeOnPage = Math.round((Date.now() - engagementData.startTime) / 1000);
       if (currentSection && sectionStartTime) {
         const timeSpent = Math.round((Date.now() - sectionStartTime) / 1000);
         engagementData.sectionTimes[currentSection] = (engagementData.sectionTimes[currentSection] || 0) + timeSpent;
       }
-
-      let score = 0;
-      score += Math.min(30, timeOnPage / 4);
-      score += Math.min(30, engagementData.readingPauses * 5);
-      score += Math.max(0, 20 - avgSpeed / 50);
-      score += Math.min(20, engagementData.scrollBackCount * 5);
-      engagementData.readingScore = Math.round(Math.min(100, score));
     }
 
-    let engagementSent = false;
-    async function sendEngagement() {
+    function sendEngagement(useBeacon = false) {
       if (engagementSent) return;
       engagementSent = true;
-      engagementData.timeOnPage = Math.round((Date.now() - engagementData.startTime) / 1000);
-      calculateReadingScore();
+      prepareEngagementData();
 
       if (engagementData.timeOnPage < 3) return;
 
-      try {
-        await fetch(TRACKING_URL, {
+      const payload = JSON.stringify({
+        event: 'engagement',
+        page: window.location.pathname,
+        visitorId: visitorId,
+        userAgent: navigator.userAgent,
+        referrer: '',
+        engagement: engagementData
+      });
+
+      if (useBeacon && navigator.sendBeacon) {
+        navigator.sendBeacon(TRACKING_URL, payload);
+      } else {
+        fetch(TRACKING_URL, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({
-            event: 'engagement',
-            page: window.location.pathname,
-            visitorId: visitorId,
-            userAgent: navigator.userAgent,
-            referrer: '',
-            engagement: engagementData
-          })
-        });
-      } catch (e) {}
+          headers: { 'Content-Type': 'application/json' },
+          body: payload,
+          keepalive: true
+        }).catch(() => {});
+      }
     }
 
+    // Wait 30s before sending (tab switch)
+    let leaveTimer = null;
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') sendEngagement();
+      if (document.visibilityState === 'hidden') {
+        leaveTimer = setTimeout(() => sendEngagement(false), 30000);
+      } else {
+        if (leaveTimer) {
+          clearTimeout(leaveTimer);
+          leaveTimer = null;
+        }
+      }
     });
-    window.addEventListener('beforeunload', sendEngagement);
+
+    window.addEventListener('beforeunload', () => sendEngagement(true));
   </script>
 
 </body>
