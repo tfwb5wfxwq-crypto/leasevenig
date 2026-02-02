@@ -2,3 +2,4 @@
 secrets.md
 *.log
 node_modules/
+.sb-pentest-evidence/
