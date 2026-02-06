@@ -52,6 +52,13 @@
     .btn-save { background: var(--gold); color: white; }
     .btn-save:hover { background: var(--gold-light); transform: translateY(-2px); }
 
+    .btn-reset {
+      background: white;
+      color: var(--gray);
+      border: 1px solid var(--light-gray) !important;
+    }
+    .btn-reset:hover { color: var(--gold); border-color: var(--gold) !important; }
+
     .lang-switch {
       display: flex;
       gap: 5px;
@@ -246,9 +253,80 @@
     .footer p { font-size: 8pt; color: var(--gray); letter-spacing: 1px; }
     .footer a { color: var(--gold); text-decoration: none; }
 
+    /* Editable zones */
+    [contenteditable="true"] {
+      outline: none;
+      border-radius: 4px;
+      transition: box-shadow 0.2s ease;
+    }
+    [contenteditable="true"]:hover {
+      box-shadow: inset 0 0 0 1px rgba(201, 169, 98, 0.2);
+    }
+    [contenteditable="true"]:focus {
+      box-shadow: inset 0 0 0 1.5px rgba(201, 169, 98, 0.4);
+    }
+
+    /* Floating format toolbar */
+    .format-toolbar {
+      position: absolute;
+      display: none;
+      background: var(--charcoal);
+      border-radius: 8px;
+      padding: 4px;
+      gap: 2px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      z-index: 2000;
+    }
+    .format-toolbar.visible { display: flex; }
+    .format-toolbar button {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: white;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .format-toolbar button:hover { background: rgba(255,255,255,0.15); }
+    .format-toolbar button.active { background: var(--gold); }
+    .format-toolbar button.fmt-bold { font-weight: 700; font-family: 'Montserrat', sans-serif; font-size: 14px; }
+    .format-toolbar button.fmt-italic { font-style: italic; }
+    .format-toolbar button.fmt-underline { text-decoration: underline; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--charcoal);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 3000;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @media print {
       body { background: white; padding: 0; margin: 0; }
-      .toolbar, .controls { display: none !important; }
+      .toolbar, .controls, .format-toolbar, .toast { display: none !important; }
+      [contenteditable="true"]:hover,
+      [contenteditable="true"]:focus { box-shadow: none; }
       .page {
         width: 100%;
         padding: 20mm 22mm 18mm 22mm;
@@ -281,6 +359,7 @@
       <a href="lm-x7k9p2m4q8.html" class="lang-btn" onclick="switchLang(event)">FR</a>
       <span class="lang-btn active">EN</span>
     </div>
+    <button class="btn-reset" onclick="resetTemplate()">Reset text</button>
     <button class="btn-save" onclick="window.print()">Save as PDF</button>
   </div>
 
@@ -324,9 +403,9 @@
 
     <p class="salutation">Dear Sir or Madam,</p>
 
-    <div class="body" id="letterBody"></div>
+    <div class="body" id="letterBody" contenteditable="true"></div>
 
-    <div class="closing">
+    <div class="closing" contenteditable="true">
       <p>I would be delighted to discuss my background and motivation in more detail during an interview.</p>
       <p>Thank you for considering my application. I look forward to hearing from you.</p>
       <p class="signature">Lea Sevenig</p>
@@ -337,104 +416,153 @@
     </footer>
   </div>
 
+  <!-- Floating format toolbar -->
+  <div class="format-toolbar" id="formatToolbar">
+    <button class="fmt-bold" onmousedown="formatText(event, 'bold')" title="Bold">B</button>
+    <button class="fmt-italic" onmousedown="formatText(event, 'italic')" title="Italic">I</button>
+    <button class="fmt-underline" onmousedown="formatText(event, 'underline')" title="Underline">U</button>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast">Saved</div>
+
   <script>
     const profiles = {
       general: {
         subject: "Application",
-        body: `<p>With a Bachelor's degree in International Restaurant Management from Institut Lyfe in Lyon and a Master's degree in Communication and Audiovisual Production from EFAP Paris, I am pleased to submit my application.</p>
+        body: `<p>Three mother tongues, a pop-up restaurant built from scratch, a Master's in audiovisual production, and 18 months running marketing for five Parisian venues at once. That's the short version. Here's the rest.</p>
 
-<p>My career sits at the intersection of marketing, communications, and brand development, with a strong operational dimension. Having started on the ground floor, I have gained a practical understanding of business challenges, positioning, and performance, particularly in the restaurant and hospitality sectors.</p>
+<p>I started with a Bachelor's in International Restaurant Management at Institut Lyfe in Lyon. Not a lecture-hall degree — we were in kitchens, dining rooms, dealing with real customers. That's where I learned how a business actually works from the inside: margins, flow, the experience you sell without naming it.</p>
 
-<p>Throughout my studies and professional experiences, I have contributed to building and implementing comprehensive marketing strategies, from defining brand identity and creating content to managing digital channels and optimizing visibility. These experiences have enabled me to work on message consistency, concept appeal, and audience retention.</p>
+<p>In 2022, with two partners, I launched Focacc' — a pop-up focaccia restaurant in Lyon, six months of operation. I handled everything brand-related: the name, the visual identity, the Instagram strategy that got us to 1,200 followers in three weeks. We ended up at 85% occupancy over the last two months. The biggest takeaway: learn to execute fast, measure, and adjust.</p>
 
-<p>In 2022, I co-founded and managed the pop-up restaurant Focacc' in Lyon. There, I led brand positioning, communication strategy, and acquisition initiatives, with the goal of increasing footfall and sales over a limited period.</p>
+<p>After that, I joined EFAP Paris for a Master's in Communication and Audiovisual Production. Alongside my studies, I worked on the "Court ou Crève" masterclass with YouTuber Ludovic — viral video, Instagram launch, website design. A project that forced me to juggle production, tight deadlines, and a demanding audience.</p>
 
-<p>After completing my Master's, I joined the Nasther Group as Communications Manager, Graphic Designer, and Web Designer. I managed the marketing of several Parisian establishments, including brand strategy, print and digital content creation, community management, and performance tracking. I developed marketing concepts aimed at increasing visibility and customer engagement.</p>
+<p>Out of the Master's, I joined the Nasther Group as Communications Manager, Graphic Designer, and Web Designer. Five Parisian establishments, each with its own positioning. I managed it all: brand guidelines, social media, print campaigns, website redesigns. The most valuable part was learning to switch between completely different brand universes in the same day.</p>
 
-<p>As a Luxembourgish national, I am fluent in Luxembourgish, French, German, and English. Independent and versatile, I am proficient in office software and the Adobe Creative Suite.</p>
+<p>I'm Luxembourgish — I speak Luxembourgish, French, German, and English fluently. I work with the Adobe suite, Figma, Canva, and I'm comfortable with standard analytics and CMS tools.</p>
 
-<p>I am now seeking to join your organization to further develop my career and gain experience within a demanding and committed team. I am confident that my strategic yet hands-on profile would be a genuine asset, and I am eager to contribute effectively to your marketing projects and brand performance.</p>`
+<p>What I'm looking for now: a team where I can bring this mix of strategy and hands-on execution, and keep growing on ambitious projects.</p>`
       },
       marketing: {
         subject: "Application - Marketing",
-        body: `<p>With a Bachelor's degree in International Restaurant Management from Institut Lyfe in Lyon and a Master's degree in Communication and Audiovisual Production from EFAP Paris, I am pleased to submit my application.</p>
+        body: `<p>Good marketing starts on the ground. Before thinking about funnels or KPIs, I first learned to notice what makes a customer come back — or not. That hands-on instinct is what I bring to every project.</p>
 
-<p>My career has been built around brand-focused marketing, performance, and communication consistency. Coming from an operational background, I have developed a comprehensive view of business challenges, from strategic positioning to marketing activation, with particular attention to brand image, messaging, and customer experience.</p>
+<p>My path started at Institut Lyfe in Lyon, with a Bachelor's in International Restaurant Management. Three years understanding business mechanics from the inside — pricing, positioning, customer journeys. Not from a slide deck: from a kitchen, a dining room, a counter.</p>
 
-<p>Throughout my experiences, I have contributed to defining and implementing multi-channel marketing strategies, working on brand identity, content production, print and digital asset management, and social media oversight. These assignments have strengthened message coherence, improved brand visibility, and supported development goals.</p>
+<p>In 2022, I co-founded Focacc', a pop-up restaurant in Lyon. Six months, from concept to close. I ran all the acquisition work: brand identity, social media strategy, local partnerships. Result: 1,200 Instagram followers in three weeks, 85% occupancy by the end. That kind of constraint — tight budget, limited time — is the best marketing training there is.</p>
 
-<p>Additionally, co-founding and managing a pop-up restaurant gave me a concrete understanding of launch, acquisition, and retention challenges, along with a results-oriented approach and resource optimization mindset.</p>
+<p>I then completed a Master's in Communication and Audiovisual Production at EFAP Paris. A program that gave me the technical toolkit for content: editing, art direction, visual storytelling. Not just the theory — the ability to produce.</p>
 
-<p>After completing my Master's, I joined the Nasther Group as Communications Manager, Graphic Designer, and Web Designer. I led communications and marketing for several establishments, working closely with operations teams and management to ensure brand consistency, campaign performance, and alignment with the group's strategic objectives.</p>
+<p>At Nasther, for a year and a half, I managed marketing for five Parisian establishments. In practice: defining communication axes per brand, community management, creating every print and digital asset, tracking performance, coordinating with on-site teams. The daily challenge was maintaining brand consistency while adapting the message to very different audiences — from a bistro to a high-end cocktail bar.</p>
 
-<p>I am now looking to join your organization to further develop my career and gain experience in a structured environment. I am confident that my versatile profile, combining strategic vision and execution capability, would be a genuine asset, and I am eager to contribute effectively to your marketing projects.</p>`
-      },
-      hospitality: {
-        subject: "Application - Luxury Hospitality",
-        body: `<p>With a Bachelor's degree in International Restaurant Management from Institut Lyfe in Lyon and a Master's degree in Communication and Audiovisual Production from EFAP Paris, I am pleased to submit my application.</p>
-
-<p>My career has focused on image-driven marketing, brand positioning, and customer experience, with particular sensitivity to luxury codes and the standards of excellence specific to high-end hospitality. Having started on the ground floor, I have developed a practical understanding of service challenges, brand consistency, and customer perception.</p>
-
-<p>Throughout my experiences, I have contributed to building and implementing marketing strategies aimed at strengthening venue identity, quality of messaging, and the enhancement of the guest experience. I have worked on content creation, print and digital asset management, and message consistency for discerning audiences, in line with brand positioning.</p>
-
-<p>Co-founding and managing a restaurant provided me with a comprehensive view of image, appeal, and retention challenges while integrating operational and economic requirements. This experience reinforced my attention to detail, perceived quality, and consistency—essential in the luxury sector.</p>
-
-<p>After completing my Master's, I joined the Nasther Group as Communications Manager, Graphic Designer, and Web Designer. I led communications and marketing for several establishments, ensuring brand consistency, asset quality, and alignment between image, messaging, and customer experience.</p>
-
-<p>I am now seeking to orient my career toward marketing in luxury hospitality or the luxury sector, to apply my skills to brands with strong identity and high standards. My profile, both strategic and operational, enables me to understand premium clientele expectations while contributing concretely to brand visibility and enhancement.</p>`
-      },
-      communication: {
-        subject: "Application - Communications",
-        body: `<p>With a Bachelor's degree in International Restaurant Management from Institut Lyfe in Lyon and a Master's degree in Communication and Audiovisual Production from EFAP Paris, I am pleased to submit my application.</p>
-
-<p>My career is firmly oriented toward brand communications and content strategy, with particular attention to image, messaging, and consistency across all channels. Coming from an operational background, I have developed a rigorous approach to communications, viewing it as a lever for brand enhancement, differentiation, and credibility.</p>
-
-<p>Throughout my experiences, I have designed and implemented comprehensive communication strategies, including editorial direction, print and digital content creation, social media management, and visual project coordination. These assignments have enabled me to deliver consistent, high-quality communications aligned with brand positioning, particularly for demanding audiences.</p>
-
-<p>Co-founding and managing a restaurant provided me with a concrete understanding of image and messaging challenges, along with a strong culture of detail and perceived quality. This hands-on experience now informs my approach to crafting accurate, credible messages that align with the actual customer experience.</p>
-
-<p>After completing my Master's, I joined the Nasther Group as Communications Manager, Graphic Designer, and Web Designer. I led communications for several establishments, ensuring asset consistency, content quality, and alignment between messaging, image, and brand identity.</p>
-
-<p>I am now looking to continue my career within an organization where communications plays a strategic and structural role. I am confident that my creative, rigorous, and operational profile would be a genuine asset to your team and would contribute effectively to enhancing your image and projects.</p>`
-      },
-      audiovisual: {
-        subject: "Application - Audiovisual",
-        body: `<p>With a Bachelor's degree in International Restaurant Management from Institut Lyfe in Lyon and a Master's degree in Communication and Audiovisual Production from EFAP Paris, I am pleased to submit my application.</p>
-
-<p>My career has primarily focused on visual communication and content production, with a strong sensitivity to image, asset consistency, and message quality. Coming from the restaurant and luxury hospitality sectors, I have developed a practical understanding of image challenges, customer experience, and brand positioning.</p>
-
-<p>Throughout my experiences, I have designed and produced comprehensive visual communication materials, from graphic identity definition to print and digital asset development, including web design and audiovisual production. I work across the entire production chain, from concept to delivery, coordinating various stakeholders while ensuring aesthetic consistency, deadline compliance, and quality standards.</p>
-
-<p>As part of a Master's project, I also worked on communications and content production for the "Court ou Crève" masterclass, developed in collaboration with YouTuber Ludovic. I participated in creating a viral video, launching and managing the Instagram account, and designing the project's website. This experience deepened my understanding of digital codes, audiovisual production, and content strategy, in connection with an engaged audience and specific visibility objectives.</p>
-
-<p>After completing my Master's, I joined the Nasther Group as Communications Manager, Graphic Designer, and Web Designer. I led visual production and communications for several establishments, including graphic content creation, social media management, website design, and visual project oversight. I also worked on storytelling, rebranding, and image enhancement projects, in close collaboration with operations teams.</p>
-
-<p>Additionally, my freelance work as a graphic designer and project manager has allowed me to support various restaurants in creating or evolving their visual identity, as well as overseeing audiovisual projects. These experiences have strengthened my ability to manage demanding visual productions adapted to various brand universes while remaining attentive to operational constraints.</p>
-
-<p>I am now seeking to join an organization where visual production and communications play a strategic role, to further develop my career and gain professional experience. My creative, rigorous, and operational profile enables me to integrate quickly into a team and contribute concretely to the quality and consistency of communication materials.</p>`
+<p>Now, I want to join an organization where marketing has real, measurable impact. My profile blends strategic thinking with fast execution — and that combination is exactly what moves projects forward.</p>`
       },
       event: {
         subject: "Application - Events",
-        body: `<p>With a Bachelor's degree in International Restaurant Management from Institut Lyfe in Lyon and a Master's degree in Communication and Audiovisual Production from EFAP Paris, I am pleased to submit my application.</p>
+        body: `<p>My first real event was a 40-seat pop-up restaurant in Lyon. Not an internship — I built the whole thing: the concept, the venue, the team, the communications. Six months of operation, from opening night to closing. That kind of fieldwork is what shaped my approach to events.</p>
 
-<p>My career has been built around the design, organization, and coordination of event projects, with a strong operational dimension. Coming from the restaurant and hospitality sectors, I have developed a pragmatic approach to events, integrating logistics, communications, and audience experience.</p>
+<p>The project, Focacc', I co-founded in 2022 during my Bachelor's at Institut Lyfe. I learned everything a classroom can't teach: negotiating a short-term lease, managing supplier surprises, pivoting the concept mid-run when the numbers weren't right. Opening night, we had 15 reservations. The last month, we were turning people away.</p>
 
-<p>Throughout my professional experiences, I have participated in creating and organizing various event projects, including pop-up restaurants, concept launches, and formats combining communications and content production. I have been involved in project design, team coordination, logistics management, and the development of event-related communication materials.</p>
+<p>I then worked for a year at La Dimanche, one of Paris's best-known LGBTQ+ parties. I was in charge of bar logistics: ordering, stock management, flow optimization during events. Crowds of 800 to 1,000, with surges to manage in real time. It builds composure.</p>
 
-<p>I also collaborated on the design and production of the "Court ou Crève" masterclass, developed with YouTuber Ludovic. I participated in project coordination, main video production, Instagram account launch and management, and website creation. This project allowed me to work on a high-visibility event format, combining content production, scheduling, and coordination, in connection with a large and engaged audience.</p>
+<p>Alongside my Master's at EFAP, I collaborated on the "Court ou Crève" masterclass with YouTuber Ludovic. Main video production, Instagram account launch, website creation. A digital event format — with the same demands for deadlines, team coordination, and results.</p>
 
-<p>In 2022, I co-founded and managed the pop-up restaurant Focacc' in Lyon for six months. This project enabled me to oversee the entire organization, from concept definition to operational implementation, including communications, team management, and process optimization over time.</p>
+<p>At Nasther, I supported numerous events across the group's five venues: launch nights, brand collaborations, private events. My role: coordinating between teams, producing all communication materials, handling operational follow-through on the day.</p>
 
-<p>I also worked for one year at La Dimanche, one of the major LGBTQ+ parties in Paris, where I was responsible for bar logistics, order management, and flow optimization, in a high-attendance event context with significant operational constraints.</p>
+<p>What I know how to do: turn a concept into a real experience, on time, on budget, without it showing when things get tight. That's the skill set I'd like to bring to your event projects.</p>`
+      },
+      hospitality: {
+        subject: "Application - Luxury Hospitality",
+        body: `<p>I grew up in Luxembourg, between three languages and three cultures. That habit of reading the room — knowing when to be formal, when to be warm, when to simply listen — is exactly what luxury hospitality demands.</p>
 
-<p>Subsequently, at the Nasther Group, I supported numerous events related to various establishments, ensuring coordination between teams, communication material production, and operational oversight. These experiences have strengthened my organizational skills, adaptability, and rigor in managing multiple projects simultaneously.</p>
+<p>My training at Institut Lyfe in Lyon focused on international restaurant management. Three years immersed in service standards, venue management, and the attention to detail that separates a good meal from a memorable experience. That's where I developed a feel for luxury — not the flashy kind, but the right gesture at the right moment.</p>
 
-<p>I am now looking to continue my career in the events sector, within an organization where operational excellence, creativity, and experience quality are central. My versatile profile, organized, autonomous, and accustomed to fieldwork, enables me to integrate quickly and contribute effectively to your projects.</p>`
+<p>With Focacc', the pop-up restaurant I co-founded in Lyon, I came to understand the power of perceived value. We were selling focaccias, but what customers were buying was the atmosphere, the care in every detail — from the menu typography to the packaging. When your budget is tight, you learn to create perceived quality differently. That discipline has stayed with me.</p>
+
+<p>My Master's in Communication and Audiovisual Production at EFAP gave me the tools to translate a brand identity into images, words, and a coherent digital experience. Everything that makes a guest discover a hotel online and already want to be there.</p>
+
+<p>At Nasther, I led marketing for five Parisian venues — some of them high-end. Creating the visual universe, managing social media with a curated editorial line, designing print materials. The challenge: maintaining a consistent level of quality at every client touchpoint.</p>
+
+<p>I speak Luxembourgish, French, German, and English — all fluently. That's a real advantage for welcoming international guests and adapting communications to different markets. I'd love to bring this combination — service instinct, visual culture, multilingualism — to an exceptional property.</p>`
+      },
+      communication: {
+        subject: "Application - Communications",
+        body: `<p>When a brand communicates well, you don't notice. Everything feels natural, obvious, effortless. It's when things go wrong that people notice the communications. My job is to make sure nobody ever does — that the message lands without any visible effort.</p>
+
+<p>I studied communications through two paths. First through the field: a Bachelor's in Restaurant Management at Institut Lyfe, where I saw firsthand how a venue's messaging directly shapes customer perception. Then through craft: a Master's in Communication and Audiovisual Production at EFAP Paris — editorial strategy, art direction, content production, project management.</p>
+
+<p>Between the two, I co-founded Focacc' in Lyon. A pop-up restaurant where I built the entire communications from zero: naming, visual identity, Instagram editorial line, print materials. With virtually no budget, every word choice, every photograph mattered. We reached 1,200 followers in three weeks — proof that a clear, authentic message is enough when it's properly calibrated.</p>
+
+<p>The "Court ou Crève" masterclass, created with YouTuber Ludovic, confronted me with a different register: mass-audience digital communications. Viral video, community management, website — all with tight deadlines and an audience that doesn't forgive missteps.</p>
+
+<p>At Nasther, I was Head of Communications for five establishments. Not five variations of the same message — five distinct identities, five tones, five audiences. I managed content strategy, community management, graphic assets, websites. The biggest lesson: learning to arbitrate between what the brand wants to say and what the audience needs to hear.</p>
+
+<p>I'm looking for an organization that treats communications as a strategic lever, not a cost center. That's the kind of environment where I do my best work.</p>`
+      },
+      audiovisual: {
+        subject: "Application - Audiovisual",
+        body: `<p>I've been making images since I first got a computer. First out of curiosity, then through training, now as a profession. What sets me apart from a purely creative profile is that I understand why we produce — not just how.</p>
+
+<p>My Bachelor's at Institut Lyfe gave me a solid business foundation: understanding a market, a positioning, a target audience. My Master's in Communication and Audiovisual Production at EFAP added the technical layer: directing, editing, motion design, art direction, production management.</p>
+
+<p>The project that connected everything was the "Court ou Crève" masterclass with YouTuber Ludovic. I co-produced the main video — from script to final cut. I also launched and managed the project's Instagram account and designed the website. It was my first end-to-end audiovisual project with a real audience and concrete visibility targets.</p>
+
+<p>At Nasther, I was responsible for all visual production across five establishments: photo shoots, graphic creation (menus, posters, social media), website design, and a few short video projects for social channels. I worked solo on these — which means I managed everything from brief to delivery, including feedback rounds and revisions.</p>
+
+<p>As a freelancer, I also help restaurateurs with their visual identity: logos, brand guidelines, social media templates, photo and video project oversight. Projects where you need to quickly grasp the client's universe and produce assets that actually feel like them — not a generic template.</p>
+
+<p>My technical environment: Premiere Pro, After Effects, Photoshop, Illustrator, InDesign, Lightroom, Figma, Canva, Webflow, WordPress. I'm comfortable across the full chain, from capture to final deliverable.</p>
+
+<p>What I'm looking for: a team where audiovisual and visual production has genuine strategic weight. Where content isn't just made to fill a feed, but to tell a story.</p>`
       }
     };
 
     let currentProfile = 'general';
+    let saveTimeout = null;
 
+    // --- LocalStorage ---
+    function getStorageKey(profile) {
+      return `lm_edited_en_${profile}`;
+    }
+
+    function getClosingKey(profile) {
+      return `lm_edited_en_closing_${profile}`;
+    }
+
+    function saveToStorage() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        const bodyHtml = document.getElementById('letterBody').innerHTML;
+        const closingHtml = document.querySelector('.closing').innerHTML;
+        localStorage.setItem(getStorageKey(currentProfile), bodyHtml);
+        localStorage.setItem(getClosingKey(currentProfile), closingHtml);
+        showToast();
+      }, 1000);
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    function resetTemplate() {
+      if (!confirm('Reset to original text? Your changes will be lost.')) return;
+      localStorage.removeItem(getStorageKey(currentProfile));
+      localStorage.removeItem(getClosingKey(currentProfile));
+      document.getElementById('letterBody').innerHTML = profiles[currentProfile].body;
+      document.querySelector('.closing').innerHTML = getDefaultClosing();
+      showToast();
+    }
+
+    function getDefaultClosing() {
+      return `<p>I would be delighted to discuss my background and motivation in more detail during an interview.</p>
+      <p>Thank you for considering my application. I look forward to hearing from you.</p>
+      <p class="signature">Lea Sevenig</p>`;
+    }
+
+    // --- Profile switching ---
     function setProfile(profile) {
       currentProfile = profile;
       document.querySelectorAll('.profile-btn').forEach(btn => btn.classList.remove('active'));
@@ -443,7 +571,16 @@
       const p = profiles[profile];
       document.getElementById('subjectInput').value = p.subject;
       document.getElementById('subjectDisplay').textContent = p.subject;
-      document.getElementById('letterBody').innerHTML = p.body;
+
+      // Load from localStorage or fallback to template
+      const savedBody = localStorage.getItem(getStorageKey(profile));
+      const savedClosing = localStorage.getItem(getClosingKey(profile));
+      document.getElementById('letterBody').innerHTML = savedBody || p.body;
+      if (savedClosing) {
+        document.querySelector('.closing').innerHTML = savedClosing;
+      } else {
+        document.querySelector('.closing').innerHTML = getDefaultClosing();
+      }
     }
 
     function updateSubject() {
@@ -462,11 +599,104 @@
       document.getElementById('currentDate').textContent = `Paris, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
     }
 
-    // Init
+    // --- Paste handler: plain text only ---
+    document.addEventListener('paste', function(e) {
+      const target = e.target.closest('[contenteditable="true"]');
+      if (!target) return;
+      e.preventDefault();
+      const text = e.clipboardData.getData('text/plain');
+      document.execCommand('insertText', false, text);
+    });
+
+    // --- Auto-save on input ---
+    document.addEventListener('input', function(e) {
+      if (e.target.closest('[contenteditable="true"]')) {
+        saveToStorage();
+      }
+    });
+
+    // --- Floating format toolbar ---
+    const toolbar = document.getElementById('formatToolbar');
+
+    function formatText(e, command) {
+      e.preventDefault();
+      document.execCommand(command, false, null);
+      updateToolbarState();
+    }
+
+    function updateToolbarState() {
+      toolbar.querySelector('.fmt-bold').classList.toggle('active', document.queryCommandState('bold'));
+      toolbar.querySelector('.fmt-italic').classList.toggle('active', document.queryCommandState('italic'));
+      toolbar.querySelector('.fmt-underline').classList.toggle('active', document.queryCommandState('underline'));
+    }
+
+    function showToolbar() {
+      const sel = window.getSelection();
+      if (!sel.rangeCount || sel.isCollapsed) {
+        toolbar.classList.remove('visible');
+        return;
+      }
+      const range = sel.getRangeAt(0);
+      const container = range.commonAncestorContainer;
+      const editable = (container.nodeType === 1 ? container : container.parentElement).closest('[contenteditable="true"]');
+      if (!editable) {
+        toolbar.classList.remove('visible');
+        return;
+      }
+
+      const rect = range.getBoundingClientRect();
+      const toolbarWidth = 116;
+      let left = rect.left + (rect.width / 2) - (toolbarWidth / 2) + window.scrollX;
+      let top = rect.top - 48 + window.scrollY;
+
+      // Keep within viewport
+      left = Math.max(8, Math.min(left, window.innerWidth - toolbarWidth - 8));
+      if (top < 8) top = rect.bottom + 8 + window.scrollY;
+
+      toolbar.style.left = left + 'px';
+      toolbar.style.top = top + 'px';
+      toolbar.classList.add('visible');
+      updateToolbarState();
+    }
+
+    document.addEventListener('selectionchange', showToolbar);
+    document.addEventListener('mousedown', function(e) {
+      if (!e.target.closest('.format-toolbar') && !e.target.closest('[contenteditable="true"]')) {
+        toolbar.classList.remove('visible');
+      }
+    });
+
+    // --- Init ---
     updateDate();
-    document.getElementById('subjectInput').value = profiles.general.subject;
-    document.getElementById('subjectDisplay').textContent = profiles.general.subject;
-    document.getElementById('letterBody').innerHTML = profiles.general.body;
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramCompany = urlParams.get('company');
+    const paramSubject = urlParams.get('subject');
+    const paramProfile = urlParams.get('profile');
+
+    if (paramProfile && profiles[paramProfile]) {
+      currentProfile = paramProfile;
+      document.querySelectorAll('.profile-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(paramProfile.substring(0, 4)));
+      });
+      const savedBody = localStorage.getItem(getStorageKey(paramProfile));
+      document.getElementById('letterBody').innerHTML = savedBody || profiles[paramProfile].body;
+      const savedClosing = localStorage.getItem(getClosingKey(paramProfile));
+      if (savedClosing) document.querySelector('.closing').innerHTML = savedClosing;
+      document.getElementById('subjectInput').value = paramSubject || profiles[paramProfile].subject;
+      document.getElementById('subjectDisplay').textContent = paramSubject || profiles[paramProfile].subject;
+    } else {
+      document.getElementById('subjectInput').value = paramSubject || profiles.general.subject;
+      document.getElementById('subjectDisplay').textContent = paramSubject || profiles.general.subject;
+      const savedBody = localStorage.getItem(getStorageKey('general'));
+      document.getElementById('letterBody').innerHTML = savedBody || profiles.general.body;
+      const savedClosing = localStorage.getItem(getClosingKey('general'));
+      if (savedClosing) document.querySelector('.closing').innerHTML = savedClosing;
+    }
+
+    if (paramCompany) {
+      document.getElementById('companyName').value = paramCompany;
+      document.getElementById('companyDisplay').textContent = ` - ${paramCompany}`;
+    }
 
     // Smooth language switch
     function switchLang(e) {

@@ -52,6 +52,13 @@
     .btn-save { background: var(--gold); color: white; }
     .btn-save:hover { background: var(--gold-light); transform: translateY(-2px); }
 
+    .btn-reset {
+      background: white;
+      color: var(--gray);
+      border: 1px solid var(--light-gray) !important;
+    }
+    .btn-reset:hover { color: var(--gold); border-color: var(--gold) !important; }
+
     .lang-switch {
       display: flex;
       gap: 5px;
@@ -246,9 +253,80 @@
     .footer p { font-size: 8pt; color: var(--gray); letter-spacing: 1px; }
     .footer a { color: var(--gold); text-decoration: none; }
 
+    /* Editable zones */
+    [contenteditable="true"] {
+      outline: none;
+      border-radius: 4px;
+      transition: box-shadow 0.2s ease;
+    }
+    [contenteditable="true"]:hover {
+      box-shadow: inset 0 0 0 1px rgba(201, 169, 98, 0.2);
+    }
+    [contenteditable="true"]:focus {
+      box-shadow: inset 0 0 0 1.5px rgba(201, 169, 98, 0.4);
+    }
+
+    /* Floating format toolbar */
+    .format-toolbar {
+      position: absolute;
+      display: none;
+      background: var(--charcoal);
+      border-radius: 8px;
+      padding: 4px;
+      gap: 2px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      z-index: 2000;
+    }
+    .format-toolbar.visible { display: flex; }
+    .format-toolbar button {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: white;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .format-toolbar button:hover { background: rgba(255,255,255,0.15); }
+    .format-toolbar button.active { background: var(--gold); }
+    .format-toolbar button.fmt-bold { font-weight: 700; font-family: 'Montserrat', sans-serif; font-size: 14px; }
+    .format-toolbar button.fmt-italic { font-style: italic; }
+    .format-toolbar button.fmt-underline { text-decoration: underline; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--charcoal);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 3000;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @media print {
       body { background: white; padding: 0; margin: 0; }
-      .toolbar, .controls { display: none !important; }
+      .toolbar, .controls, .format-toolbar, .toast { display: none !important; }
+      [contenteditable="true"]:hover,
+      [contenteditable="true"]:focus { box-shadow: none; }
       .page {
         width: 100%;
         padding: 20mm 22mm 18mm 22mm;
@@ -281,6 +359,7 @@
       <span class="lang-btn active">FR</span>
       <a href="lm-en-x7k9p2m4q8.html" class="lang-btn" onclick="switchLang(event)">EN</a>
     </div>
+    <button class="btn-reset" onclick="resetTemplate()">Réinitialiser</button>
     <button class="btn-save" onclick="window.print()">Sauvegarder PDF</button>
   </div>
 
@@ -324,9 +403,9 @@
 
     <p class="salutation">Madame, Monsieur,</p>
 
-    <div class="body" id="letterBody"></div>
+    <div class="body" id="letterBody" contenteditable="true"></div>
 
-    <div class="closing">
+    <div class="closing" contenteditable="true">
       <p>Je serais ravie d'échanger avec vous lors d'un entretien afin de vous présenter plus en détail mon parcours et ma motivation.</p>
       <p>Je vous remercie pour l'attention portée à ma candidature et vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</p>
       <p class="signature">Lea Sevenig</p>
@@ -337,104 +416,153 @@
     </footer>
   </div>
 
+  <!-- Floating format toolbar -->
+  <div class="format-toolbar" id="formatToolbar">
+    <button class="fmt-bold" onmousedown="formatText(event, 'bold')" title="Gras">B</button>
+    <button class="fmt-italic" onmousedown="formatText(event, 'italic')" title="Italique">I</button>
+    <button class="fmt-underline" onmousedown="formatText(event, 'underline')" title="Souligné">U</button>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast">Sauvegardé</div>
+
   <script>
     const profiles = {
       general: {
         subject: "Candidature",
-        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
+        body: `<p>Trois langues maternelles, un resto éphémère monté de zéro, un master en audiovisuel et 18 mois à gérer le marketing de cinq adresses parisiennes en même temps — c'est le résumé rapide. Voici le détail.</p>
 
-<p>Mon parcours s'inscrit à l'interface du marketing, de la communication et du développement de marque, avec une forte dimension opérationnelle. Issue du terrain, j'ai acquis une compréhension concrète des enjeux business, de positionnement et de performance, notamment dans les secteurs de la restauration et des lieux de vie.</p>
+<p>J'ai commencé par un Bachelor en management de la restauration à l'Institut Lyfe, à Lyon. Pas un cursus théorique : on était en cuisine, en salle, face aux clients. C'est là que j'ai compris comment fonctionne un business de l'intérieur — les marges, le flux, l'expérience qu'on vend sans la nommer.</p>
 
-<p>Lors de mes études puis de mes expériences professionnelles, j'ai contribué à la construction et au déploiement de stratégies marketing complètes, allant de la définition de l'identité de marque à la création de contenus, en passant par la gestion des canaux digitaux et l'optimisation de la visibilité. Ces expériences m'ont permis de travailler sur la cohérence des messages, l'attractivité des concepts et la fidélisation des publics.</p>
+<p>En 2022, avec deux associés, j'ai lancé Focacc' — un restaurant éphémère de focaccias à Lyon, six mois d'exploitation. J'ai tout porté côté marque : le nom, l'identité visuelle, la stratégie Instagram qui nous a amenés à 1 200 abonnés en trois semaines. On a fini avec un taux de remplissage de 85 % sur les deux derniers mois. Ce projet m'a appris une chose essentielle : savoir exécuter vite, mesurer, ajuster.</p>
 
-<p>En 2022, j'ai cofondé et dirigé le restaurant éphémère Focacc' à Lyon. J'y ai piloté le positionnement de marque, la stratégie de communication et les leviers d'acquisition, avec pour objectif d'augmenter la fréquentation et les ventes sur une durée limitée.</p>
+<p>Ensuite, j'ai intégré l'EFAP Paris pour un Master en communication et production audiovisuelle. En parallèle, j'ai travaillé sur la masterclass "Court ou Crève" avec le youtubeur Ludovic — vidéo virale, lancement Instagram, création du site. Un projet qui m'a obligée à jongler entre production, planning serré et audience exigeante.</p>
 
-<p>Après l'obtention de mon master, j'ai intégré le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai assuré le pilotage marketing de plusieurs établissements parisiens, incluant la stratégie de marque, la création de supports print et digitaux, le community management et le suivi des performances. J'y ai notamment développé des concepts marketing visant à accroître la visibilité et l'engagement des clients.</p>
+<p>À la sortie du master, j'ai rejoint le groupe Nasther comme responsable communication, graphiste et web designer. Cinq établissements parisiens, chacun avec son positionnement. Je gérais tout : charte graphique, réseaux sociaux, campagnes print, refonte des sites web. Le plus formateur, c'est la capacité à passer d'un univers de marque à un autre dans la même journée.</p>
 
-<p>Luxembourgeoise, je parle couramment le luxembourgeois, le français, l'allemand et l'anglais. Autonome et polyvalente, je maîtrise les outils bureautiques ainsi que la suite Adobe.</p>
+<p>Je suis luxembourgeoise — je parle couramment luxembourgeois, français, allemand et anglais. Je maîtrise la suite Adobe, Figma, Canva, et je suis à l'aise avec les outils analytics et CMS courants.</p>
 
-<p>Je souhaite aujourd'hui rejoindre votre structure afin de compléter mon parcours et d'enrichir mon expérience professionnelle au sein d'une équipe exigeante et engagée. Convaincue que mon profil à la fois stratégique et opérationnel peut constituer un réel atout, je suis persuadée de pouvoir contribuer efficacement au développement de vos projets marketing et à la performance de votre marque.</p>`
+<p>Ce que je cherche maintenant : une équipe où je peux apporter cette double casquette stratégie + exécution, et continuer à progresser sur des projets ambitieux.</p>`
       },
       marketing: {
         subject: "Candidature - Marketing",
-        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
+        body: `<p>Le marketing, pour moi, ça commence sur le terrain. Avant de penser funnels ou KPIs, j'ai d'abord appris à observer ce qui fait revenir un client — ou pas. C'est cette approche concrète que j'apporte aujourd'hui.</p>
 
-<p>Mon parcours s'inscrit dans une logique marketing orientée marque, performance et cohérence des dispositifs de communication. Issue d'un environnement opérationnel, j'ai développé une vision globale des enjeux business, allant du positionnement stratégique à l'activation des leviers marketing, avec une attention particulière portée à l'image, aux messages et à l'expérience client.</p>
+<p>Mon parcours a démarré à l'Institut Lyfe, à Lyon, avec un Bachelor en management de la restauration internationale. Trois ans à comprendre les mécaniques business de l'intérieur — pricing, positionnement, parcours client. Pas depuis un slide deck : depuis une cuisine, une salle, un comptoir.</p>
 
-<p>Au cours de mes expériences, j'ai contribué à la définition et au déploiement de stratégies marketing multi-canales, en travaillant sur l'identité de marque, la production de contenus, la gestion des supports print et digitaux ainsi que le pilotage des réseaux sociaux. Ces missions m'ont permis de renforcer la cohérence des prises de parole, d'optimiser la visibilité des marques et de soutenir leurs objectifs de développement.</p>
+<p>En 2022, j'ai cofondé Focacc', un restaurant éphémère à Lyon. Six mois, de la création du concept à la fermeture. J'ai piloté toute la partie acquisition : identité de marque, stratégie réseaux sociaux, partenariats locaux. Résultat : 1 200 abonnés Instagram en trois semaines, taux de remplissage à 85 % sur la fin. Ce genre de contrainte — budget limité, temps compté — c'est le meilleur apprentissage marketing qui existe.</p>
 
-<p>En parallèle, la cofondation et la direction d'un restaurant éphémère m'ont apporté une compréhension concrète des enjeux de lancement, d'acquisition et de fidélisation, ainsi qu'une approche orientée résultats et optimisation des ressources.</p>
+<p>J'ai ensuite complété un Master en communication et production audiovisuelle à l'EFAP Paris. Un cursus qui m'a donné les outils techniques côté contenu : montage, DA, storytelling visuel. Pas juste la théorie — la capacité à produire.</p>
 
-<p>Après l'obtention de mon master, j'ai rejoint le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai piloté la communication et le marketing de plusieurs établissements, en lien étroit avec les équipes opérationnelles et la direction, en veillant à la cohérence des marques, à la performance des actions menées et à l'alignement avec les objectifs stratégiques du groupe.</p>
+<p>Chez Nasther, pendant un an et demi, j'ai géré le marketing de cinq établissements parisiens. Concrètement : définition des axes de communication par marque, community management, création de tous les supports print et digitaux, suivi des performances, coordination avec les équipes terrain. Le défi quotidien, c'était de maintenir une cohérence de marque tout en adaptant le discours à des cibles très différentes — d'un bistrot à un bar à cocktails haut de gamme.</p>
 
-<p>Aujourd'hui, je souhaite intégrer votre structure afin de compléter mon parcours et d'enrichir mon expérience professionnelle dans un environnement structuré. Convaincue que mon profil polyvalent, alliant vision stratégique et capacité d'exécution, peut constituer un réel atout, je suis persuadée de pouvoir contribuer efficacement à vos projets marketing.</p>`
-      },
-      hospitality: {
-        subject: "Candidature - Hôtellerie de luxe",
-        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
-
-<p>Mon parcours s'inscrit dans une approche marketing orientée image, positionnement de marque et expérience client, avec une sensibilité particulière aux codes du luxe et aux standards d'excellence propres à l'hôtellerie haut de gamme. Issue du terrain, j'ai développé une compréhension concrète des enjeux de service, de cohérence de marque et de perception client.</p>
-
-<p>Au fil de mes expériences, j'ai contribué à la construction et au déploiement de stratégies marketing visant à renforcer l'identité des lieux, la qualité des prises de parole et la valorisation de l'expérience proposée. J'ai travaillé sur la création de contenus, la gestion des supports print et digitaux, ainsi que sur la cohérence des messages diffusés auprès de publics exigeants, en accord avec le positionnement des marques.</p>
-
-<p>La cofondation et la direction d'un restaurant m'ont permis d'acquérir une vision globale des enjeux liés à l'image, à l'attractivité et à la fidélisation, tout en intégrant les impératifs opérationnels et économiques. Cette expérience a renforcé mon sens du détail, de la qualité perçue et de la constance, essentiels dans l'univers du luxe.</p>
-
-<p>Après l'obtention de mon master, j'ai intégré le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai piloté la communication et le marketing de plusieurs établissements, en veillant à la cohérence des marques, à la qualité des supports et à l'alignement entre image, discours et expérience client.</p>
-
-<p>Aujourd'hui, je souhaite orienter mon parcours vers le marketing dans l'hôtellerie de luxe ou le secteur du luxe, afin de mettre mes compétences au service de marques à forte identité et à haut niveau d'exigence. Mon profil, à la fois stratégique et opérationnel, me permet de comprendre les attentes d'une clientèle premium tout en contribuant concrètement au rayonnement et à la valorisation d'une marque.</p>`
-      },
-      communication: {
-        subject: "Candidature - Communication",
-        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
-
-<p>Mon parcours est résolument orienté communication de marque et stratégie de contenus, avec une attention particulière portée à l'image, aux messages et à leur cohérence sur l'ensemble des supports. Issue d'un environnement opérationnel, j'ai développé une approche exigeante de la communication, pensée comme un levier de valorisation, de différenciation et de crédibilité des marques.</p>
-
-<p>Au cours de mes expériences, j'ai conçu et déployé des dispositifs de communication globaux, incluant la définition des axes éditoriaux, la création de contenus print et digitaux, la gestion des réseaux sociaux et la coordination de projets visuels. Ces missions m'ont permis d'assurer une communication cohérente, qualitative et alignée avec le positionnement des marques, notamment auprès de publics exigeants.</p>
-
-<p>La cofondation et la direction d'un restaurant m'ont apporté une compréhension concrète des enjeux d'image et de prise de parole, ainsi qu'une forte culture du détail et de la qualité perçue. Cette expérience terrain nourrit aujourd'hui ma manière de concevoir des messages justes, crédibles et en adéquation avec l'expérience réellement vécue par le client.</p>
-
-<p>Après l'obtention de mon master, j'ai rejoint le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai piloté la communication de plusieurs établissements, en veillant à la cohérence des supports, à la qualité des contenus et à l'alignement entre discours, image et identité de marque.</p>
-
-<p>Aujourd'hui, je souhaite poursuivre mon parcours au sein d'une structure où la communication occupe une place stratégique et structurante. Je suis convaincue que mon profil, à la fois créatif, rigoureux et opérationnel, peut constituer un réel atout pour votre équipe et contribuer efficacement à la valorisation de votre image et de vos projets.</p>`
-      },
-      audiovisual: {
-        subject: "Candidature - Audiovisuel",
-        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
-
-<p>Mon parcours est principalement orienté vers la communication visuelle et la production de contenus, avec une forte sensibilité à l'image, à la cohérence des supports et à la qualité des prises de parole. Issue du terrain de la restauration et de l'hôtellerie haut de gamme, j'ai développé une compréhension concrète des enjeux d'image, d'expérience client et de positionnement de marque.</p>
-
-<p>Au cours de mes expériences, j'ai conçu et produit des dispositifs de communication visuelle complets, de la définition de l'identité graphique à la déclinaison des supports print et digitaux, en passant par le web design et la production audiovisuelle. J'interviens sur l'ensemble de la chaîne de production, de la conception à la livraison, en coordonnant les différents intervenants et en veillant à la cohérence esthétique, au respect des délais et aux exigences de qualité.</p>
-
-<p>Dans le cadre d'un projet de master, j'ai également travaillé sur la communication et la production de contenus pour la masterclass "Court ou Crève", développée en collaboration avec le youtubeur Ludovic. J'ai participé à la création d'une vidéo virale, au lancement et à la gestion du compte Instagram ainsi qu'à la conception du site web du projet. Cette expérience m'a permis d'approfondir ma compréhension des codes du digital, de la production audiovisuelle et de la stratégie de contenus, en lien avec une audience engagée et des objectifs de visibilité précis.</p>
-
-<p>Après l'obtention de mon master, j'ai intégré le groupe Nasther en tant que responsable communication, graphiste et web designer. J'y ai piloté la production visuelle et la communication de plusieurs établissements, incluant la création de contenus graphiques, la gestion des réseaux sociaux, la conception de sites web et le suivi de projets visuels. J'y ai également travaillé sur des projets de storytelling, de rebranding et de valorisation d'image, en lien étroit avec les équipes opérationnelles.</p>
-
-<p>En parallèle, mon activité indépendante en tant que graphiste et responsable de projet m'a permis d'accompagner différents restaurants dans la création ou l'évolution de leur identité visuelle, ainsi que dans le suivi de projets audiovisuels. Ces expériences ont renforcé ma capacité à gérer des productions visuelles exigeantes, adaptées à des univers de marque variés, tout en restant attentive aux contraintes opérationnelles.</p>
-
-<p>Aujourd'hui, je souhaite rejoindre une structure où la production visuelle et la communication occupent une place stratégique, afin de compléter mon parcours et d'enrichir mon expérience professionnelle. Mon profil, à la fois créatif, rigoureux et opérationnel, me permet de m'intégrer rapidement au sein d'une équipe et de contribuer concrètement à la qualité et à la cohérence des supports de communication.</p>`
+<p>Aujourd'hui, je veux rejoindre une structure où le marketing a un vrai impact mesurable. Mon profil mêle vision stratégique et capacité d'exécution rapide — et c'est exactement cette combinaison qui me permet de faire avancer les projets.</p>`
       },
       event: {
         subject: "Candidature - Événementiel",
-        body: `<p>Diplômée d'un Bachelor en management international de la restauration à l'Institut Lyfe à Lyon et d'un Master en communication et production audiovisuelle à l'EFAP Paris, je vous adresse ma candidature.</p>
+        body: `<p>Mon premier vrai événement, c'était un restaurant éphémère de 40 couverts à Lyon. Pas un stage d'observation — j'ai tout monté : le concept, le lieu, l'équipe, la comm'. Six mois d'exploitation, de l'ouverture à la fermeture. C'est ce type de terrain qui m'a formée à l'événementiel.</p>
 
-<p>Mon parcours s'est construit autour de la conception, de l'organisation et de la coordination de projets événementiels, avec une forte dimension opérationnelle. Issue du terrain de la restauration et de l'hôtellerie, j'ai développé une approche pragmatique de l'événementiel, intégrant à la fois les enjeux logistiques, la communication et l'expérience du public.</p>
+<p>Ce projet, Focacc', je l'ai cofondé en 2022 pendant mon Bachelor à l'Institut Lyfe. J'y ai appris tout ce qu'un cours ne peut pas enseigner : négocier un bail précaire, gérer les imprévus fournisseurs, adapter le concept en cours de route quand les chiffres ne suivent pas. Le soir de l'ouverture, on avait 15 réservations. Le dernier mois, on refusait du monde.</p>
 
-<p>Au cours de mes expériences professionnelles, j'ai participé à la création et à l'organisation de différents projets événementiels, incluant des restaurants éphémères, des lancements de concepts et des formats associant communication et production de contenus. J'ai été amenée à intervenir sur la conception des projets, la coordination des équipes, la gestion logistique ainsi que la mise en place des supports de communication liés aux événements.</p>
+<p>Ensuite, j'ai travaillé un an pour La Dimanche, l'une des soirées LGBTQ+ les plus connues de Paris. J'étais en charge de la logistique bar : commandes, gestion des stocks, optimisation des flux en soirée. Des événements à 800-1 000 personnes, avec des pics d'affluence à gérer en temps réel. Ça forge le sang-froid.</p>
 
-<p>J'ai également collaboré à la conception et à la production de la masterclass "Court ou Crève", développée avec le youtubeur Ludovic. J'ai participé à la coordination du projet, à la production de la vidéo principale, au lancement et à la gestion du compte Instagram ainsi qu'à la création du site web. Ce projet m'a permis de travailler sur un format événementiel à forte visibilité, mêlant production de contenu, gestion de planning et coordination, en lien avec une audience large et engagée.</p>
+<p>En parallèle de mon Master à l'EFAP, j'ai collaboré sur la masterclass "Court ou Crève" avec le youtubeur Ludovic. Production de la vidéo principale, lancement du compte Instagram, création du site web. Un format événementiel digital — avec les mêmes exigences de deadline, de coordination d'équipe et de résultat.</p>
 
-<p>En 2022, j'ai cofondé et dirigé le restaurant éphémère Focacc' à Lyon pendant six mois. Ce projet m'a permis de piloter l'ensemble de l'organisation, de la définition du concept à sa mise en œuvre opérationnelle, en passant par la communication, la gestion des équipes et l'optimisation des process sur la durée.</p>
+<p>Chez Nasther, j'ai accompagné de nombreux événements liés aux cinq établissements du groupe : soirées de lancement, collaborations marques, événements privés. Mon rôle : la coordination entre les équipes, la production de tous les supports de communication, le suivi opérationnel le jour J.</p>
 
-<p>J'ai également travaillé pendant un an pour La Dimanche, l'une des soirées LGBTQ+ majeures à Paris, où j'étais en charge de la logistique bar, de la gestion des commandes et de l'optimisation des flux, dans un contexte événementiel à forte affluence et à contraintes opérationnelles élevées.</p>
+<p>Ce que je sais faire : transformer un concept en expérience concrète, dans les délais, dans le budget, sans que ça se voie quand ça coince. C'est ce savoir-faire que j'aimerais mettre au service de vos projets événementiels.</p>`
+      },
+      hospitality: {
+        subject: "Candidature - Hôtellerie de luxe",
+        body: `<p>J'ai grandi au Luxembourg, entre trois langues et trois cultures. Cette habitude de naviguer entre les codes — savoir quand être formelle, quand être chaleureuse, quand simplement écouter — c'est exactement ce que demande l'hôtellerie haut de gamme.</p>
 
-<p>Par la suite, au sein du groupe Nasther, j'ai accompagné de nombreux événements en lien avec les différents établissements, en assurant la coordination entre les équipes, la production des supports de communication et le suivi opérationnel. Ces expériences m'ont permis de renforcer mon sens de l'organisation, ma capacité d'adaptation et ma rigueur dans la gestion simultanée de plusieurs projets.</p>
+<p>Ma formation à l'Institut Lyfe, à Lyon, était centrée sur le management de la restauration internationale. Trois ans immergée dans les standards de service, la gestion d'établissements, l'attention au détail qui fait la différence entre un bon repas et une expérience mémorable. C'est là que j'ai développé cette sensibilité au luxe — pas le luxe ostentatoire, celui du geste juste au bon moment.</p>
 
-<p>Aujourd'hui, je souhaite poursuivre mon parcours dans le domaine de l'événementiel, au sein d'une structure où l'exigence opérationnelle, la créativité et la qualité de l'expérience proposée occupent une place centrale. Mon profil polyvalent, à la fois organisé, autonome et habitué au terrain, me permet de m'intégrer rapidement et de contribuer efficacement à vos projets.</p>`
+<p>Avec Focacc', le restaurant éphémère que j'ai cofondé à Lyon, j'ai compris l'importance de l'image perçue. On vendait des focaccias, mais ce que les clients achetaient, c'était l'ambiance, le soin apporté à chaque détail — de la typographie du menu au packaging. Quand on a un budget limité, on apprend à créer de la valeur perçue autrement. Cette discipline me suit partout.</p>
+
+<p>Mon Master en communication et production audiovisuelle à l'EFAP m'a donné les outils pour traduire une identité de marque en images, en mots, en expérience digitale cohérente. Tout ce qui fait qu'un client découvre un hôtel en ligne et a déjà envie d'y être.</p>
+
+<p>Chez Nasther, j'ai piloté le marketing de cinq adresses parisiennes — dont certaines positionnées haut de gamme. Création de l'univers visuel, gestion des réseaux sociaux avec une ligne éditoriale soignée, conception des supports print. Le défi : maintenir un niveau d'exigence constant sur chaque point de contact avec le client.</p>
+
+<p>Je parle luxembourgeois, français, allemand et anglais — couramment. C'est un atout concret pour accueillir une clientèle internationale et adapter la communication aux différents marchés. J'aimerais mettre cette combinaison — sens du service, culture visuelle, multilinguisme — au service d'un établissement d'exception.</p>`
+      },
+      communication: {
+        subject: "Candidature - Communication",
+        body: `<p>Une marque qui communique bien, ça ne se voit pas. Tout semble naturel, évident, fluide. C'est quand ça ne fonctionne pas qu'on remarque la communication. Mon travail, c'est de faire en sorte qu'on ne la remarque jamais — qu'elle porte le message sans effort apparent.</p>
+
+<p>J'ai étudié la communication par deux chemins. D'abord par le terrain : un Bachelor en management de la restauration à l'Institut Lyfe, où j'ai vu comment le discours d'un établissement influence directement la perception client. Puis par la technique : un Master en communication et production audiovisuelle à l'EFAP Paris — stratégie éditoriale, DA, production de contenus, pilotage de projets.</p>
+
+<p>Entre les deux, j'ai cofondé Focacc' à Lyon. Un restaurant éphémère où j'ai construit toute la communication de zéro : naming, identité visuelle, ligne éditoriale Instagram, supports print. Avec un budget quasi nul, chaque choix de mot, chaque photo comptait. On a atteint 1 200 abonnés en trois semaines — preuve qu'un message clair et authentique suffit quand il est bien calibré.</p>
+
+<p>La masterclass "Court ou Crève", créée avec le youtubeur Ludovic, m'a confrontée à un autre registre : la communication digitale grand public. Vidéo virale, gestion de communauté, site web — le tout avec des délais serrés et une audience qui pardonne peu les faux pas.</p>
+
+<p>Chez Nasther, j'étais responsable communication pour cinq établissements. Pas cinq déclinaisons du même message — cinq identités distinctes, cinq tons, cinq audiences. Je gérais la stratégie de contenu, le community management, les supports graphiques, les sites web. Ce qui m'a le plus appris : arbitrer entre ce que la marque veut dire et ce que le public a besoin d'entendre.</p>
+
+<p>Je cherche une structure qui considère la communication comme un levier stratégique, pas comme un poste de dépense. C'est dans ce contexte que je donne le meilleur.</p>`
+      },
+      audiovisual: {
+        subject: "Candidature - Audiovisuel",
+        body: `<p>Je fais des images depuis que j'ai un ordinateur. D'abord par curiosité, puis par formation, aujourd'hui par métier. Ce qui me distingue d'un pur profil créatif, c'est que je comprends pourquoi on produit — pas seulement comment.</p>
+
+<p>Mon Bachelor à l'Institut Lyfe m'a donné une base business solide : comprendre un marché, un positionnement, une cible. Mon Master en communication et production audiovisuelle à l'EFAP a ajouté la couche technique : réalisation, montage, motion design, direction artistique, gestion de production.</p>
+
+<p>Le projet qui a tout connecté, c'est la masterclass "Court ou Crève" avec le youtubeur Ludovic. J'ai co-produit la vidéo principale — du script au montage final. J'ai aussi lancé et géré le compte Instagram du projet et conçu le site web. C'était mon premier vrai projet audiovisuel de bout en bout, avec une audience réelle et des objectifs chiffrés de visibilité.</p>
+
+<p>Chez Nasther, j'ai été responsable de toute la production visuelle pour cinq établissements : shooting photo, création graphique (menus, affiches, réseaux sociaux), conception des sites web, et quelques projets vidéo courts pour les réseaux. Je travaillais seule sur ces sujets — ce qui veut dire que je gérais tout, du brief à la livraison, en passant par les retours et les ajustements.</p>
+
+<p>En freelance, j'accompagne aussi des restaurateurs sur leur identité visuelle : logos, chartes graphiques, templates réseaux sociaux, suivi de projets photo et vidéo. Des missions où il faut comprendre vite l'univers du client et produire des supports qui lui ressemblent — pas un template générique.</p>
+
+<p>Mon environnement technique : Premiere Pro, After Effects, Photoshop, Illustrator, InDesign, Lightroom, Figma, Canva, Webflow, WordPress. Je suis à l'aise sur toute la chaîne, de la captation au livrable final.</p>
+
+<p>Ce que je cherche : intégrer une équipe où la production audiovisuelle et visuelle a une vraie place stratégique. Où on ne fait pas juste du contenu pour remplir un feed, mais pour raconter quelque chose.</p>`
       }
     };
 
     let currentProfile = 'general';
+    let saveTimeout = null;
 
+    // --- LocalStorage ---
+    function getStorageKey(profile) {
+      return `lm_edited_fr_${profile}`;
+    }
+
+    function getClosingKey(profile) {
+      return `lm_edited_fr_closing_${profile}`;
+    }
+
+    function saveToStorage() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        const bodyHtml = document.getElementById('letterBody').innerHTML;
+        const closingHtml = document.querySelector('.closing').innerHTML;
+        localStorage.setItem(getStorageKey(currentProfile), bodyHtml);
+        localStorage.setItem(getClosingKey(currentProfile), closingHtml);
+        showToast();
+      }, 1000);
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    function resetTemplate() {
+      if (!confirm('Réinitialiser le texte ? Les modifications seront perdues.')) return;
+      localStorage.removeItem(getStorageKey(currentProfile));
+      localStorage.removeItem(getClosingKey(currentProfile));
+      document.getElementById('letterBody').innerHTML = profiles[currentProfile].body;
+      document.querySelector('.closing').innerHTML = getDefaultClosing();
+      showToast();
+    }
+
+    function getDefaultClosing() {
+      return `<p>Je serais ravie d'échanger avec vous lors d'un entretien afin de vous présenter plus en détail mon parcours et ma motivation.</p>
+      <p>Je vous remercie pour l'attention portée à ma candidature et vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</p>
+      <p class="signature">Lea Sevenig</p>`;
+    }
+
+    // --- Profile switching ---
     function setProfile(profile) {
       currentProfile = profile;
       document.querySelectorAll('.profile-btn').forEach(btn => btn.classList.remove('active'));
@@ -443,7 +571,16 @@
       const p = profiles[profile];
       document.getElementById('subjectInput').value = p.subject;
       document.getElementById('subjectDisplay').textContent = p.subject;
-      document.getElementById('letterBody').innerHTML = p.body;
+
+      // Load from localStorage or fallback to template
+      const savedBody = localStorage.getItem(getStorageKey(profile));
+      const savedClosing = localStorage.getItem(getClosingKey(profile));
+      document.getElementById('letterBody').innerHTML = savedBody || p.body;
+      if (savedClosing) {
+        document.querySelector('.closing').innerHTML = savedClosing;
+      } else {
+        document.querySelector('.closing').innerHTML = getDefaultClosing();
+      }
     }
 
     function updateSubject() {
@@ -462,29 +599,100 @@
       document.getElementById('currentDate').textContent = `Paris, le ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
     }
 
-    // Init - Lire les paramètres URL
+    // --- Paste handler: plain text only ---
+    document.addEventListener('paste', function(e) {
+      const target = e.target.closest('[contenteditable="true"]');
+      if (!target) return;
+      e.preventDefault();
+      const text = e.clipboardData.getData('text/plain');
+      document.execCommand('insertText', false, text);
+    });
+
+    // --- Auto-save on input ---
+    document.addEventListener('input', function(e) {
+      if (e.target.closest('[contenteditable="true"]')) {
+        saveToStorage();
+      }
+    });
+
+    // --- Floating format toolbar ---
+    const toolbar = document.getElementById('formatToolbar');
+
+    function formatText(e, command) {
+      e.preventDefault();
+      document.execCommand(command, false, null);
+      updateToolbarState();
+    }
+
+    function updateToolbarState() {
+      toolbar.querySelector('.fmt-bold').classList.toggle('active', document.queryCommandState('bold'));
+      toolbar.querySelector('.fmt-italic').classList.toggle('active', document.queryCommandState('italic'));
+      toolbar.querySelector('.fmt-underline').classList.toggle('active', document.queryCommandState('underline'));
+    }
+
+    function showToolbar() {
+      const sel = window.getSelection();
+      if (!sel.rangeCount || sel.isCollapsed) {
+        toolbar.classList.remove('visible');
+        return;
+      }
+      const range = sel.getRangeAt(0);
+      const container = range.commonAncestorContainer;
+      const editable = (container.nodeType === 1 ? container : container.parentElement).closest('[contenteditable="true"]');
+      if (!editable) {
+        toolbar.classList.remove('visible');
+        return;
+      }
+
+      const rect = range.getBoundingClientRect();
+      const toolbarWidth = 116;
+      let left = rect.left + (rect.width / 2) - (toolbarWidth / 2) + window.scrollX;
+      let top = rect.top - 48 + window.scrollY;
+
+      // Keep within viewport
+      left = Math.max(8, Math.min(left, window.innerWidth - toolbarWidth - 8));
+      if (top < 8) top = rect.bottom + 8 + window.scrollY;
+
+      toolbar.style.left = left + 'px';
+      toolbar.style.top = top + 'px';
+      toolbar.classList.add('visible');
+      updateToolbarState();
+    }
+
+    document.addEventListener('selectionchange', showToolbar);
+    document.addEventListener('mousedown', function(e) {
+      if (!e.target.closest('.format-toolbar') && !e.target.closest('[contenteditable="true"]')) {
+        toolbar.classList.remove('visible');
+      }
+    });
+
+    // --- Init ---
     updateDate();
     const urlParams = new URLSearchParams(window.location.search);
     const paramCompany = urlParams.get('company');
     const paramSubject = urlParams.get('subject');
     const paramProfile = urlParams.get('profile');
 
-    // Appliquer le profil si spécifié
     if (paramProfile && profiles[paramProfile]) {
       currentProfile = paramProfile;
       document.querySelectorAll('.profile-btn').forEach(btn => {
         btn.classList.toggle('active', btn.textContent.toLowerCase().includes(paramProfile.substring(0, 4)));
       });
-      document.getElementById('letterBody').innerHTML = profiles[paramProfile].body;
+      const savedBody = localStorage.getItem(getStorageKey(paramProfile));
+      document.getElementById('letterBody').innerHTML = savedBody || profiles[paramProfile].body;
+      const savedClosing = localStorage.getItem(getClosingKey(paramProfile));
+      if (savedClosing) document.querySelector('.closing').innerHTML = savedClosing;
       document.getElementById('subjectInput').value = paramSubject || profiles[paramProfile].subject;
       document.getElementById('subjectDisplay').textContent = paramSubject || profiles[paramProfile].subject;
     } else {
       document.getElementById('subjectInput').value = paramSubject || profiles.general.subject;
       document.getElementById('subjectDisplay').textContent = paramSubject || profiles.general.subject;
-      document.getElementById('letterBody').innerHTML = profiles.general.body;
+      const savedBody = localStorage.getItem(getStorageKey('general'));
+      document.getElementById('letterBody').innerHTML = savedBody || profiles.general.body;
+      const savedClosing = localStorage.getItem(getClosingKey('general'));
+      if (savedClosing) document.querySelector('.closing').innerHTML = savedClosing;
     }
 
-    // Appliquer l'entreprise si spécifiée
     if (paramCompany) {
       document.getElementById('companyName').value = paramCompany;
       document.getElementById('companyDisplay').textContent = ` - ${paramCompany}`;
