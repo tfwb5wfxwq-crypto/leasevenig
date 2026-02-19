@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lea Sevenig - Communication & Marketing</title>
-  <meta name="description" content="Lea Sevenig - Responsable communication, Graphiste & Web Designer. Stratégie marketing, création de contenus, identité visuelle.">
+  <meta name="description" content="Lea Sevenig - Chef de projet junior, Assistance. Accompagnement de projets, coordination opérationnelle, communication.">
 
   <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://leasevenig.cv/">
   <meta property="og:title" content="Lea Sevenig - Communication & Marketing">
-  <meta property="og:description" content="Responsable communication, Graphiste & Web Designer. Stratégie marketing, création de contenus, identité visuelle.">
+  <meta property="og:description" content="Chef de projet junior, Assistance. Accompagnement de projets, coordination opérationnelle, communication.">
   <meta property="og:image" content="https://leasevenig.cv/og-image.png">
   <meta property="og:locale" content="fr_FR">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Lea Sevenig - Communication & Marketing">
-  <meta name="twitter:description" content="Responsable communication, Graphiste & Web Designer. Stratégie marketing, création de contenus, identité visuelle.">
+  <meta name="twitter:description" content="Chef de projet junior, Assistance. Accompagnement de projets, coordination opérationnelle, communication.">
   <meta name="twitter:image" content="https://leasevenig.cv/og-image.png">
 
   <!-- SEO -->
@@ -280,6 +280,9 @@
       padding: 60px 40px;
       position: relative;
       overflow: hidden;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 50%, #1a1a1a 100%);
+      width: 100%;
+      max-width: 100%;
     }
 
     /* Animated background shapes */
@@ -791,6 +794,172 @@
 
     .timeline-desc li:hover::before {
       left: 5px;
+    }
+
+    /* ========== PARCOURS (Timeline simple année par année) ========== */
+    .timeline-visual {
+      padding: 100px 20px 150px;
+      background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 50%, #f8f8f8 100%);
+      width: 100%;
+    }
+
+    .timeline-simple {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .timeline-content {
+      margin-top: 80px;
+      position: relative;
+    }
+
+    /* Ligne verticale qui traverse toutes les années */
+    .timeline-content::before {
+      content: '';
+      position: absolute;
+      left: 100px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--coral) 0%, var(--lavender) 100%);
+      border-radius: 10px;
+    }
+
+    /* Chaque ligne = 1 année */
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    /* Année à gauche avec point */
+    .timeline-year-block {
+      text-align: right;
+      position: relative;
+    }
+
+    .year-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--coral);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .year-dot {
+      position: absolute;
+      right: -23px;
+      top: 10px;
+      width: 18px;
+      height: 18px;
+      background: var(--coral);
+      border: 4px solid #f8f8f8;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+
+    /* Cartes d'expériences à droite */
+    .timeline-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .exp-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Barre colorée gauche */
+    .card-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: var(--color);
+    }
+
+    .exp-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .exp-card h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 8px;
+      padding-left: 10px;
+    }
+
+    .card-role {
+      font-size: 15px;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 8px;
+      padding-left: 10px;
+    }
+
+    .card-dates {
+      font-size: 13px;
+      color: #999;
+      margin: 0;
+      padding-left: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .timeline-content::before {
+        left: 20px;
+      }
+
+      .timeline-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 50px;
+        padding-left: 50px;
+      }
+
+      .timeline-year-block {
+        text-align: left;
+      }
+
+      .year-label {
+        font-size: 24px;
+      }
+
+      .year-dot {
+        right: auto;
+        left: -43px;
+        top: 5px;
+      }
+
+      .timeline-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .exp-card h4 {
+        font-size: 17px;
+      }
+
+      .card-role {
+        font-size: 14px;
+      }
+
+      .card-dates {
+        font-size: 12px;
+      }
     }
 
     /* ========== SKILLS SECTION ========== */
@@ -2007,8 +2176,7 @@
           </span>
         </h1>
         <p class="hero-subtitle reveal stagger-3">
-          <span class="highlight">Responsable communication</span><br>
-          <span class="highlight">Graphiste</span> · <span class="highlight">Web Designer</span>
+          <span class="highlight">Chef de projet junior</span> · <span class="highlight">Assistance</span>
         </p>
         <div class="hero-tags reveal stagger-4">
           <span class="hero-tag">Stratégie de marque</span>
@@ -2018,7 +2186,7 @@
         </div>
       </div>
       <div class="hero-photo reveal-right">
-        <img src="lea-detoure.png" alt="Lea Sevenig">
+        <img src="lea-nouvelle.jpg" alt="Lea Sevenig">
       </div>
     </div>
     <div class="scroll-indicator">
@@ -2032,25 +2200,25 @@
     <div class="section-header">
       <p class="section-label reveal-left">À propos</p>
       <h2 class="section-title">
-        <span class="line reveal-blur">De la stratégie</span>
+        <span class="line reveal-blur">De l'assistance</span>
         <span class="line reveal-blur stagger">à l'exécution</span>
       </h2>
     </div>
     <div class="about-content">
       <div class="about-text">
         <p class="reveal">
-          Profil terrain issu de la restauration et de l'hôtellerie de luxe, avec une <strong>forte sensibilité à l'image</strong>, à l'expérience client et aux environnements exigeants.
+          Issue de la restauration et de l'hôtellerie de luxe, j'ai développé une <strong>sensibilité à l'expérience client</strong> et aux environnements exigeants. Mon parcours m'a appris à <strong>anticiper les besoins</strong> et à <strong>m'adapter rapidement</strong>.
         </p>
         <p class="reveal stagger">
-          Habituée à <strong>concevoir et déployer des stratégies de communication</strong> adaptées aux lieux, aux équipes et aux publics, de la réflexion à l'opérationnel.
+          Je suis spécialisée dans <strong>l'accompagnement de projets</strong> et <strong>l'assistance opérationnelle</strong>, de la coordination logistique à la création de supports de communication. Mon approche : <strong>comprendre les enjeux</strong> pour <strong>faciliter l'exécution</strong>.
         </p>
         <p class="reveal stagger-2">
-          Mon approche : comprendre les enjeux business pour créer des <strong>contenus impactants</strong> et des <strong>identités visuelles mémorables</strong>.
+          Avec <strong>2-3 ans d'expérience</strong> en communication, community management et gestion de projets audiovisuels, je combine <strong>autonomie</strong> et <strong>esprit d'équipe</strong> pour livrer des résultats concrets.
         </p>
       </div>
       <div class="about-stats">
         <div class="stat reveal-zoom">
-          <span class="stat-number" data-count="4">0</span>
+          <span class="stat-number" data-count="3">0</span>
           <span class="stat-label">Années d'expérience</span>
         </div>
         <div class="stat reveal-zoom stagger">
@@ -2084,21 +2252,18 @@
         <div class="timeline-item reveal-left">
           <span class="timeline-date">Depuis juin 2025 · Auto-entreprise</span>
           <h3 class="timeline-company">Brasseur Design</h3>
-          <p class="timeline-role">Graphiste & Responsable de projet</p>
+          <p class="timeline-role">Responsable de projet et accompagnement</p>
           <ul class="timeline-desc">
-            <li>Accompagnement de restaurants et projets dans la création de leur identité visuelle</li>
-            <li>Conception de supports de communication adaptés aux usages terrain et aux clientèles</li>
-            <li>Suivi de projets audiovisuels et de tournages (YouTubeur Ludovik : La Poste, Winamax…)</li>
-            <li>Coordination entre clients, équipes créatives et prestataires</li>
-            <li>Supervision de projets de la conception à la livraison finale</li>
+            <li>Expérience en projets audiovisuels et accompagnement de projets</li>
+            <li>Création de supports de communication adaptés aux besoins clients</li>
           </ul>
         </div>
 
-        <!-- Groupe Nasther -->
-        <div class="timeline-item reveal-left stagger-2">
-          <span class="timeline-date">Avril 2024 - Décembre 2025 · CDI</span>
+        <!-- Groupe Nasther - CDI -->
+        <div class="timeline-item reveal-left stagger">
+          <span class="timeline-date">Janvier - Décembre 2025 · CDI</span>
           <h3 class="timeline-company">Groupe Nasther</h3>
-          <p class="timeline-role">Responsable communication – Graphiste & Web designer</p>
+          <p class="timeline-role">Responsable communication</p>
           <ul class="timeline-desc">
             <li>Pilotage de la communication globale de plusieurs lieux de restauration et de vie</li>
             <li>Création et mise à jour des supports print et digitaux (affiches, menus, visuels, contenus réseaux sociaux)</li>
@@ -2108,19 +2273,239 @@
           </ul>
         </div>
 
+        <!-- Groupe Nasther - Stage -->
+        <div class="timeline-item reveal-left stagger-2">
+          <span class="timeline-date">Avril - Décembre 2024 · Stage</span>
+          <h3 class="timeline-company">Groupe Nasther</h3>
+          <p class="timeline-role">Community manager</p>
+          <ul class="timeline-desc">
+            <li>Community manager de 2 restaurants du groupe</li>
+            <li>Création de contenus et animation des réseaux sociaux</li>
+          </ul>
+        </div>
+
+        <!-- La Dimanche -->
+        <div class="timeline-item reveal-left stagger-3">
+          <span class="timeline-date">2023 - 2024 · Extra durant études</span>
+          <h3 class="timeline-company">La Dimanche</h3>
+          <p class="timeline-role">Service événementiel</p>
+          <ul class="timeline-desc">
+            <li>Événementiel et coordination des bars</li>
+            <li>Gestion des commandes et du personnel</li>
+          </ul>
+        </div>
+
         <!-- Restaurant Focacc' -->
         <div class="timeline-item reveal-left stagger-4">
-          <span class="timeline-date">2022 · 6 mois · Restaurant éphémère</span>
+          <span class="timeline-date">Juin - Décembre 2022 · Restaurant éphémère</span>
           <h3 class="timeline-company">Restaurant Focacc'</h3>
-          <p class="timeline-role">Directrice générale</p>
+          <p class="timeline-role">Création d'un restaurant éphémère</p>
           <ul class="timeline-desc">
-            <li>Co-création et ouverture d'un restaurant éphémère</li>
+            <li>Co-création et ouverture d'un restaurant éphémère au lieu d'un stage classique</li>
             <li>Définition du concept, du positionnement et de l'identité visuelle</li>
             <li>Gestion de la communication et de l'image de marque</li>
             <li>Management d'une équipe de 3 personnes</li>
             <li>Participation au recrutement et à l'intégration des équipes</li>
             <li>Négociation de partenariats et gestion opérationnelle quotidienne</li>
           </ul>
+        </div>
+
+        <!-- Hôtel Martinez -->
+        <div class="timeline-item reveal-left stagger-5">
+          <span class="timeline-date">Juin - Août 2021 · Stage</span>
+          <h3 class="timeline-company">Hôtel Martinez</h3>
+          <p class="timeline-role">Barmaid, hôtesse d'accueil</p>
+          <ul class="timeline-desc">
+            <li>Stage de barmaid dans l'hôtellerie de luxe</li>
+            <li>Relation client et hôtesse d'accueil</li>
+            <li>Gestion du stress durant grands événements (Festival de Cannes)</li>
+          </ul>
+        </div>
+
+        <!-- Miss Luxembourg -->
+        <div class="timeline-item reveal-left stagger-6">
+          <span class="timeline-date">Mai 2021 · Élection</span>
+          <h3 class="timeline-company">Miss Luxembourg</h3>
+          <p class="timeline-role">Élection Miss Luxembourg</p>
+          <ul class="timeline-desc">
+            <li>Élection Miss Luxembourg</li>
+            <li>Plusieurs interviews au Luxembourg (Lëtzebuerger Wort et L'essentiel)</li>
+            <li>Article Nice Matin en collaboration avec le Martinez</li>
+            <li>Collaboration avec le chef René Matthieu : création d'un menu 100% local et végétarien pour nourrir les sans-abris au Luxembourg durant les fêtes de fin d'année</li>
+          </ul>
+        </div>
+
+        <!-- Institut Paul Bocuse -->
+        <div class="timeline-item reveal-left stagger-7">
+          <span class="timeline-date">2019 - 2023 · Formation</span>
+          <h3 class="timeline-company">Institut Paul Bocuse / Institut Lyfe</h3>
+          <p class="timeline-role">Expériences professionnelles</p>
+          <ul class="timeline-desc">
+            <li>Plusieurs expériences au sein des lieux d'apprentissage : accueil client, housekeeping, service</li>
+            <li>Création d'événements et de directions artistiques de plusieurs restaurants</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parcours -->
+  <section class="timeline-visual">
+    <div class="timeline-simple">
+      <div class="section-header">
+        <p class="section-label reveal-left">Résumé</p>
+        <h2 class="section-title">
+          <span class="line reveal-blur">Parcours</span>
+        </h2>
+      </div>
+
+      <div class="timeline-content">
+        <!-- 2025-2026 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2025<br>2026</div>
+            <div class="year-dot"></div>
+          </div>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #D94F3D;">
+              <div class="card-bar"></div>
+              <h4>Groupe Nasther</h4>
+              <p class="card-role">Responsable communication</p>
+              <p class="card-dates">Janv. - Déc. 2025 · CDI</p>
+            </div>
+            <div class="exp-card" style="--color: #B83C2D;">
+              <div class="card-bar"></div>
+              <h4>Brasseur Design</h4>
+              <p class="card-role">Responsable de projet</p>
+              <p class="card-dates">Depuis juin 2025 · Freelance</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2024 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2024</div>
+            <div class="year-dot"></div>
+          </div>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #D8CFF2;">
+              <div class="card-bar"></div>
+              <h4>Groupe Nasther</h4>
+              <p class="card-role">Community manager</p>
+              <p class="card-dates">Avr. - Déc. 2024 · Stage</p>
+            </div>
+            <div class="exp-card" style="--color: #9B87C7;">
+              <div class="card-bar"></div>
+              <h4>La Dimanche</h4>
+              <p class="card-role">Service événementiel</p>
+              <p class="card-dates">2023 - 2024 · Extra</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2023 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2023</div>
+            <div class="year-dot"></div>
+          </div>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
+            </div>
+            <div class="exp-card" style="--color: #9B87C7;">
+              <div class="card-bar"></div>
+              <h4>La Dimanche</h4>
+              <p class="card-role">Service événementiel</p>
+              <p class="card-dates">2023 - 2024 · Extra</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2022 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2022</div>
+            <div class="year-dot"></div>
+          </div>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
+            </div>
+            <div class="exp-card" style="--color: #FF8C42;">
+              <div class="card-bar"></div>
+              <h4>Restaurant Focacc'</h4>
+              <p class="card-role">Restaurant éphémère</p>
+              <p class="card-dates">Juin - Déc. 2022</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2021 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2021</div>
+            <div class="year-dot"></div>
+          </div>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
+            </div>
+            <div class="exp-card" style="--color: #FFD700;">
+              <div class="card-bar"></div>
+              <h4>Miss Luxembourg</h4>
+              <p class="card-role">Élection</p>
+              <p class="card-dates">Mai 2021</p>
+            </div>
+            <div class="exp-card" style="--color: #E8685A;">
+              <div class="card-bar"></div>
+              <h4>Hôtel Martinez</h4>
+              <p class="card-role">Stage barmaid</p>
+              <p class="card-dates">Juin - Août 2021</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2020 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2020</div>
+            <div class="year-dot"></div>
+          </div>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2019 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2019</div>
+            <div class="year-dot"></div>
+          </div>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2676,7 +3061,7 @@
     }, { threshold: 0.5 });
 
     // Sections importantes à tracker (pas hero/contact)
-    document.querySelectorAll('section.about, section.experience, section.skills, section.projects').forEach(section => {
+    document.querySelectorAll('section.about, section.experience, section.timeline-visual, section.skills, section.projects').forEach(section => {
       sectionObserver.observe(section);
     });
 
