@@ -2136,330 +2136,7 @@
         gap: 8px;
       }
     }
-  
-
-/* ===================================
-   TIMELINE VERTICALE PARCOURS
-   =================================== */
-
-.parcours-timeline {
-  padding: 120px 0;
-  background: #FAFAF8;
-  position: relative;
-  overflow: hidden;
-}
-
-.container-timeline {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-.timeline-vertical {
-  position: relative;
-  margin-top: 80px;
-}
-
-/* Ligne verticale centrale */
-.timeline-line {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg,
-    rgba(216, 207, 242, 0.3) 0%,
-    rgba(216, 207, 242, 0.8) 20%,
-    rgba(216, 207, 242, 0.8) 80%,
-    rgba(216, 207, 242, 0.3) 100%
-  );
-  transform: translateX(-50%);
-  z-index: 1;
-}
-
-/* Timeline Block */
-.timeline-block {
-  position: relative;
-  margin-bottom: 80px;
-}
-
-.timeline-block.small {
-  margin-bottom: 40px;
-}
-
-/* Timeline Year */
-.timeline-year {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  text-align: center;
-}
-
-.timeline-year span {
-  display: inline-block;
-  background: #FAFAF8;
-  padding: 8px 20px;
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: #8B7FB3;
-  border-radius: 100px;
-  box-shadow: 0 2px 8px rgba(139, 127, 179, 0.1);
-}
-
-.timeline-year.small span {
-  display: none;
-}
-
-.year-dot {
-  width: 16px;
-  height: 16px;
-  background: linear-gradient(135deg, #D8CFF2 0%, #C4B8E8 100%);
-  border-radius: 50%;
-  margin: 12px auto 0;
-  box-shadow: 0 0 0 4px #FAFAF8, 0 0 0 6px rgba(216, 207, 242, 0.3);
-  position: relative;
-  z-index: 2;
-}
-
-.year-dot.small {
-  width: 10px;
-  height: 10px;
-  margin-top: 0;
-}
-
-/* Timeline Cards Row */
-.timeline-cards-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  padding-top: 60px;
-  position: relative;
-}
-
-/* Timeline Card */
-.timeline-card {
-  background: white;
-  padding: 24px 28px;
-  border-radius: 16px;
-  border: 1.5px solid transparent;
-  position: relative;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-}
-
-.timeline-card.left {
-  text-align: right;
-}
-
-.timeline-card.right {
-  text-align: left;
-}
-
-/* Formation = Lavender */
-.timeline-card.formation {
-  border-color: rgba(216, 207, 242, 0.3);
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(248, 246, 253, 1) 100%
-  );
-}
-
-.timeline-card.formation:hover {
-  border-color: #D8CFF2;
-  box-shadow: 0 8px 24px rgba(216, 207, 242, 0.15);
-  transform: translateY(-4px);
-}
-
-.timeline-card.formation::before {
-  content: '';
-  position: absolute;
-  width: 40px;
-  height: 2px;
-  background: linear-gradient(90deg,
-    #D8CFF2 0%,
-    rgba(216, 207, 242, 0.3) 100%
-  );
-  top: 50%;
-  right: -40px;
-  transform: translateY(-1px);
-}
-
-/* Expérience = Coral */
-.timeline-card.experience {
-  border-color: rgba(232, 104, 90, 0.2);
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(254, 249, 248, 1) 100%
-  );
-}
-
-.timeline-card.experience:hover {
-  border-color: #E8685A;
-  box-shadow: 0 8px 24px rgba(232, 104, 90, 0.12);
-  transform: translateY(-4px);
-}
-
-.timeline-card.experience::before {
-  content: '';
-  position: absolute;
-  width: 40px;
-  height: 2px;
-  background: linear-gradient(270deg,
-    #E8685A 0%,
-    rgba(232, 104, 90, 0.2) 100%
-  );
-  top: 50%;
-  left: -40px;
-  transform: translateY(-1px);
-}
-
-/* Card Header */
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  gap: 12px;
-}
-
-.timeline-card.left .card-header {
-  flex-direction: row-reverse;
-}
-
-.card-header h4 {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: #2E2E2E;
-  margin: 0;
-}
-
-.card-type {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.formation .card-type {
-  background: rgba(216, 207, 242, 0.2);
-  color: #8B7FB3;
-}
-
-.experience .card-type {
-  background: rgba(232, 104, 90, 0.15);
-  color: #D94F3D;
-}
-
-.card-subtitle {
-  font-size: 15px;
-  color: #666;
-  margin: 4px 0 8px;
-  font-weight: 500;
-}
-
-.card-date {
-  font-size: 13px;
-  color: #999;
-  margin: 0;
-}
-
-/* Timeline Spacer (pour les vides) */
-.timeline-spacer {
-  min-height: 1px;
-}
-
-/* Responsive */
-@media (max-width: 968px) {
-  .timeline-line {
-    left: 40px;
-  }
-
-  .timeline-cards-row {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding-left: 80px;
-    padding-top: 40px;
-  }
-
-  .timeline-year {
-    left: 40px;
-    transform: translateX(-50%);
-  }
-
-  .timeline-card {
-    text-align: left !important;
-  }
-
-  .timeline-card.left,
-  .timeline-card.right {
-    margin-left: 0;
-  }
-
-  .timeline-card.left .card-header {
-    flex-direction: row;
-  }
-
-  .timeline-card::before {
-    width: 30px;
-    left: -30px !important;
-    right: auto !important;
-    background: linear-gradient(90deg,
-      rgba(216, 207, 242, 0.5) 0%,
-      transparent 100%
-    ) !important;
-  }
-
-  .timeline-card.experience::before {
-    background: linear-gradient(90deg,
-      rgba(232, 104, 90, 0.3) 0%,
-      transparent 100%
-    ) !important;
-  }
-
-  .timeline-spacer {
-    display: none;
-  }
-
-  .timeline-block {
-    margin-bottom: 60px;
-  }
-}
-
-@media (max-width: 640px) {
-  .parcours-timeline {
-    padding: 80px 0;
-  }
-
-  .container-timeline {
-    padding: 0 20px;
-  }
-
-  .timeline-cards-row {
-    padding-left: 60px;
-  }
-
-  .timeline-year span {
-    font-size: 16px;
-    padding: 6px 16px;
-  }
-
-  .card-header h4 {
-    font-size: 18px;
-  }
-
-  .timeline-block {
-    margin-bottom: 50px;
-  }
-}
-
-
-</style>
+  </style>
 </head>
 <body>
 
@@ -2560,202 +2237,279 @@
     </div>
   </section>
 
-
-  <!-- Timeline Verticale Parcours -->
-  <section class="parcours-timeline">
-    <div class="container-timeline">
+  <!-- Experience Section -->
+  <section class="experience">
+    <div class="container">
       <div class="section-header">
-        <p class="section-label reveal-right">Mon parcours</p>
+        <p class="section-label reveal-right">Parcours</p>
         <h2 class="section-title">
-          <span class="line reveal-flip">Formation &</span>
-          <span class="line reveal-flip stagger">Expérience</span>
+          <span class="line reveal-flip">Expériences</span>
+          <span class="line reveal-flip stagger">professionnelles</span>
+        </h2>
+      </div>
+      <div class="timeline">
+        <!-- Brasseur Design -->
+        <div class="timeline-item reveal-left">
+          <span class="timeline-date">Depuis juin 2025 · Auto-entreprise</span>
+          <h3 class="timeline-company">Brasseur Design</h3>
+          <p class="timeline-role">Responsable de projet et accompagnement</p>
+          <ul class="timeline-desc">
+            <li>Expérience en projets audiovisuels et accompagnement de projets</li>
+            <li>Création de supports de communication adaptés aux besoins clients</li>
+          </ul>
+        </div>
+
+        <!-- Groupe Nasther - CDI -->
+        <div class="timeline-item reveal-left stagger">
+          <span class="timeline-date">Janvier - Décembre 2025 · CDI</span>
+          <h3 class="timeline-company">Groupe Nasther</h3>
+          <p class="timeline-role">Responsable communication</p>
+          <ul class="timeline-desc">
+            <li>Pilotage de la communication globale de plusieurs lieux de restauration et de vie</li>
+            <li>Création et mise à jour des supports print et digitaux (affiches, menus, visuels, contenus réseaux sociaux)</li>
+            <li>Community management : création de contenus, animation des réseaux sociaux, mise en avant des temps forts</li>
+            <li>Coordination avec les équipes opérationnelles et les prestataires externes</li>
+            <li>Approche orientée terrain et expérience client, nourrie par une solide connaissance des réalités opérationnelles</li>
+          </ul>
+        </div>
+
+        <!-- Groupe Nasther - Stage -->
+        <div class="timeline-item reveal-left stagger-2">
+          <span class="timeline-date">Avril - Décembre 2024 · Stage</span>
+          <h3 class="timeline-company">Groupe Nasther</h3>
+          <p class="timeline-role">Community manager</p>
+          <ul class="timeline-desc">
+            <li>Community manager de 2 restaurants du groupe</li>
+            <li>Création de contenus et animation des réseaux sociaux</li>
+          </ul>
+        </div>
+
+        <!-- La Dimanche -->
+        <div class="timeline-item reveal-left stagger-3">
+          <span class="timeline-date">2023 - 2024 · Extra durant études</span>
+          <h3 class="timeline-company">La Dimanche</h3>
+          <p class="timeline-role">Service événementiel</p>
+          <ul class="timeline-desc">
+            <li>Événementiel et coordination des bars</li>
+            <li>Gestion des commandes et du personnel</li>
+          </ul>
+        </div>
+
+        <!-- Restaurant Focacc' -->
+        <div class="timeline-item reveal-left stagger-4">
+          <span class="timeline-date">Juin - Décembre 2022 · Restaurant éphémère</span>
+          <h3 class="timeline-company">Restaurant Focacc'</h3>
+          <p class="timeline-role">Création d'un restaurant éphémère</p>
+          <ul class="timeline-desc">
+            <li>Co-création et ouverture d'un restaurant éphémère au lieu d'un stage classique</li>
+            <li>Définition du concept, du positionnement et de l'identité visuelle</li>
+            <li>Gestion de la communication et de l'image de marque</li>
+            <li>Management d'une équipe de 3 personnes</li>
+            <li>Participation au recrutement et à l'intégration des équipes</li>
+            <li>Négociation de partenariats et gestion opérationnelle quotidienne</li>
+          </ul>
+        </div>
+
+        <!-- Hôtel Martinez -->
+        <div class="timeline-item reveal-left stagger-5">
+          <span class="timeline-date">Juin - Août 2021 · Stage</span>
+          <h3 class="timeline-company">Hôtel Martinez</h3>
+          <p class="timeline-role">Barmaid, hôtesse d'accueil</p>
+          <ul class="timeline-desc">
+            <li>Stage de barmaid dans l'hôtellerie de luxe</li>
+            <li>Relation client et hôtesse d'accueil</li>
+            <li>Gestion du stress durant grands événements (Festival de Cannes)</li>
+          </ul>
+        </div>
+
+        <!-- Miss Luxembourg -->
+        <div class="timeline-item reveal-left stagger-6">
+          <span class="timeline-date">Mai 2021 · Élection</span>
+          <h3 class="timeline-company">Miss Luxembourg</h3>
+          <p class="timeline-role">Élection Miss Luxembourg</p>
+          <ul class="timeline-desc">
+            <li>Élection Miss Luxembourg</li>
+            <li>Plusieurs interviews au Luxembourg (Lëtzebuerger Wort et L'essentiel)</li>
+            <li>Article Nice Matin en collaboration avec le Martinez</li>
+            <li>Collaboration avec le chef René Matthieu : création d'un menu 100% local et végétarien pour nourrir les sans-abris au Luxembourg durant les fêtes de fin d'année</li>
+          </ul>
+        </div>
+
+        <!-- Institut Paul Bocuse -->
+        <div class="timeline-item reveal-left stagger-7">
+          <span class="timeline-date">2019 - 2023 · Formation</span>
+          <h3 class="timeline-company">Institut Paul Bocuse / Institut Lyfe</h3>
+          <p class="timeline-role">Expériences professionnelles</p>
+          <ul class="timeline-desc">
+            <li>Plusieurs expériences au sein des lieux d'apprentissage : accueil client, housekeeping, service</li>
+            <li>Création d'événements et de directions artistiques de plusieurs restaurants</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parcours -->
+  <section class="timeline-visual">
+    <div class="timeline-simple">
+      <div class="section-header">
+        <p class="section-label reveal-left">Résumé</p>
+        <h2 class="section-title">
+          <span class="line reveal-blur">Parcours</span>
         </h2>
       </div>
 
-      <div class="timeline-vertical">
-        <!-- Ligne verticale centrale -->
-        <div class="timeline-line"></div>
-
-        <!-- Aujourd'hui / 2025 -->
-        <div class="timeline-block">
-          <div class="timeline-year">
-            <span>Aujourd'hui</span>
+      <div class="timeline-content">
+        <!-- 2025-2026 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2025<br>2026</div>
             <div class="year-dot"></div>
           </div>
-          <div class="timeline-cards-row">
-            <!-- Formation gauche -->
-            <div class="timeline-card left formation reveal-left">
-              <div class="card-header">
-                <h4>Brasseur Design</h4>
-                <span class="card-type">Auto-entreprise</span>
-              </div>
-              <p class="card-subtitle">Cool Cuisine · Yin 2025</p>
-              <p class="card-date">Depuis juin 2025</p>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #D94F3D;">
+              <div class="card-bar"></div>
+              <h4>Groupe Nasther</h4>
+              <p class="card-role">Responsable communication</p>
+              <p class="card-dates">Janv. - Déc. 2025 · CDI</p>
             </div>
-            <!-- Expérience droite -->
-            <div class="timeline-card right experience reveal-right">
-              <div class="card-header">
-                <h4>Groupe Nasther</h4>
-                <span class="card-type">CDI</span>
-              </div>
-              <p class="card-subtitle">Responsable communication</p>
-              <p class="card-date">Décembre 2025</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2025 -->
-        <div class="timeline-block">
-          <div class="timeline-year">
-            <span>2025</span>
-            <div class="year-dot"></div>
-          </div>
-          <div class="timeline-cards-row">
-            <div class="timeline-spacer left"></div>
-            <div class="timeline-card right experience reveal-right stagger">
-              <div class="card-header">
-                <h4>Groupe Nasther</h4>
-                <span class="card-type">CDI</span>
-              </div>
-              <p class="card-subtitle">Responsable communication</p>
-              <p class="card-date">Janvier 2025</p>
+            <div class="exp-card" style="--color: #B83C2D;">
+              <div class="card-bar"></div>
+              <h4>Brasseur Design</h4>
+              <p class="card-role">Responsable de projet</p>
+              <p class="card-dates">Depuis juin 2025 · Freelance</p>
             </div>
           </div>
         </div>
 
         <!-- 2024 -->
-        <div class="timeline-block">
-          <div class="timeline-year">
-            <span>2024</span>
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2024</div>
             <div class="year-dot"></div>
           </div>
-          <div class="timeline-cards-row">
-            <!-- Formation gauche -->
-            <div class="timeline-card left formation reveal-left stagger">
-              <div class="card-header">
-                <h4>Efap</h4>
-                <span class="card-type">Formation</span>
-              </div>
-              <p class="card-date">2024</p>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #D8CFF2;">
+              <div class="card-bar"></div>
+              <h4>Groupe Nasther</h4>
+              <p class="card-role">Community manager</p>
+              <p class="card-dates">Avr. - Déc. 2024 · Stage</p>
             </div>
-            <!-- Expérience droite -->
-            <div class="timeline-card right experience reveal-right stagger-2">
-              <div class="card-header">
-                <h4>Groupe Nasther</h4>
-                <span class="card-type">Stage</span>
-              </div>
-              <p class="card-subtitle">Community manager</p>
-              <p class="card-date">Avril - Décembre 2024</p>
+            <div class="exp-card" style="--color: #9B87C7;">
+              <div class="card-bar"></div>
+              <h4>La Dimanche</h4>
+              <p class="card-role">Service événementiel</p>
+              <p class="card-dates">2023 - 2024 · Extra</p>
             </div>
           </div>
         </div>
 
-        <!-- 2023 (La Dimanche) -->
-        <div class="timeline-block">
-          <div class="timeline-year">
-            <span>2023</span>
+        <!-- 2023 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2023</div>
             <div class="year-dot"></div>
           </div>
-          <div class="timeline-cards-row">
-            <!-- Formation gauche -->
-            <div class="timeline-card left formation reveal-left stagger-2">
-              <div class="card-header">
-                <h4>Institut Paul Bocuse</h4>
-                <span class="card-type">Formation</span>
-              </div>
-              <p class="card-subtitle">L'institut Lyfe</p>
-              <p class="card-date">2019 - 2023</p>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
             </div>
-            <!-- Expérience droite -->
-            <div class="timeline-card right experience reveal-right stagger-3">
-              <div class="card-header">
-                <h4>La Dimanche</h4>
-                <span class="card-type">Extra</span>
-              </div>
-              <p class="card-subtitle">Service événementiel</p>
-              <p class="card-date">2023 - 2024</p>
+            <div class="exp-card" style="--color: #9B87C7;">
+              <div class="card-bar"></div>
+              <h4>La Dimanche</h4>
+              <p class="card-role">Service événementiel</p>
+              <p class="card-dates">2023 - 2024 · Extra</p>
             </div>
           </div>
         </div>
 
-        <!-- 2022 (Restaurant Focacc') -->
-        <div class="timeline-block">
-          <div class="timeline-year">
-            <span>2022</span>
+        <!-- 2022 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2022</div>
             <div class="year-dot"></div>
           </div>
-          <div class="timeline-cards-row">
-            <div class="timeline-spacer left"></div>
-            <div class="timeline-card right experience reveal-right stagger-4">
-              <div class="card-header">
-                <h4>Restaurant Focacc'</h4>
-                <span class="card-type">Restaurant éphémère</span>
-              </div>
-              <p class="card-subtitle">Création d'un restaurant éphémère</p>
-              <p class="card-date">Juin - Décembre 2022</p>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
+            </div>
+            <div class="exp-card" style="--color: #FF8C42;">
+              <div class="card-bar"></div>
+              <h4>Restaurant Focacc'</h4>
+              <p class="card-role">Restaurant éphémère</p>
+              <p class="card-dates">Juin - Déc. 2022</p>
             </div>
           </div>
         </div>
 
-        <!-- 2021 (Martinez + Miss Luxembourg) -->
-        <div class="timeline-block">
-          <div class="timeline-year">
-            <span>2021</span>
+        <!-- 2021 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2021</div>
             <div class="year-dot"></div>
           </div>
-          <div class="timeline-cards-row">
-            <div class="timeline-spacer left"></div>
-            <div class="timeline-card right experience reveal-right stagger-5">
-              <div class="card-header">
-                <h4>Hôtel Martinez</h4>
-                <span class="card-type">Stage</span>
-              </div>
-              <p class="card-subtitle">Barmaid · Hôtesse d'accueil</p>
-              <p class="card-date">Avril - Juin 2021</p>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
+            </div>
+            <div class="exp-card" style="--color: #FFD700;">
+              <div class="card-bar"></div>
+              <h4>Miss Luxembourg</h4>
+              <p class="card-role">Élection</p>
+              <p class="card-dates">Mai 2021</p>
+            </div>
+            <div class="exp-card" style="--color: #E8685A;">
+              <div class="card-bar"></div>
+              <h4>Hôtel Martinez</h4>
+              <p class="card-role">Stage barmaid</p>
+              <p class="card-dates">Juin - Août 2021</p>
             </div>
           </div>
         </div>
 
-        <!-- 2021 (Miss Luxembourg - séparé) -->
-        <div class="timeline-block small">
-          <div class="timeline-year small">
-            <div class="year-dot small"></div>
-          </div>
-          <div class="timeline-cards-row">
-            <div class="timeline-spacer left"></div>
-            <div class="timeline-card right experience reveal-right stagger-6">
-              <div class="card-header">
-                <h4>Miss Luxembourg</h4>
-                <span class="card-type">Élection</span>
-              </div>
-              <p class="card-date">Mai 2021</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2019 (Bac Luxembourg) -->
-        <div class="timeline-block">
-          <div class="timeline-year">
-            <span>2019</span>
+        <!-- 2020 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2020</div>
             <div class="year-dot"></div>
           </div>
-          <div class="timeline-cards-row">
-            <div class="timeline-card left formation reveal-left stagger-3">
-              <div class="card-header">
-                <h4>Bac Luxembourg</h4>
-                <span class="card-type">Diplôme</span>
-              </div>
-              <p class="card-subtitle">Mention bien</p>
-              <p class="card-date">2019</p>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
             </div>
-            <div class="timeline-spacer right"></div>
           </div>
         </div>
 
+        <!-- 2019 -->
+        <div class="timeline-row">
+          <div class="timeline-year-block">
+            <div class="year-label">2019</div>
+            <div class="year-dot"></div>
+          </div>
+          <div class="timeline-cards">
+            <div class="exp-card" style="--color: #C4B8E8;">
+              <div class="card-bar"></div>
+              <h4>Institut Paul Bocuse / Lyfe</h4>
+              <p class="card-role">Formation</p>
+              <p class="card-dates">2019 - 2023</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-
 
   <!-- Skills Section -->
   <section class="skills">
